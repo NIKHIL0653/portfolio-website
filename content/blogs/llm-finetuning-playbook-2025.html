@@ -1,0 +1,111 @@
+<h1>The 2025 Playbook for LLM Fine-Tuning</h1>
+<p><em>A practical guide to SFT, LoRA/QLoRA, DPO, data strategy, evaluation, and safe deployment—with a decision matrix to choose the right path for quality, cost, and latency.</em></p>
+
+<h2>Why Fine-Tuning Still Matters</h2>
+<p>
+Fine-tuning adapts a pre-trained model to a task or domain so it follows instructions, uses vocabulary correctly, and returns outputs in the formats enterprises need without brittle prompt gymnastics.
+</p>
+<p>
+In 2025, parameter-efficient methods like LoRA and QLoRA make this practical on mid-range GPUs while preserving strong quality, shifting fine-tuning from a research luxury to an engineering default for focused use cases.
+</p>
+<p><strong>TL;DR:</strong> Start with PEFT (LoRA/QLoRA), reserve full fine-tune for hard distribution shifts, and prefer DPO for preference alignment when RLHF complexity is overkill.</p>
+
+<h2>What “Fine-Tuning” Includes</h2>
+<p><strong>Supervised fine-tuning (SFT):</strong> Teaches task format and style using labeled pairs like instruction → response. Often the first post-training step for assistants and vertical applications.</p>
+<p><strong>PEFT (LoRA/QLoRA):</strong> Trains small adapter layers or low-rank updates while freezing base weights, yielding similar gains with lower memory and faster iteration than full weight updates.</p>
+<p><strong>Alignment (DPO/RLHF):</strong> Tunes to human preferences using ranked outputs or reward models. DPO is a simpler alternative that avoids reward model training and on-policy RL.</p>
+<p><strong>Full fine-tune:</strong> Updates all weights. Reserved for severe domain shift or new language tasks that require deep representation changes at higher compute cost and complexity.</p>
+
+<h2>Decision Matrix: Prompt/RAG vs PEFT vs Full</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Scenario</th>
+      <th>Recommended Path</th>
+      <th>Why</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Narrow domain, stable schema, strict latency/cost</td>
+      <td>LoRA or QLoRA</td>
+      <td>Adapters give deterministic formats and lower VRAM/latency than full FT, enabling on-device or smaller GPU serving.</td>
+    </tr>
+    <tr>
+      <td>Knowledge gaps with fast-changing facts</td>
+      <td>RAG + light SFT</td>
+      <td>Retrieve fresh facts and use SFT only for style/format, avoiding catastrophic forgetting and re-training cadence.</td>
+    </tr>
+    <tr>
+      <td>Safety/tone alignment for assistants</td>
+      <td>SFT → DPO</td>
+      <td>Teach format with SFT, then optimize human preferences with DPO for simpler, robust alignment than full RLHF loops.</td>
+    </tr>
+    <tr>
+      <td>Severe domain shift or new language</td>
+      <td>Full fine-tune (last resort)</td>
+      <td>Only when PEFT cannot close the gap; expect higher compute, QA burden, and regression risk.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Data Strategy: Quality Beats Quantity</h2>
+<p>Curate high-signal instruction/response pairs that reflect target tone, constraints, and edge cases. Noisy or biased data amplifies errors during adaptation.</p>
+<p>Balance positive and negative examples, include counter-prompts for refusal behavior, and document provenance to support audits and reproducibility in regulated contexts.</p>
+<p>For preference tuning, create ranked outputs per prompt and pre-SFT the reference model on the chosen “winning” completions to reduce distribution shift before DPO.</p>
+
+<h2>Methods That Work in 2025</h2>
+<h3>LoRA: Efficient Adapters</h3>
+<p>LoRA inserts low-rank matrices into attention/MLP modules so training only updates a small parameter set, enabling rapid iterations and cheap rollback or A/B testing.</p>
+
+<h3>QLoRA: 4-Bit Fine-Tuning</h3>
+<p>QLoRA loads base weights in 4-bit (NF4) with high-precision compute while training LoRA adapters, cutting memory without large quality loss compared to full precision.</p>
+<p>Key ingredients: NF4 quantization, double quantization of constants, and paged optimizers that avoid loading all weights into memory at once for large models.</p>
+
+<h3>DPO: Simpler Preference Alignment</h3>
+<p>Direct Preference Optimization optimizes a closed-form objective that matches human preference rankings, avoiding reward model training and on-policy rollouts.</p>
+<p>The β hyperparameter controls deviation from the reference policy, with values like 0.1 commonly used to balance adaptation and stability in practice.</p>
+
+<h2>Hyperparameters and Training Tips</h2>
+<ul>
+  <li>Use conservative learning rates, small per-device batch sizes with gradient accumulation, and early stopping on validation metrics.</li>
+  <li>Freeze early layers to preserve general knowledge while fine-tuning later blocks, especially for small datasets.</li>
+  <li>Prefer <code>bfloat16/float16</code> compute with 4-bit quantized loading for QLoRA.</li>
+  <li>Log loss plus task-level success metrics for each model version.</li>
+</ul>
+
+<h2>Evaluation That Reflects Reality</h2>
+<p>Combine automatic metrics (e.g., exact match, BLEU/ROUGE) with human review for faithfulness, safety, and adherence to constraints.</p>
+<p>Build a golden set of prompts/responses, run evals in CI for every adapter version, and track drift over time with stratified scenario coverage.</p>
+
+<h2>Safety, Privacy, and Governance</h2>
+<p>Red-team for prompt injection, jailbreaks, and sensitive data leakage. Include negative examples that teach safe refusal and policy-compliant behavior during SFT.</p>
+<p>Document datasets, licenses, and consent; apply PII scrubbing and retention rules; and maintain audit logs linking models to data and evaluation artifacts.</p>
+<p>For assistants, align with DPO on preference datasets that encode tone, safety constraints, and escalation boundaries to reduce incident rates post-deployment.</p>
+
+<h2>Serving and MLOps</h2>
+<p>Serve adapters without merging for fast rollbacks and multi-tenant variants, or merge for minimal latency when the adapter is stable and widely deployed.</p>
+<p>Monitor token latency, error codes, and cost per thousand tokens. Route to larger models only when uncertainty thresholds or evaluation gates fail.</p>
+
+<h2>End-to-End Workflow (Quickstart)</h2>
+<ol>
+  <li>Pick a strong base model that’s close to the task to minimize tuning depth and risk.</li>
+  <li>Assemble clean task data and a compact preference set; write data docs for provenance and policy.</li>
+  <li>Start with LoRA; upgrade to QLoRA if VRAM is tight or the model is large for the available hardware.</li>
+  <li>Train SFT for format/style, then run DPO for alignment if needed, keeping β conservative initially.</li>
+  <li>Evaluate on a golden set plus human review, then ship adapters with versioned telemetry and fallback routing.</li>
+</ol>
+
+<h3>Minimal QLoRA Scaffold (Pseudo-Code)</h3>
+<pre><code># Load 4-bit base, attach LoRA, train
+load_base_in_4bit(model_id, quant_type="nf4", compute_dtype="bfloat16") # QLoRA memory savings
+attach_lora(target_modules=["q_proj","v_proj"], r=8, alpha=32, dropout=0.05) # PEFT adapters
+sft_train(dataset=instruction_pairs, lr=2e-4, grad_accum=8, epochs=3) # SFT foundation
+dpo_train(pref_dataset=ranked_pairs, beta=0.1) # Preference alignment
+evaluate(golden_set, metrics=["exact_match","rouge","human-accept"]) # Mixed eval
+serve_with_adapter(base_model, adapter_version="v1") # Safe rollout
+</code></pre>
+
+<h2>Call to Action</h2>
+<p>If the goal is reliable formats, strict latency, and lower cost, prefer LoRA/QLoRA with a tight SFT set—and add DPO only when human preference gaps remain.</p>
+<p>Want a reusable notebook and decision checklist to operationalize this playbook for the stack in use today? Comment “TUNE” and the complete starter kit will be shared.</p>

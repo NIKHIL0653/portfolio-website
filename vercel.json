@@ -5,9 +5,8 @@
   "installCommand": "pnpm install",
   "framework": "nextjs",
   "env": {
-    "NEXT_PUBLIC_RESUME_URL": "@next_public_resume_url",
     "GITHUB_TOKEN": "@github_token",
-    "GITHUB_USERNAME": "@github_username", 
+    "GITHUB_USERNAME": "@github_username",
     "LEETCODE_USERNAME": "@leetcode_username"
   }
 }

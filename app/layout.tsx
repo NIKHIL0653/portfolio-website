@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   title: "Nikhil Choudhary - Portfolio",
   description: "Full-stack developer portfolio showcasing skills in React, Next.js, and cutting-edge web technologies",
   icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
   },
 }
 

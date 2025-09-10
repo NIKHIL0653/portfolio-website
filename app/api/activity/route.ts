@@ -4,6 +4,12 @@ type Map = Record<string, number>
 const DAYS = 365
 
 export async function GET(_req: NextRequest) {
+  console.log("[v0] Activity API called")
+
+  // Debug environment variables
+  console.log("[v0] GITHUB_TOKEN exists:", !!process.env.GITHUB_TOKEN)
+  console.log("[v0] GITHUB_USERNAME:", process.env.GITHUB_USERNAME)
+
   const gh = await Promise.resolve(getGitHubActivity())
 
   const sources = {
@@ -15,15 +21,11 @@ export async function GET(_req: NextRequest) {
     for (const [k, v] of Object.entries(sources.github)) byDate[k] = (byDate[k] || 0) + v
   }
 
-  // Fallback sample activity if nothing configured
+  console.log("[v0] Activity data points:", Object.keys(byDate).length)
+
+  // No fallback - return empty if no data
   if (Object.keys(byDate).length === 0) {
-    const today = new Date()
-    for (let i = 0; i < 90; i++) {
-      const d = new Date(today)
-      d.setDate(d.getDate() - i)
-      const key = d.toISOString().slice(0, 10)
-      byDate[key] = Math.random() < 0.7 ? Math.floor(Math.random() * 6) : 0
-    }
+    console.log("[v0] No activity data available - check GitHub credentials")
   }
 
   const end = new Date().toISOString().slice(0, 10)

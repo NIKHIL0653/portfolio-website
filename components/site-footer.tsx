@@ -32,7 +32,7 @@ export function SiteFooter() {
             </p>
             <div className="flex space-x-4 pt-2">
               <a
-                href="https://x.com/nikhil"
+                href="https://x.com/Nikhil0653"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-foreground transition-colors"
@@ -41,7 +41,7 @@ export function SiteFooter() {
                 <XLogo className="h-5 w-5" />
               </a>
               <a
-                href="https://github.com/nikhil"
+                href="https://github.com/NIKHIL0653"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-foreground transition-colors"
@@ -50,7 +50,7 @@ export function SiteFooter() {
                 <Github className="h-5 w-5" />
               </a>
               <a
-                href="https://linkedin.com/in/nikhil"
+                href="https://linkedin.com/in/nikhil-choudhary-0653"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-foreground transition-colors"
@@ -72,7 +72,7 @@ export function SiteFooter() {
                 About
               </Link>
               <a
-                href="/resume.pdf"
+                href="https://drive.google.com/file/d/1iAWePU4UtApS1Dx-2Vg7hK3bXRO8rUQy/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"

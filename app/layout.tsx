@@ -36,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
       <body className="font-sans bg-background text-foreground">
-        <ThemeProvider defaultTheme="system" storageKey="portfolio-theme">
+        <ThemeProvider defaultTheme="light" storageKey="portfolio-theme">
           <SiteHeader />
           <main>{children}</main>
           <SiteFooter />

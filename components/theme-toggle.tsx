@@ -1,48 +1,35 @@
 "use client"
 
-import { Moon, Sun, Monitor } from "lucide-react"
+import { Moon, Sun } from "lucide-react"
 import { useTheme } from "./theme-provider"
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme()
 
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light")
+  }
+
   return (
-    <div className="flex items-center bg-card border border-border rounded-md p-0.5 shadow-sm max-w-fit">
-      <button
-        onClick={() => setTheme("light")}
-        className={`flex items-center justify-center w-6 h-6 rounded text-xs font-medium transition-all duration-200 ${
+    <button
+      onClick={toggleTheme}
+      className="flex items-center justify-center w-8 h-8 rounded-md bg-card border border-border shadow-sm hover:bg-muted/50 transition-all duration-300 ease-in-out hover:scale-105"
+      aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+    >
+      <Sun
+        className={`h-4 w-4 transition-all duration-500 ease-in-out ${
           theme === "light"
-            ? "bg-primary text-primary-foreground shadow-sm"
-            : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+            ? "rotate-0 scale-100 text-yellow-500"
+            : "rotate-180 scale-0 text-gray-400"
         }`}
-        aria-label="Switch to light mode"
-      >
-        <Sun className="h-3 w-3" />
-      </button>
-
-      <button
-        onClick={() => setTheme("dark")}
-        className={`flex items-center justify-center w-6 h-6 rounded text-xs font-medium transition-all duration-200 ${
+      />
+      <Moon
+        className={`absolute h-4 w-4 transition-all duration-500 ease-in-out ${
           theme === "dark"
-            ? "bg-primary text-primary-foreground shadow-sm"
-            : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+            ? "rotate-0 scale-100 text-blue-400"
+            : "rotate-180 scale-0 text-gray-400"
         }`}
-        aria-label="Switch to dark mode"
-      >
-        <Moon className="h-3 w-3" />
-      </button>
-
-      <button
-        onClick={() => setTheme("system")}
-        className={`flex items-center justify-center w-6 h-6 rounded text-xs font-medium transition-all duration-200 ${
-          theme === "system"
-            ? "bg-primary text-primary-foreground shadow-sm"
-            : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-        }`}
-        aria-label="Switch to system mode"
-      >
-        <Monitor className="h-3 w-3" />
-      </button>
-    </div>
+      />
+    </button>
   )
 }

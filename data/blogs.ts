@@ -10,7 +10,7 @@ export type BlogPostMeta = {
   imageAlt?: string
 }
 
-// Simply add your blog metadata here - the content will be read from content/blogs/{slug}.html
+// Blog posts metadata - content loaded from HTML files
 export const posts: BlogPostMeta[] = [
   {
     slug: "getting-started-with-nextjs",

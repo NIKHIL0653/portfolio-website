@@ -22,7 +22,9 @@ import {
   siPostgresql,
   siTailwindcss,
   siGit,
-  siLinux
+  siLinux,
+  siScikitlearn,
+  siPytorch
 } from "simple-icons"
 
 type IconDef = { title: string; path: string }
@@ -32,6 +34,8 @@ const ICONS: IconDef[] = [
   { title: siTypescript.title, path: siTypescript.path },
   { title: siReact.title, path: siReact.path },
   { title: siTensorflow.title, path: siTensorflow.path },
+  { title: siPytorch.title, path: siPytorch.path },
+  { title: siScikitlearn.title, path: siScikitlearn.path },
   { title: siSupabase.title, path: siSupabase.path },
   { title: siOpencv.title, path: siOpencv.path },
   { title: siPrisma.title, path: siPrisma.path },

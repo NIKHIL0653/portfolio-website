@@ -31,15 +31,15 @@ export function ThemeProvider({
   const [theme, setTheme] = useState<Theme>(defaultTheme)
 
   useEffect(() => {
-    // Load theme from localStorage after component mounts
+    // Remember user's theme choice
     try {
       const storedTheme = localStorage.getItem(storageKey) as Theme
       if (storedTheme) {
         setTheme(storedTheme)
       }
     } catch (error) {
-      // Handle localStorage errors (e.g., in private browsing mode)
-      console.warn('Failed to load theme from localStorage:', error)
+      // Handle private browsing mode
+      console.warn('Storage not available:', error)
     }
   }, [storageKey])
 
@@ -56,8 +56,8 @@ export function ThemeProvider({
       try {
         localStorage.setItem(storageKey, theme)
       } catch (error) {
-        // Handle localStorage errors (e.g., in private browsing mode)
-        console.warn('Failed to save theme to localStorage:', error)
+        // Handle private browsing issues
+        console.warn('Could not save theme:', error)
       }
       setTheme(theme)
     },

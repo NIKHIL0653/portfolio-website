@@ -4,10 +4,10 @@ import { posts } from "@/data/blogs"
 
 export default function BlogIndexPage() {
   return (
-    <main className="mx-auto max-w-7xl px-4 py-12 sm:py-16">
-        <header className="mb-8 sm:mb-10">
-          <h1 className="text-3xl font-semibold">All Posts</h1>
-          <p className="text-muted-foreground mt-2 max-w-2xl">Writings on frontend, accessibility, and product craft.</p>
+    <main className="mx-auto max-w-7xl px-4 py-8 sm:py-12 md:py-16">
+        <header className="mb-6 sm:mb-8 md:mb-10">
+          <h1 className="text-2xl sm:text-3xl font-semibold">All Posts</h1>
+          <p className="text-muted-foreground mt-2 max-w-2xl text-sm sm:text-base">Writings on frontend, accessibility, and product craft.</p>
         </header>
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
           {posts.map((post, index) => (

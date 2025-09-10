@@ -148,14 +148,14 @@ export function InteractiveHero() {
   return (
     <section id="top" className="relative">
       <div className="absolute inset-0">
-        <canvas ref={canvasRef} className="block h-[85vh] w-full" aria-hidden="true" />
+        <canvas ref={canvasRef} className="block h-[75vh] sm:h-[85vh] w-full" aria-hidden="true" />
       </div>
 
-      <div className="relative z-10 h-[85vh] px-6 sm:px-8 flex items-center justify-center">
+      <div className="relative z-10 h-[75vh] sm:h-[85vh] px-4 sm:px-6 lg:px-8 flex items-center justify-center">
         <div className="max-w-2xl text-center">
           <div className="mx-auto mb-4 flex justify-center">
             <h2
-              className="text-3xl sm:text-4xl md:text-5xl font-medium font-mono tracking-tight"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium font-mono tracking-tight"
               aria-live="polite"
               aria-label="Hi, I'm Nikhil typing"
             >
@@ -169,12 +169,12 @@ export function InteractiveHero() {
           <div className="specialty-container">
             <h1
               key={currentSpecialty}
-              className="text-balance text-3xl sm:text-4xl md:text-5xl font-bold leading-tight specialty-text"
+              className="text-balance text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight specialty-text"
             >
               {specialties[currentSpecialty]}
             </h1>
           </div>
-          <p className="mt-4 text-pretty text-base sm:text-lg leading-relaxed text-muted-foreground mx-auto max-w-xl">
+          <p className="mt-4 text-pretty text-sm sm:text-base md:text-lg leading-relaxed text-muted-foreground mx-auto max-w-xl px-2">
             I build performant interfaces and systems with a product mindset.
           </p>
         </div>

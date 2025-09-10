@@ -19,8 +19,9 @@ function XLogo({ className }: { className?: string }) {
 export function SiteFooter() {
   return (
     <footer id="contact" className="border-t">
-      <div className="mx-auto max-w-6xl px-6 py-12">
-        <div className="grid gap-12 md:grid-cols-4 place-items-center md:place-items-start">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8 sm:py-12">
+        {/* Mobile: 2x2 grid, Desktop: 4 column grid */}
+        <div className="grid gap-6 sm:gap-8 md:gap-12 grid-cols-2 md:grid-cols-4 place-items-start">
           
           {/* Branding & Socials */}
           <div className="space-y-4">

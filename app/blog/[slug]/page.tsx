@@ -11,10 +11,10 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   const content = await getBlogContent(params.slug)
   if (!content) {
     return (
-      <main className="blog-article-container min-h-screen bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-800 py-12 px-4">
+      <main className="blog-article-container min-h-screen bg-slate-50 dark:bg-black py-12 px-4">
         {/* Enhanced Dotted Background Pattern */}
         <div className="dotted-background" />
-        
+
         <div className="relative mx-auto max-w-4xl">
           {/* Back Link - Centered outside the card */}
           <div className="text-center mb-8">
@@ -22,8 +22,8 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
               ← Back to all posts
             </Link>
           </div>
-          
-          <div className="blog-article-card bg-white dark:bg-slate-800 rounded-2xl shadow-xl overflow-hidden border border-slate-200 dark:border-slate-700">
+
+          <div className="blog-article-card bg-white dark:bg-[#1E1E1E] rounded-2xl shadow-xl shadow-white/10 dark:shadow-white/5 overflow-hidden border border-slate-200 dark:border-slate-500">
             <div className="p-6 sm:p-8 lg:p-12">
               <header className="mb-10 pb-8 border-b border-slate-200 dark:border-slate-700 text-center">
                 <h1 className="text-4xl font-bold mb-6 leading-tight text-slate-900 dark:text-white">{post.title}</h1>
@@ -58,10 +58,10 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   }
 
   return (
-    <main className="blog-article-container min-h-screen bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-800 py-12 px-4">
+    <main className="blog-article-container min-h-screen bg-slate-50 dark:bg-black py-8 sm:py-12 px-4">
       {/* Enhanced Dotted Background Pattern */}
       <div className="dotted-background" />
-      
+
       <div className="relative mx-auto max-w-4xl">
         {/* Back Link - Centered outside the card */}
         <div className="text-center mb-8">
@@ -69,9 +69,9 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
             ← Back to all posts
           </Link>
         </div>
-        
+
         {/* Main Article Card */}
-        <article className="blog-article-card bg-white dark:bg-slate-800 rounded-2xl shadow-xl overflow-hidden border border-slate-200 dark:border-slate-700">
+        <article className="blog-article-card bg-white dark:bg-[#121212] rounded-2xl shadow-xl shadow-white/10 dark:shadow-white/5 overflow-hidden border border-slate-200 dark:border-slate-500">
           {/* Article Content */}
           <div className="p-6 sm:p-8 lg:p-12">
             {/* Header Section - Centered */}

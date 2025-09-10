@@ -76,8 +76,9 @@ export function ActivityHeatmap() {
 
   return (
     <div>
-      <div className="mt-2 overflow-x-auto">
-        <div className="min-w-[720px]">
+      {/* Mobile: Horizontal scroll with custom scrollbar, Desktop: No scroll */}
+      <div className="mt-2 sm:overflow-x-visible overflow-x-auto custom-scrollbar">
+        <div className="sm:min-w-0 min-w-[720px]">
           {isLoading ? (
             <p className="text-sm text-muted-foreground">Loading activity…</p>
           ) : error ? (

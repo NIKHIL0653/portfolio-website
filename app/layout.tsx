@@ -8,9 +8,12 @@ import { SiteFooter } from "@/components/site-footer"
 import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
-  title: "v0 App",
-  description: "Created with v0",
-  generator: "v0.app",
+  title: "Nikhil Choudhary - Portfolio",
+  description: "Full-stack developer portfolio showcasing skills in React, Next.js, and cutting-edge web technologies",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+  },
 }
 
 const geistSans = localFont({

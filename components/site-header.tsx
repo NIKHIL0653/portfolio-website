@@ -104,10 +104,10 @@ export function SiteHeader() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="sm:hidden mt-4 pb-4 border-t pt-4">
+          <div className="sm:hidden mt-4 pb-4 border-t border-border pt-4">
             <nav aria-label="Mobile navigation">
-              <ul className="flex flex-col gap-4">
-                {nav.map((item) => {
+              <ul className="flex flex-col gap-1">
+                {nav.map((item, index) => {
                   const active = pathname === item.href
                   return (
                     <li key={item.href}>
@@ -116,13 +116,16 @@ export function SiteHeader() {
                         aria-current={active ? "page" : undefined}
                         className={
                           active
-                            ? "text-sm font-semibold text-foreground block py-2"
-                            : "text-sm text-muted-foreground hover:text-foreground transition-colors block py-2"
+                            ? "text-sm font-semibold text-foreground block py-2 px-2"
+                            : "text-sm text-muted-foreground hover:text-foreground transition-colors block py-2 px-2"
                         }
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         {item.label}
                       </Link>
+                      {index < nav.length - 1 && (
+                        <div className="border-t border-dotted border-gray-300 dark:border-gray-600 mx-2" />
+                      )}
                     </li>
                   )
                 })}

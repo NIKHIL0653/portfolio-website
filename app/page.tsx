@@ -40,7 +40,7 @@ export default function HomePage() {
                 Know More
               </h2>
             </header>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-0 relative">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-0 relative">
               {/* Projects Column */}
               <Link href="/projects" className="group relative flex flex-col items-center justify-center min-h-[120px] py-2 pt-10">
                 <div className="flex flex-col items-center text-center transition-all duration-500 group-hover:-translate-y-5">
@@ -54,6 +54,8 @@ export default function HomePage() {
                 </div>
                 {/* Dotted divider for desktop - extended to connect with top/bottom */}
                 <div className="hidden md:block absolute -top-6 bottom-2 right-0 w-px border-r border-dotted border-gray-300 dark:border-gray-600"></div>
+                {/* Horizontal dotted divider for mobile */}
+                <div className="md:hidden absolute -bottom-1 left-4 right-4 h-px border-t border-dotted border-gray-300 dark:border-gray-600"></div>
               </Link>
 
               {/* Blog Column */}
@@ -69,6 +71,8 @@ export default function HomePage() {
                 </div>
                 {/* Dotted divider for desktop - extended to connect with top/bottom */}
                 <div className="hidden md:block absolute -top-6 bottom-2 right-0 w-px border-r border-dotted border-gray-300 dark:border-gray-600"></div>
+                {/* Horizontal dotted divider for mobile */}
+                <div className="md:hidden absolute -bottom-1 left-4 right-4 h-px border-t border-dotted border-gray-300 dark:border-gray-600"></div>
               </Link>
 
               {/* About Column */}

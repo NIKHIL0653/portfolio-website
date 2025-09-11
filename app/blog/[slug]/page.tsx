@@ -76,7 +76,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           <div className="p-6 sm:p-8 lg:p-12">
             {/* Header Section - Centered */}
             <header className="mb-10 pb-8 border-b border-slate-200 dark:border-slate-700 text-center">
-              <h1 className="text-4xl font-bold mb-6 leading-tight text-slate-900 dark:text-white">{post.title}</h1>
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 leading-tight text-slate-900 dark:text-white">{post.title}</h1>
               
               {/* Author and Date Info - Centered */}
               <div className="flex items-center justify-center gap-3 text-sm text-slate-600 dark:text-slate-400">
@@ -99,14 +99,14 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
             
             {/* Hero Image - Larger content width with minimal styling */}
             {post.image && (
-              <div className="mb-10">
-                <div className="blog-image-frame-large w-full max-w-4xl mx-auto h-72 sm:h-96 relative rounded-xl overflow-hidden border border-slate-100 dark:border-slate-600">
+              <div className="mb-10 px-2 sm:px-0">
+                <div className="blog-image-frame-large w-full max-w-4xl mx-auto h-48 sm:h-72 lg:h-96 relative rounded-xl overflow-hidden border border-slate-100 dark:border-slate-600">
                   <Image
                     src={post.image}
                     alt={post.imageAlt || post.title}
                     fill
                     className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 768px"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     priority
                   />
                 </div>

@@ -9,7 +9,7 @@ interface Company {
 const companies: Company[] = [
   {
     name: "TCS",
-    position: "Software Engineer",
+    position: "Trainee Engineer",
     duration: "Feb 2025 - Present"
   },
   {

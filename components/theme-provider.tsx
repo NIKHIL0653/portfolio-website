@@ -16,7 +16,7 @@ type ThemeProviderState = {
 }
 
 const initialState: ThemeProviderState = {
-  theme: "light",
+  theme: "light", // Ensure initial state is always light
   setTheme: () => null,
 }
 
@@ -28,18 +28,23 @@ export function ThemeProvider({
   storageKey = "portfolio-theme",
   ...props
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(defaultTheme)
+  const [theme, setTheme] = useState<Theme>("light") // Always start with light mode
 
   useEffect(() => {
-    // Remember user's theme choice
+    // Remember user's theme choice, but default to light if none exists
     try {
       const storedTheme = localStorage.getItem(storageKey) as Theme
-      if (storedTheme) {
+      if (storedTheme && (storedTheme === "light" || storedTheme === "dark")) {
         setTheme(storedTheme)
+      } else {
+        // If no valid theme is stored, set light mode and save it
+        setTheme("light")
+        localStorage.setItem(storageKey, "light")
       }
     } catch (error) {
-      // Handle private browsing mode
+      // Handle private browsing mode - default to light
       console.warn('Storage not available:', error)
+      setTheme("light")
     }
   }, [storageKey])
 
@@ -52,14 +57,17 @@ export function ThemeProvider({
 
   const value = {
     theme,
-    setTheme: (theme: Theme) => {
-      try {
-        localStorage.setItem(storageKey, theme)
-      } catch (error) {
-        // Handle private browsing issues
-        console.warn('Could not save theme:', error)
+    setTheme: (newTheme: Theme) => {
+      // Ensure only valid themes are set
+      if (newTheme === "light" || newTheme === "dark") {
+        try {
+          localStorage.setItem(storageKey, newTheme)
+        } catch (error) {
+          // Handle private browsing issues
+          console.warn('Could not save theme:', error)
+        }
+        setTheme(newTheme)
       }
-      setTheme(theme)
     },
   }
 

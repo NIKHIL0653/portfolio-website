@@ -18,11 +18,11 @@ export default function BlogIndexPage() {
               } ${index % 3 !== 2 ? 'lg:border-r' : ''} ${
                 Math.floor(index / 3) < Math.floor((posts.length - 1) / 3) ? 'border-b' : ''
               }`}
-              style={{ borderStyle: 'dotted' }}
+              style={{ borderStyle: 'solid' }}
             >
               <article className="flex flex-col h-full">
                 {post.image && (
-                  <div className="relative aspect-[16/10] w-full p-3">
+                  <div className="relative aspect-[16/10] w-full p-2 sm:p-3">
                     <div className="relative w-full h-full rounded-lg overflow-hidden">
                       <Image
                         src={post.image}
@@ -34,15 +34,15 @@ export default function BlogIndexPage() {
                     </div>
                   </div>
                 )}
-                <div className="px-4 pb-4 flex flex-col gap-2 flex-grow">
-                  <h2 className="text-base font-semibold leading-tight">
+                <div className="px-3 sm:px-4 pb-3 sm:pb-4 flex flex-col gap-2 flex-grow">
+                  <h2 className="text-sm sm:text-base font-semibold leading-tight">
                     <Link href={`/blog/${post.slug}`} className="hover:underline">
                       {post.title}
                     </Link>
                   </h2>
-                  <p className="text-sm text-muted-foreground line-clamp-2">{post.excerpt}</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">{post.excerpt}</p>
                   <div className="text-xs text-muted-foreground font-mono mt-auto">{post.date}</div>
-                  <Link className="mt-2 text-sm text-primary hover:underline w-fit" href={`/blog/${post.slug}`}>
+                  <Link className="mt-2 text-xs sm:text-sm text-primary hover:underline w-fit" href={`/blog/${post.slug}`}>
                     Read more
                   </Link>
                 </div>

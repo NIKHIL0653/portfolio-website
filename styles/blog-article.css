@@ -9,10 +9,11 @@
   background-color: #000000; /* Black background for blog posts */
 }
 
-/* Blog Article Card Styling */
+/* Blog Article Card Styling - FIXED TO MATCH LANDING PAGE */
 .dark .blog-article-card {
-  background-color: #161A1D; /* User's specified color for blog cards */
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1); /* Subtle white shadow with less spread */
+  background-color: #161A1D !important; /* Matching landing page vertical card color */
+  border-color: #2a2a2a !important; /* Slightly lighter border for better definition */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 0 4px 10px rgba(0, 0, 0, 0.3) !important; /* Enhanced shadow for depth */
 }
 
 /* Prevent dotted background in footer - comprehensive fix */
@@ -77,22 +78,22 @@ footer * {
   color: #4a5568 !important;
 }
 
-/* Dark mode headings */
+/* ENHANCED Dark mode headings with better contrast */
 .dark .blog-content h1 {
-  color: #f7fafc !important;
-  border-bottom-color: #4a5568 !important;
+  color: #ffffff !important; /* Pure white for better contrast */
+  border-bottom-color: #3a3a3a !important; /* Consistent with card borders */
 }
 
 .dark .blog-content h2 {
-  color: #e2e8f0 !important;
-  border-bottom-color: #4a5568 !important;
+  color: #f5f5f5 !important; /* Slightly off-white */
+  border-bottom-color: #3a3a3a !important; /* Consistent border */
 }
 
 .dark .blog-content h3,
 .dark .blog-content h4,
 .dark .blog-content h5,
 .dark .blog-content h6 {
-  color: #e2e8f0 !important;
+  color: #e8e8e8 !important; /* Consistent heading color */
 }
 
 /* Paragraph and Text Spacing */
@@ -104,7 +105,7 @@ footer * {
 }
 
 .dark .blog-content p {
-  color: #cbd5e1 !important;
+  color: #d1d5db !important; /* Better readability in dark mode */
 }
 
 /* List Styling with Better Spacing */
@@ -121,7 +122,7 @@ footer * {
 }
 
 .dark .blog-content li {
-  color: #cbd5e1 !important;
+  color: #d1d5db !important; /* Consistent with paragraph text */
 }
 
 .blog-content ul li {
@@ -140,7 +141,7 @@ footer * {
   margin: 0.5rem 0 !important;
 }
 
-/* Links */
+/* ENHANCED Links with better dark mode colors */
 .blog-content a {
   color: #3182ce !important;
   text-decoration: none !important;
@@ -155,22 +156,22 @@ footer * {
 }
 
 .dark .blog-content a {
-  color: #63b3ed !important;
+  color: #60a5fa !important; /* Better blue for dark mode */
 }
 
 .dark .blog-content a:hover {
-  color: #90cdf4 !important;
-  border-bottom-color: #63b3ed !important;
+  color: #93c5fd !important;
+  border-bottom-color: #60a5fa !important;
 }
 
-/* Enhanced Dotted Background Pattern */
+/* ENHANCED Dotted Background Pattern for better dark mode */
 .dotted-background {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  opacity: 0.4;
+  opacity: 0.3; /* Reduced opacity for better readability */
   pointer-events: none;
   z-index: 0;
 }
@@ -201,15 +202,15 @@ footer * {
   background-position: 0 0;
 }
 
-/* Dark mode dotted background */
+/* ENHANCED Dark mode dotted background with better consistency */
 .dark .dotted-background::before {
   background-image: 
-    radial-gradient(circle at 1px 1px, #334155 1px, transparent 0);
+    radial-gradient(circle at 1px 1px, #2a2a2a 1px, transparent 0);
 }
 
 .dark .dotted-background::after {
   background-image: 
-    radial-gradient(circle at 1px 1px, #475569 0.8px, transparent 0);
+    radial-gradient(circle at 1px 1px, #3a3a3a 0.8px, transparent 0);
 }
 
 /* Blog Card Enhancements */
@@ -223,20 +224,18 @@ footer * {
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
   border: 1px solid #e2e8f0;
   overflow: hidden;
-  /* transition: all 0.3s ease; */
 }
 
-
+/* ENHANCED Dark mode blog card to match landing page exactly */
 .dark .blog-article-card {
-  background: #1e293b;
-  border-color: #374151;
+  background: #161A1D !important; /* Exact match with landing page */
+  border-color: #2a2a2a !important;
   box-shadow: 
-    0 20px 25px -5px rgba(0, 0, 0, 0.3),
-    0 10px 10px -5px rgba(0, 0, 0, 0.2);
+    0 20px 25px -5px rgba(0, 0, 0, 0.5),
+    0 10px 10px -5px rgba(0, 0, 0, 0.3) !important;
 }
 
-
-/* Author Avatar - Simple Initials */
+/* ENHANCED Author Avatar with better dark mode */
 .author-avatar {
   display: flex;
   align-items: center;
@@ -253,12 +252,12 @@ footer * {
 }
 
 .dark .author-avatar {
-  color: #e2e8f0;
-  background: #374151;
-  border-color: #4b5563;
+  color: #e8e8e8 !important;
+  background: #2a2a2a !important; /* Consistent with overall dark theme */
+  border-color: #3a3a3a !important;
 }
 
-/* Enhanced Code Blocks */
+/* ENHANCED Code Blocks with better dark mode */
 .blog-content pre {
   background: #f7fafc !important;
   border: 2px solid #e2e8f0 !important;
@@ -277,9 +276,9 @@ footer * {
 }
 
 .dark .blog-content pre {
-  background: #1a202c !important;
-  border-color: #4a5568 !important;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3) !important;
+  background: #1a1a1a !important; /* Darker, more consistent background */
+  border-color: #3a3a3a !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4) !important;
 }
 
 /* Code language labels */
@@ -298,8 +297,8 @@ footer * {
 }
 
 .dark .blog-content pre::before {
-  background: #4a5568 !important;
-  color: #e2e8f0 !important;
+  background: #3a3a3a !important;
+  color: #d1d5db !important;
 }
 
 .blog-content code {
@@ -315,9 +314,9 @@ footer * {
 }
 
 .dark .blog-content code {
-  background: #2d3748 !important;
-  color: #f56565 !important;
-  border-color: #4a5568 !important;
+  background: #2a2a2a !important;
+  color: #f87171 !important; /* Better red for dark mode */
+  border-color: #3a3a3a !important;
 }
 
 /* Enhanced Syntax Highlighting for Multiple Languages */
@@ -580,7 +579,7 @@ footer * {
   font-weight: 400 !important;
 }
 
-/* Enhanced Blockquotes */
+/* ENHANCED Blockquotes with better dark mode */
 .blog-content blockquote {
   background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%) !important;
   border-left: 4px solid #3182ce !important;
@@ -603,11 +602,15 @@ footer * {
 }
 
 .dark .blog-content blockquote {
-  background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%) !important;
-  border-left-color: #63b3ed !important;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%) !important;
+  border-left-color: #60a5fa !important;
 }
 
-/* Enhanced Image Styling */
+.dark .blog-content blockquote::before {
+  color: #4a4a4a !important;
+}
+
+/* ENHANCED Image Styling with better dark mode borders */
 .blog-content img {
   border-radius: 12px !important;
   border: 2px solid #e2e8f0 !important;
@@ -616,15 +619,14 @@ footer * {
   display: block !important;
   max-width: 100% !important;
   height: auto !important;
-  /* transition: all 0.3s ease !important; */
 }
-
 
 .dark .blog-content img {
-  border-color: #4a5568 !important;
+  border-color: #3a3a3a !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4) !important;
 }
 
-/* Table Styling */
+/* ENHANCED Table Styling with better dark mode */
 .blog-content table {
   width: 100% !important;
   border-collapse: collapse !important;
@@ -652,19 +654,20 @@ footer * {
 }
 
 .dark .blog-content table {
-  background: #2d3748 !important;
-  border-color: #4a5568 !important;
+  background: #161A1D !important; /* Match blog card background */
+  border-color: #3a3a3a !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4) !important;
 }
 
 .dark .blog-content th {
-  background: #4a5568 !important;
-  border-color: #718096 !important;
-  color: #e2e8f0 !important;
+  background: #2a2a2a !important;
+  border-color: #3a3a3a !important;
+  color: #f5f5f5 !important;
 }
 
 .dark .blog-content td {
-  border-color: #718096 !important;
-  color: #cbd5e1 !important;
+  border-color: #3a3a3a !important;
+  color: #d1d5db !important;
 }
 
 /* Strong and Emphasis */
@@ -679,51 +682,49 @@ footer * {
 }
 
 .dark .blog-content strong {
-  color: #f7fafc !important;
+  color: #ffffff !important; /* Pure white for emphasis */
 }
 
 .dark .blog-content em {
-  color: #cbd5e1 !important;
+  color: #d1d5db !important;
 }
 
-/* Blog Image Frame Styling - Large Content Width - Minimal Style */
+/* ENHANCED Blog Image Frame Styling - Large Content Width */
 .blog-image-frame-large {
   background: #ffffff;
   border: 1px solid #f1f5f9;
   border-radius: 0.75rem;
   overflow: hidden;
-  max-width: 48rem; /* Increased from 42rem to 48rem */
+  max-width: 48rem;
 }
 
 .dark .blog-image-frame-large {
-  background: #2d3748;
-  border-color: #4a5568;
+  background: #161A1D !important; /* Match blog card background */
+  border-color: #3a3a3a !important;
 }
 
-/* Image inside the large frame - No hover effects */
+/* Image inside the large frame */
 .blog-image-frame-large img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* Responsive large image frame - Increased sizes */
+/* Responsive large image frame */
 @media (max-width: 1024px) {
   .blog-image-frame-large {
     max-width: 100%;
-    height: 20rem; /* Increased from h-72 to h-80 */
   }
 }
 
 @media (max-width: 640px) {
   .blog-image-frame-large {
-    height: 14rem; /* Increased from h-48 to h-56 */
-    margin: 0 -1rem; /* Extend to card edges on mobile */
+    margin: 0;
     border-radius: 0.5rem;
   }
 }
 
-/* Blog Image Frame Styling */
+/* ENHANCED Blog Image Frame Styling */
 .blog-image-frame {
   background: #ffffff;
   border: 2px solid #e2e8f0;
@@ -733,39 +734,35 @@ footer * {
   overflow: hidden;
 }
 
-
 .dark .blog-image-frame {
-  background: #2d3748;
-  border-color: #4a5568;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  background: #161A1D !important; /* Match blog card background */
+  border-color: #3a3a3a !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3) !important;
 }
-
 
 /* Image inside the frame */
 .blog-image-frame img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* transition: transform 0.3s ease; */
 }
-
 
 /* Responsive image frame */
 @media (max-width: 640px) {
   .blog-image-frame {
-    width: 16rem; /* w-64 */
-    height: 10rem; /* h-40 */
+    width: 16rem;
+    height: 10rem;
   }
 }
 
 @media (max-width: 480px) {
   .blog-image-frame {
-    width: 14rem; /* w-56 */
-    height: 8.75rem; /* h-35 */
+    width: 14rem;
+    height: 8.75rem;
   }
 }
 
-/* Section Dividers and Visual Flow */
+/* ENHANCED Section Dividers */
 .blog-content hr {
   border: none !important;
   height: 2px !important;
@@ -774,7 +771,7 @@ footer * {
 }
 
 .dark .blog-content hr {
-  background: linear-gradient(90deg, transparent, #4a5568, transparent) !important;
+  background: linear-gradient(90deg, transparent, #3a3a3a, transparent) !important;
 }
 
 /* First paragraph styling */
@@ -786,7 +783,7 @@ footer * {
 }
 
 .dark .blog-content > p:first-of-type {
-  color: #e2e8f0 !important;
+  color: #f5f5f5 !important;
 }
 
 /* Reading flow improvements */
@@ -803,41 +800,56 @@ footer * {
   .blog-content {
     font-size: 15px;
   }
-  
+
   .blog-content h1 {
     font-size: 1.875rem;
     margin: 2rem 0 1rem 0;
   }
-  
+
   .blog-content h2 {
     font-size: 1.5rem;
     margin: 1.75rem 0 0.75rem 0;
   }
-  
+
   .blog-content h3 {
     font-size: 1.25rem;
     margin: 1.5rem 0 0.5rem 0;
   }
-  
+
   .blog-content pre {
     padding: 1rem !important;
     margin: 1.5rem 0 !important;
+    font-size: 0.75rem !important;
+    overflow-x: auto !important;
   }
-  
+
   .blog-content blockquote {
     padding: 1rem 1.5rem;
     margin: 1.5rem 0;
   }
+
+  .blog-content img {
+    margin: 1rem auto !important;
+  }
+
+  .blog-content table {
+    font-size: 0.875rem !important;
+  }
+
+  .blog-content th,
+  .blog-content td {
+    padding: 0.5rem !important;
+  }
 }
 
-/* Reading Progress Indicator */
+/* ENHANCED Reading Progress Indicator */
 .reading-progress {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  background: linear-gradient(90deg, #60a5fa, #a78bfa); /* Better colors for dark mode compatibility */
   transform-origin: left;
   z-index: 50;
 }
@@ -848,14 +860,53 @@ footer * {
     margin: 1rem;
     border-radius: 0.75rem;
   }
-  
+
   .dotted-background::before,
   .dotted-background::after {
     background-size: 16px 16px;
   }
 }
 
-/* Custom Elements from Blog Content */
+@media (max-width: 480px) {
+  .blog-content {
+    font-size: 14px;
+  }
+
+  .blog-content h1 {
+    font-size: 1.5rem;
+    margin: 1.5rem 0 0.75rem 0;
+  }
+
+  .blog-content h2 {
+    font-size: 1.25rem;
+    margin: 1.5rem 0 0.5rem 0;
+  }
+
+  .blog-content h3 {
+    font-size: 1.125rem;
+    margin: 1.25rem 0 0.5rem 0;
+  }
+
+  .blog-content pre {
+    padding: 0.75rem !important;
+    font-size: 0.7rem !important;
+  }
+
+  .blog-content blockquote {
+    padding: 0.75rem 1rem;
+  }
+
+  .blog-article-card {
+    margin: 0.5rem;
+  }
+
+  .blog-image-frame-large {
+    width: 100% !important;
+    max-width: none !important;
+  }
+}
+
+/* ENHANCED Custom Elements from Blog Content */
 .blog-content .card {
   background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%) !important;
   border: 1px solid #e2e8f0 !important;
@@ -866,8 +917,9 @@ footer * {
 }
 
 .dark .blog-content .card {
-  background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%) !important;
-  border-color: #4a5568 !important;
+  background: linear-gradient(135deg, #0f1419 0%, #1a1a1a 100%) !important;
+  border-color: #1a1a1a !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4) !important;
 }
 
 .blog-content .badge {
@@ -889,10 +941,10 @@ footer * {
 }
 
 .dark .blog-content .muted {
-  color: #a0aec0 !important;
+  color: #9ca3af !important; /* Better muted color for dark mode */
 }
 
-/* Print Styles */
+/* ENHANCED Print Styles */
 @media print {
   .dotted-background,
   .reading-progress {
@@ -903,4 +955,94 @@ footer * {
     box-shadow: none !important;
     border: 1px solid #e5e7eb !important;
   }
+
+  .dark .blog-article-card {
+    background: white !important;
+    color: black !important;
+  }
+}
+
+/* ADDITIONAL DARK MODE ENHANCEMENTS */
+
+/* Ensure consistent scrollbar styling in dark mode */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #3a3a3a;
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #4a4a4a;
+}
+
+/* Better selection colors for dark mode */
+.dark ::selection {
+  background: #60a5fa;
+  color: #ffffff;
+}
+
+.dark ::-moz-selection {
+  background: #60a5fa;
+  color: #ffffff;
+}
+
+/* Focus states for better accessibility in dark mode */
+.dark .blog-content a:focus,
+.dark .blog-content button:focus {
+  outline: 2px solid #60a5fa;
+  outline-offset: 2px;
+}
+
+/* Ensure form elements look good in dark mode if any exist */
+.dark input,
+.dark textarea,
+.dark select {
+  background: #2a2a2a !important;
+  border-color: #3a3a3a !important;
+  color: #d1d5db !important;
+}
+
+.dark input:focus,
+.dark textarea:focus,
+.dark select:focus {
+  border-color: #60a5fa !important;
+  box-shadow: 0 0 0 1px #60a5fa !important;
+}
+
+/* Enhanced button styles for dark mode consistency */
+.dark button {
+  background: #2a2a2a !important;
+  border-color: #3a3a3a !important;
+  color: #d1d5db !important;
+}
+
+.dark button:hover {
+  background: #3a3a3a !important;
+  border-color: #4a4a4a !important;
+}
+
+/* Better contrast for any alert/notification elements */
+.dark .alert,
+.dark .notification,
+.dark .warning {
+  background: #2a2a2a !important;
+  border-color: #3a3a3a !important;
+  color: #d1d5db !important;
+}
+
+/* Ensure any tooltips or popovers match the dark theme */
+.dark .tooltip,
+.dark .popover {
+  background: #1a1a1a !important;
+  border-color: #3a3a3a !important;
+  color: #d1d5db !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4) !important;
 }

@@ -239,11 +239,48 @@ footer * {
   z-index: 10;
   background: white;
   border-radius: 1rem;
-  box-shadow: 
+  box-shadow:
     0 20px 25px -5px rgba(0, 0, 0, 0.1),
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
   border: 1px solid #e2e8f0;
   overflow: hidden;
+}
+
+/* Vertical Dotted Lines */
+.blog-article-card::before,
+.blog-article-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  border-left: 1px dotted #cbd5e1;
+  z-index: -1;
+}
+
+.blog-article-card::before {
+  left: 33.333%;
+}
+
+.blog-article-card::after {
+  right: 33.333%;
+}
+
+/* In mobile, show only one dotted line at center */
+@media (max-width: 767px) {
+  .blog-article-card::before {
+    left: 50%;
+  }
+
+  .blog-article-card::after {
+    display: none;
+  }
+}
+
+/* Dark mode vertical lines */
+.dark .blog-article-card::before,
+.dark .blog-article-card::after {
+  border-left-color: #4a5568;
 }
 
 /* ENHANCED Dark mode blog card to match landing page exactly */
@@ -262,11 +299,11 @@ footer * {
   justify-content: center;
   color: #4a5568;
   font-weight: 600;
-  font-size: 12px;
+  font-size: 10px;
   text-transform: uppercase;
   background: #f7fafc;
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   border: 1px solid #e2e8f0;
 }
@@ -447,7 +484,7 @@ footer * {
   border: 1px solid #f1f5f9;
   border-radius: 0.75rem;
   overflow: hidden;
-  max-width: 48rem;
+  max-width: 60rem;
 }
 
 .dark .blog-image-frame-large {

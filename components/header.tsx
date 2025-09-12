@@ -16,7 +16,7 @@ export function Header() {
       {/* Match blog page frame: max-w-6xl + px-6 sm:px-8 */}
       <div className="mx-auto max-w-6xl px-6 sm:px-8 py-3 relative flex items-center">
         {/* Left: Name aligned with blog title */}
-        <Link href="#top" className="font-semibold tracking-tight text-lg">
+        <Link href="#top" className="font-semibold tracking-tight text-lg mr-8">
           Nikhil Choudhary
         </Link>
 

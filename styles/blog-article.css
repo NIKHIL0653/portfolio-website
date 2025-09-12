@@ -39,26 +39,26 @@ footer * {
 
 /* Heading Hierarchy with Better Spacing */
 .blog-content h1 {
-  font-size: 2.125rem !important;
+  font-size: 1rem !important;
   font-weight: 700 !important;
   line-height: 1.2 !important;
-  margin: 3rem 0 1.5rem 0 !important;
+  margin: 2rem 0 1.5rem 0 !important;
   color: #1a202c !important;
 }
 
 .blog-content h2 {
-  font-size: 1.75rem !important;
+  font-size: 1.25rem !important;
   font-weight: 600 !important;
   line-height: 1.3 !important;
-  margin: 2.5rem 0 1rem 0 !important;
+  margin: 1.5rem 0 1rem 0 !important;
   color: #2d3748 !important;
 }
 
 .blog-content h3 {
-  font-size: 1.375rem !important;
+  font-size: 1.125rem !important;
   font-weight: 600 !important;
   line-height: 1.4 !important;
-  margin: 2rem 0 0.75rem 0 !important;
+  margin: 1.25rem 0 0.75rem 0 !important;
   color: #2d3748 !important;
 }
 
@@ -83,6 +83,25 @@ footer * {
 .dark .blog-content h1 {
   color: #ffffff !important; /* Pure white for better contrast */
   border-bottom-color: #3a3a3a !important; /* Consistent with card borders */
+}
+
+/* Responsive h1 sizes to be <= blog post title */
+@media (min-width: 640px) {
+  .blog-content h1 {
+    font-size: 1.125rem !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .blog-content h1 {
+    font-size: 1.25rem !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .blog-content h1 {
+    font-size: 1.5rem !important;
+  }
 }
 
 .dark .blog-content h2 {
@@ -117,7 +136,7 @@ footer * {
 }
 
 .blog-content li {
-  margin: 0.4rem 0 !important;
+  margin: 0.2rem 0 !important;
   line-height: 1.4 !important;
   color: #4a5568 !important;
 }
@@ -246,8 +265,8 @@ footer * {
   font-size: 12px;
   text-transform: uppercase;
   background: #f7fafc;
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   border: 1px solid #e2e8f0;
 }
@@ -518,31 +537,33 @@ footer * {
 
 /* Reading flow improvements */
 .blog-content > * + h2 {
-  margin-top: 4rem !important;
+  margin-top: 2rem !important;
 }
 
 .blog-content > * + h3 {
-  margin-top: 3rem !important;
+  margin-top: 1.5rem !important;
 }
 
 /* Responsive Typography */
 @media (max-width: 768px) {
   .blog-content {
     font-size: 14px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 
   .blog-content h1 {
-    font-size: 1.75rem;
+    font-size: 1rem;
     margin: 2rem 0 1rem 0;
   }
 
   .blog-content h2 {
-    font-size: 1.375rem;
+    font-size: 1.125rem;
     margin: 1.75rem 0 0.75rem 0;
   }
 
   .blog-content h3 {
-    font-size: 1.125rem;
+    font-size: 1rem;
     margin: 1.5rem 0 0.5rem 0;
   }
 
@@ -603,17 +624,17 @@ footer * {
   }
 
   .blog-content h1 {
-    font-size: 1.375rem;
+    font-size: 0.875rem;
     margin: 1.5rem 0 0.75rem 0;
   }
 
   .blog-content h2 {
-    font-size: 1.125rem;
+    font-size: 1rem;
     margin: 1.5rem 0 0.5rem 0;
   }
 
   .blog-content h3 {
-    font-size: 1rem;
+    font-size: 0.875rem;
     margin: 1.25rem 0 0.5rem 0;
   }
 

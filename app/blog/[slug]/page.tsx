@@ -80,7 +80,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           <div className="p-4 sm:p-6 md:p-8 lg:p-12">
             {/* Header Section - Centered */}
             <header className="mb-8 sm:mb-10 pb-6 sm:pb-8 border-b border-slate-200 dark:border-slate-700 text-center">
-              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 leading-tight text-slate-900 dark:text-white px-2">{post.title}</h1>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 leading-tight text-slate-900 dark:text-white px-2">{post.title}</h1>
               
               {/* Author and Date Info - Mobile Responsive */}
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-2 sm:gap-3 text-sm text-slate-600 dark:text-slate-400">
@@ -106,7 +106,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
             
             {/* Hero Image - Mobile Responsive */}
             {post.image && (
-              <div className="mb-8 sm:mb-10 px-2 sm:px-0">
+              <div className="mb-4 sm:mb-6 px-0">
                 <div className="blog-image-frame-large w-full max-w-4xl mx-auto h-40 sm:h-56 md:h-72 lg:h-96 relative rounded-lg sm:rounded-xl overflow-hidden border border-slate-100 dark:border-slate-600">
                   <Image
                     src={post.image}

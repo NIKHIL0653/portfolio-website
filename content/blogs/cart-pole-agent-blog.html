@@ -1,8 +1,8 @@
-<h2>Mastering Reinforcement Learning: Building a CartPole Agent with Deep Q-Networks</h2>
+<h3>Mastering Reinforcement Learning: Building a CartPole Agent with Deep Q-Networks</h3>
 
     <p>In the fascinating world of artificial intelligence, reinforcement learning (RL) stands out as one of the most promising approaches to creating intelligent agents that can learn and adapt through interaction with their environment. In this comprehensive guide, we'll dive deep into reinforcement learning concepts while exploring a practical implementation: a CartPole balancing agent built using Deep Q-Networks (DQN).</p>
 
-    <h2>What is Reinforcement Learning?</h2>
+    <h3>What is Reinforcement Learning?</h3>
 
     <p>Reinforcement learning is a type of machine learning where an agent learns to make decisions by interacting with an environment. Unlike supervised learning, where we have labeled training data, RL agents learn through trial and error, receiving rewards or penalties for their actions.</p>
 
@@ -30,7 +30,7 @@
         <li>The cycle repeats</li>
     </ol>
 
-    <h2>The CartPole Problem: A Classic RL Challenge</h2>
+    <h3>The CartPole Problem: A Classic RL Challenge</h3>
 
     <p>The CartPole environment, part of OpenAI's Gym toolkit, presents a perfect playground for RL algorithms. The challenge is deceptively simple yet surprisingly complex:</p>
 
@@ -97,7 +97,7 @@ Output: Q-values for each action (2 values for CartPole: left/right)</code></pre
 
     <p>The target network is updated periodically with the policy network's weights, providing stable targets for learning.</p>
 
-    <h2>Building the CartPole Agent</h2>
+    <h3>Building the CartPole Agent</h3>
 
     <p>Now let's explore the implementation of our DQN-based CartPole agent. The project is built using Python and leverages several key libraries:</p>
 
@@ -165,7 +165,7 @@ Output: Q-values for each action (2 values for CartPole: left/right)</code></pre
     return reward + angle_reward + position_reward</code></pre>
 </div>
 
-    <h2>Training and Results</h2>
+    <h3>Training and Results</h3>
 
     <p>The agent is trained using the following hyperparameters:</p>
 
@@ -206,7 +206,7 @@ Output: Q-values for each action (2 values for CartPole: left/right)</code></pre
 python record_video.py  # Record gameplay videos</code></pre>
 </div>
 
-    <h2>Lessons Learned and Best Practices</h2>
+    <h3>Lessons Learned and Best Practices</h3>
 
     <div>
         <strong>Key Takeaways from Building this RL Agent:</strong>
@@ -219,7 +219,7 @@ python record_video.py  # Record gameplay videos</code></pre>
         </ul>
     </div>
 
-    <h2>Conclusion</h2>
+    <h3>Conclusion</h3>
 
     <p>Building a CartPole agent with Deep Q-Learning provides an excellent introduction to reinforcement learning concepts while demonstrating practical implementation techniques. The project showcases how RL can solve complex control problems through trial and error, with neural networks approximating optimal decision-making.</p>
 

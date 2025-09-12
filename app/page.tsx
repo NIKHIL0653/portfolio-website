@@ -9,8 +9,8 @@ import Link from "next/link"
 
 export default function HomePage() {
   return (
-    <main className="min-h-dvh flex flex-col bg-gray-50/30 dark:bg-[#0f1419]">
-      <div className="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+    <main className="min-h-dvh flex flex-col bg-[#fafafa] dark:bg-[#0f1419]">
+      <div className="flex-1 flex items-center justify-center p-4 sm:p-6 md:p-16 lg:p-8">
         <div className="w-full max-w-6xl bg-white dark:bg-[#161A1D] rounded-2xl shadow-lg border border-gray-200/60 dark:border-gray-700/60 overflow-hidden">
           <InteractiveHero />
 
@@ -34,7 +34,7 @@ export default function HomePage() {
 
           {/* Navigation Section */}
           <section id="navigation" className="px-6 sm:px-8 py-6 sm:py-8 border-t border-dotted border-gray-300 dark:border-gray-600">
-            <header className="mb-6 sm:mb-8">
+            <header className="mb-0 sm:mb-8">
               <h2 className="text-2xl sm:text-3xl font-semibold text-center flex items-center justify-center gap-3">
                 <Eye className="h-7 w-7 text-muted-foreground" />
                 Know More
@@ -49,7 +49,7 @@ export default function HomePage() {
                   </div>
                   <h3 className="text-xl font-bold group-hover:text-primary transition-colors duration-300">Projects</h3>
                 </div>
-                <div className="mt-2 opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:translate-y-0 translate-y-1">
+                <div className="mt-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-500 md:group-hover:translate-y-0 md:translate-y-1">
                   <p className="text-muted-foreground text-center leading-relaxed text-sm max-w-xs">Discover my latest projects and technical implementations</p>
                 </div>
                 {/* Dotted divider for desktop - extended to connect with top/bottom */}
@@ -66,7 +66,7 @@ export default function HomePage() {
                   </div>
                   <h3 className="text-xl font-bold group-hover:text-primary transition-colors duration-300">Blog</h3>
                 </div>
-                <div className="mt-2 opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:translate-y-0 translate-y-1">
+                <div className="mt-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-500 md:group-hover:translate-y-0 md:translate-y-1">
                   <p className="text-muted-foreground text-center leading-relaxed text-sm max-w-xs">Read my thoughts on development, design, and technology</p>
                 </div>
                 {/* Dotted divider for desktop - extended to connect with top/bottom */}
@@ -83,7 +83,7 @@ export default function HomePage() {
                   </div>
                   <h3 className="text-xl font-bold group-hover:text-primary transition-colors duration-300">About</h3>
                 </div>
-                <div className="mt-2 opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:translate-y-0 translate-y-1">
+                <div className="mt-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-500 md:group-hover:translate-y-0 md:translate-y-1">
                   <p className="text-muted-foreground text-center leading-relaxed text-sm max-w-xs">Learn about my journey and professional background</p>
                 </div>
               </Link>

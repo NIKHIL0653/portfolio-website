@@ -23,7 +23,7 @@ export default function BlogIndexPageClient() {
   }
 
   return (
-    <main className="min-h-dvh flex flex-col bg-gray-50/30 dark:bg-[#0f1419]">
+    <main className="min-h-dvh flex flex-col bg-[#fafafa] dark:bg-[#0f1419]">
       <div className="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-8">
         <div className="w-full max-w-6xl">
           <div className="px-6 sm:px-8 py-6 sm:py-8">

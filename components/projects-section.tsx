@@ -44,7 +44,7 @@ export function ProjectsSection() {
           <li
             key={p.title}
             ref={(el) => { cardRefs.current[index] = el }}
-            className="group relative border-2 border-border rounded-lg p-4 hover:border-primary hover:shadow-lg transition-all duration-300 overflow-hidden"
+            className="group relative border-2 border-border rounded-lg p-4 bg-white hover:border-primary hover:shadow-lg transition-all duration-300 overflow-hidden"
             style={{
               transformStyle: "preserve-3d",
               transform: "perspective(1200px) rotateX(0deg) rotateY(0deg) scale(1)",

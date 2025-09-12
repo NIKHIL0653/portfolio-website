@@ -9,6 +9,12 @@
   text-align: left;
 }
 
+@media (min-width: 768px) {
+  .blog-content {
+    max-width: 48rem;
+  }
+}
+
 /* Blog Article Page Background */
 .dark .blog-article-page {
   background-color: #000000; /* Black background for blog posts */

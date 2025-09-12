@@ -62,11 +62,11 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   }
 
   return (
-    <main className="blog-article-container min-h-screen bg-slate-50 dark:bg-black py-2 sm:py-8 px-4">
+    <main className="blog-article-container min-h-screen bg-[#fafafa] dark:bg-black py-2 sm:py-8 md:py-16 px-4">
       {/* Enhanced Dotted Background Pattern */}
       <div className="dotted-background" />
 
-      <div className="relative mx-auto max-w-4xl">
+      <div className="relative mx-auto max-w-4xl md:max-w-[56rem]">
         {/* Main Article Card */}
         <article className="blog-article-card bg-white dark:bg-[#121212] rounded-2xl shadow-xl shadow-white/10 dark:shadow-white/5 overflow-hidden border border-slate-200 dark:border-slate-500">
           {/* Back Link - Inside the card at top */}
@@ -107,7 +107,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
             {/* Hero Image - Mobile Responsive */}
             {post.image && (
               <div className="mb-2 sm:mb-4 px-0">
-                <div className="image-wrapper bg-gray-50 dark:bg-gray-900 rounded-lg sm:rounded-xl px-1.5 py-2 border border-slate-200 dark:border-slate-600 max-w-3xl mx-auto">
+                <div className="image-wrapper bg-gray-50 dark:bg-gray-900 rounded-lg sm:rounded-xl px-1.5 py-2 border border-slate-200 dark:border-slate-600 max-w-3xl md:max-w-[48rem] mx-auto">
                   <div className="blog-image-frame-large w-full mx-auto h-40 sm:h-56 md:h-72 lg:h-96 relative rounded-md sm:rounded-lg overflow-hidden border border-slate-100 dark:border-slate-600">
                     <Image
                       src={post.image}

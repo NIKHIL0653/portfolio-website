@@ -23,11 +23,14 @@ export default function BlogIndexPageClient() {
   }
 
   return (
-    <main className="mx-auto max-w-7xl px-4 py-8 sm:py-12 md:py-16">
-        <header className="mb-6 sm:mb-8 md:mb-10">
-          <h1 className="text-2xl sm:text-3xl font-semibold">Blog</h1>
-          <p className="text-muted-foreground mt-2 max-w-2xl text-sm sm:text-base">Writings on frontend, accessibility, and product craft.</p>
-        </header>
+    <main className="min-h-dvh flex flex-col bg-gray-50/30 dark:bg-[#0f1419]">
+      <div className="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+        <div className="w-full max-w-6xl">
+          <div className="px-6 sm:px-8 py-6 sm:py-8">
+            <header className="mb-3 sm:mb-4">
+              <h1 className="text-2xl sm:text-3xl font-semibold">Blog</h1>
+              <p className="text-muted-foreground mt-2 max-w-2xl text-sm sm:text-base">Writings on frontend, accessibility, and product craft.</p>
+            </header>
 
         <BlogFilters
           onFilterChange={handleFilterChange}
@@ -122,6 +125,9 @@ export default function BlogIndexPageClient() {
             </div>
           </div>
         )}
+          </div>
+        </div>
+      </div>
     </main>
   )
 }

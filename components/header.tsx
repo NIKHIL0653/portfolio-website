@@ -13,11 +13,15 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
-      <div className="mx-auto max-w-5xl px-4 py-3 flex items-center justify-between">
-        <Link href="#top" className="font-semibold tracking-tight">
+      {/* Match blog page frame: max-w-6xl + px-6 sm:px-8 */}
+      <div className="mx-auto max-w-6xl px-6 sm:px-8 py-3 relative flex items-center">
+        {/* Left: Name aligned with blog title */}
+        <Link href="#top" className="font-semibold tracking-tight text-lg">
           Nikhil Choudhary
         </Link>
-        <nav className="hidden sm:flex items-center gap-6">
+
+        {/* Center: Navigation pill, centered relative to content frame */}
+        <nav className="hidden sm:flex absolute left-1/2 -translate-x-1/2 items-center gap-10 px-8 py-2 rounded-full bg-muted/40 shadow-sm">
           <Link href="#projects" className="text-sm hover:underline">
             Projects
           </Link>
@@ -28,17 +32,24 @@ export function Header() {
             About
           </Link>
         </nav>
-        <Button
-          asChild
-          variant="default"
-          className="ml-4"
-          disabled={!hasResume}
-          title={hasResume ? "View Resume" : "Set NEXT_PUBLIC_RESUME_URL"}
-        >
-          <a href={hasResume ? RESUME_URL : "#"} target={hasResume ? "_blank" : "_self"} rel="noopener noreferrer">
-            View Resume
-          </a>
-        </Button>
+
+        {/* Right: Resume button aligned with blog grid edge */}
+        <div className="ml-auto">
+          <Button
+            asChild
+            variant="default"
+            disabled={!hasResume}
+            title={hasResume ? "View Resume" : "Set NEXT_PUBLIC_RESUME_URL"}
+          >
+            <a
+              href={hasResume ? RESUME_URL : "#"}
+              target={hasResume ? "_blank" : "_self"}
+              rel="noopener noreferrer"
+            >
+              View Resume
+            </a>
+          </Button>
+        </div>
       </div>
     </header>
   )

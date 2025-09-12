@@ -154,7 +154,7 @@ export function InteractiveHero() {
         <canvas ref={canvasRef} className="block h-[75vh] sm:h-[85vh] w-full" aria-hidden="true" />
       </div>
 
-      <div className="relative z-10 h-[75vh] sm:h-[85vh] px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+      <div className="relative z-10 h-[75vh] sm:h-[85vh] px-6 sm:px-8 flex items-center justify-center">
         <div className="max-w-2xl text-center">
           <div className="mx-auto mb-4 flex justify-center">
             <h2

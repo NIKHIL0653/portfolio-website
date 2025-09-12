@@ -16,16 +16,16 @@ export default function AboutPage() {
         <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px border-l border-dotted border-gray-300 dark:border-gray-600 transform -translate-x-1/2"></div>
 
         {/* Left Column: Name, Text Content, and Maps Card */}
-        <div className="flex flex-col space-y-8 sm:space-y-12">
+        <div className="flex flex-col space-y-8 sm:space-y-12 ml-6">
           {/* Name and Text Content */}
           <div>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight mb-6 text-left">Nikhil Choudhary</h1>
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold tracking-tight mb-6 text-left">About Me</h1>
             <div className="prose prose-neutral dark:prose-invert prose-base leading-relaxed text-left">
-              <p className="text-base sm:text-lg text-muted-foreground mb-4">
+              <p className="text-sm sm:text-base text-muted-foreground mb-4">
                 I’m Nikhil Choudhary, a developer focused on performant, accessible, and design-forward web
                 experiences—bridging interactive front-ends with robust backends.
               </p>
-              <p className="text-base sm:text-lg text-muted-foreground">
+              <p className="text-sm sm:text-base text-muted-foreground">
                 Areas of interest: AI-assisted tooling, developer experience, visualization, and building interfaces that feel
                 "alive" without sacrificing clarity or speed.
               </p>

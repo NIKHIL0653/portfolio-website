@@ -27,7 +27,7 @@ const companies: Company[] = [
 export default function CompaniesTimeline() {
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-semibold">Companies I've Worked With</h2>
+      <h2 className="text-2xl font-semibold text-center">Companies I've Worked With</h2>
 
       {/* Timeline */}
       <div className="relative">
@@ -43,7 +43,7 @@ export default function CompaniesTimeline() {
               return (
                 <div key={`${company.name}-${index}`} className="relative flex items-center min-h-[100px] px-4">
                   {/* Left side content */}
-                  <div className="w-1/2 pr-12 text-right">
+                  <div className="w-1/2 pr-6 text-right">
                     {isEven && (
                       <div className="max-w-sm ml-auto text-center">
                         <div className="flex justify-center mb-2">
@@ -71,7 +71,7 @@ export default function CompaniesTimeline() {
                   </div>
 
                   {/* Right side content */}
-                  <div className="w-1/2 pl-12 text-left">
+                  <div className="w-1/2 pl-6 text-left">
                     {!isEven && (
                       <div className="max-w-sm mr-auto text-center">
                         <div className="flex justify-center mb-2">

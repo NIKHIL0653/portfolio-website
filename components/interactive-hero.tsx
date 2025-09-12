@@ -14,6 +14,9 @@ export function InteractiveHero() {
     "Data Enthusiast"
   ]
 
+  // Calculate if dark mode is active (including system dark mode)
+  const isDark = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches)
+
   useEffect(() => {
     setMounted(true)
     const canvas = canvasRef.current
@@ -35,8 +38,8 @@ export function InteractiveHero() {
     const onResize = () => resize()
     window.addEventListener("resize", onResize)
 
-    // Starfield (calm) - Dynamic color based on theme
-    const STAR_COLOR = theme === "dark" ? "#ffffff" : "#111111"
+    // Starfield (calm) - Dynamic color based on theme with system support
+    const STAR_COLOR = isDark ? "#ffffff" : "#111111"
     const STAR_MIN = 0.8
     const STAR_MAX = 1.8
     const SPEED = 0.25
@@ -103,7 +106,7 @@ export function InteractiveHero() {
       cancelAnimationFrame(raf)
       window.removeEventListener("resize", onResize)
     }
-  }, [theme])
+  }, [isDark])
 
   // A smoother cursive path spelling "nikhil"
   const nikhilPath =

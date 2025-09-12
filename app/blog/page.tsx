@@ -6,7 +6,7 @@ const BlogIndexPageClient = dynamic(() => import("../../components/blog-index-pa
   loading: () => (
     <main className="mx-auto max-w-7xl px-4 py-8 sm:py-12 md:py-16">
       <header className="mb-6 sm:mb-8 md:mb-10">
-        <h1 className="text-2xl sm:text-3xl font-semibold">All Posts</h1>
+        <h1 className="text-2xl sm:text-3xl font-semibold">Blog</h1>
         <p className="text-muted-foreground mt-2 max-w-2xl text-sm sm:text-base">Writings on frontend, accessibility, and product craft.</p>
       </header>
       <div className="animate-pulse">

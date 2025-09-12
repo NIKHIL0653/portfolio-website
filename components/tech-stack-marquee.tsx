@@ -81,19 +81,20 @@ export function TechStackMarquee({ className }: { className?: string }) {
     right: ''
   })
 
-  // Dynamic gradient color based on theme - enhanced blur intensity
-  const gradientColor = theme === "dark" ? "#161A1D" : "white"
-  const gradientOpacity = theme === "dark" ? "0.95" : "0.98"
+  // Dynamic gradient color based on theme - enhanced blur intensity with system support
+  const isDark = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches)
+  const gradientColor = isDark ? "#161A1D" : "white"
+  const gradientOpacity = isDark ? "0.95" : "0.98"
 
   React.useEffect(() => {
-    const rgbaColor = theme === "dark" ? `rgba(22, 26, 29, ${gradientOpacity})` : `rgba(255, 255, 255, ${gradientOpacity})`
-    const midColor = theme === "dark" ? `rgba(22, 26, 29, 0.4)` : `rgba(255, 255, 255, 0.5)`
+    const rgbaColor = isDark ? `rgba(22, 26, 29, ${gradientOpacity})` : `rgba(255, 255, 255, ${gradientOpacity})`
+    const midColor = isDark ? `rgba(22, 26, 29, 0.4)` : `rgba(255, 255, 255, 0.5)`
 
     setGradientStyle({
       left: `radial-gradient(ellipse 140% 110% at 100% 50%, transparent 0%, ${midColor} 50%, ${rgbaColor} 80%, ${rgbaColor} 100%)`,
       right: `radial-gradient(ellipse 140% 110% at 0% 50%, transparent 0%, ${midColor} 50%, ${rgbaColor} 80%, ${rgbaColor} 100%)`
     })
-  }, [theme, gradientOpacity])
+  }, [isDark, gradientOpacity])
 
   return (
     <div className={cn("w-full overflow-hidden py-2", className)}>

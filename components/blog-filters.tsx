@@ -13,12 +13,12 @@ const categories: Category[] = ['All', 'Development', 'AI/ML', 'Data', 'Blogging
 
 export function BlogFilters({ onFilterChange, activeCategory }: BlogFiltersProps) {
   return (
-    <div className="flex flex-wrap gap-2 mb-6">
+    <div className="flex gap-1 mb-6 overflow-x-auto scrollbar-hide">
       {categories.map((category) => (
         <button
           key={category}
           onClick={() => onFilterChange(category)}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+          className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 ${
             activeCategory === category
               ? 'bg-primary text-primary-foreground shadow-md'
               : 'bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground'

@@ -39,10 +39,6 @@ export function ProjectsSection() {
 
   return (
     <section id="projects">
-      <header className="mb-4 sm:mb-6 px-2">
-        <h1 className="text-2xl sm:text-3xl font-semibold">Projects</h1>
-      </header>
-
       <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {projects.map((p, index) => (
           <li

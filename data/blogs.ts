@@ -8,6 +8,7 @@ export type BlogPostMeta = {
   readTime?: string
   image?: string
   imageAlt?: string
+  category: 'Development' | 'AI/ML' | 'Data' | 'Blogging'
 }
 
 // Blog posts metadata - content loaded from HTML files
@@ -21,18 +22,20 @@ export const posts: BlogPostMeta[] = [
     tags: ["Next.js", "React", "Web Development"],
     readTime: "5 min read",
     image: "/images/blog/nextjs-hero.jpg",
-    imageAlt: "Next.js logo with modern web development setup"
+    imageAlt: "Next.js logo with modern web development setup",
+    category: "Development"
   },
   {
     slug: "clarity-over-complexity",
-    title: "Clarity Over Complexity", 
+    title: "Clarity Over Complexity",
     excerpt: "Why straightforward architectures tend to outlast clever ones in fast-moving teams.",
     date: "2025-01-10",
     author: "Nikhil Choudhary",
     tags: ["Architecture", "Best Practices", "Development"],
     readTime: "8 min read",
     image: "/images/blog/architecture-hero.jpg",
-    imageAlt: "Clean architecture diagram with simple, clear components"
+    imageAlt: "Clean architecture diagram with simple, clear components",
+    category: "Development"
   },
   {
     slug: "accessibility-is-a-feature",
@@ -43,7 +46,8 @@ export const posts: BlogPostMeta[] = [
     tags: ["Accessibility", "UX", "Web Development"],
     readTime: "6 min read",
     image: "/images/blog/accessibility-hero.jpg",
-    imageAlt: "Hands using assistive technology devices"
+    imageAlt: "Hands using assistive technology devices",
+    category: "Development"
   },
   {
     slug: "demystifying-rag-ai-secret-sauce",
@@ -54,7 +58,8 @@ export const posts: BlogPostMeta[] = [
     tags: ["RAG", "AI", "LLM", "Generative AI", "NLP"],
     readTime: "4 min read",
     image: "/images/blog/demystifying-rag-hero.png",
-    imageAlt: "Diagram showing the RAG workflow from data indexing to augmented generation"
+    imageAlt: "Diagram showing the RAG workflow from data indexing to augmented generation",
+    category: "AI/ML"
   },
   {
     slug: "llm-finetuning-playbook-2025",
@@ -65,7 +70,8 @@ export const posts: BlogPostMeta[] = [
     tags: ["LLM", "Fine-Tuning", "LoRA", "DPO", "AI Strategy"],
     readTime: "12 min read",
     image: "/images/blog/llm-finetuning-hero.jpg",
-    imageAlt: "LLM fine-tuning"
+    imageAlt: "LLM fine-tuning",
+    category: "AI/ML"
   },
   {
     slug: "cart-pole-agent-blog",
@@ -76,7 +82,8 @@ export const posts: BlogPostMeta[] = [
     tags: ["Reinforcement Learning", "Deep Q-Learning", "Python", "Pygame", "AI"],
     readTime: "10 min read",
     image: "/images/blog/cartpole-dqn-1.jpg",
-    imageAlt: "Screenshot of the Pygame UI showing the CartPole agent in action with score and performance graph."
+    imageAlt: "Screenshot of the Pygame UI showing the CartPole agent in action with score and performance graph.",
+    category: "AI/ML"
   },
   // {
   //   slug: "design-systems-that-scale",

@@ -51,7 +51,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
                 </div>
               </header>
               
-              <div className="blog-content max-w-none text-center">
+              <div className="blog-content text-center">
                 <p>Content for this blog post is coming soon... Create a file named <code>{post.slug}.html</code> in the <code>content/blogs/</code> directory.</p>
               </div>
             </div>
@@ -121,7 +121,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
             )}
             
             {/* Article Content - HTML Structure */}
-            <div className="blog-content max-w-none">
+            <div className="blog-content">
               <div dangerouslySetInnerHTML={{ __html: content }} />
             </div>
           </div>

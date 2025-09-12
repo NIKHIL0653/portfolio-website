@@ -45,7 +45,7 @@ footer * {
 
 /* Heading Hierarchy with Better Spacing */
 .blog-content h1 {
-  font-size: 1rem !important;
+  font-size: 24px !important;
   font-weight: 700 !important;
   line-height: 1.2 !important;
   margin: 2rem 0 1.5rem 0 !important;
@@ -53,7 +53,7 @@ footer * {
 }
 
 .blog-content h2 {
-  font-size: 1.25rem !important;
+  font-size: 24px !important;
   font-weight: 600 !important;
   line-height: 1.3 !important;
   margin: 1.5rem 0 1rem 0 !important;
@@ -209,8 +209,8 @@ footer * {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: 
-    radial-gradient(circle at 1px 1px, #e2e8f0 1px, transparent 0);
+  background-image:
+    radial-gradient(circle at 2px 2px, #e2e8f0 2px, transparent 0);
   background-size: 20px 20px;
   background-position: 0 0;
 }
@@ -222,21 +222,21 @@ footer * {
   left: 10px;
   right: 0;
   bottom: 0;
-  background-image: 
-    radial-gradient(circle at 1px 1px, #cbd5e1 0.8px, transparent 0);
+  background-image:
+    radial-gradient(circle at 2px 2px, #cbd5e1 1.6px, transparent 0);
   background-size: 20px 20px;
   background-position: 0 0;
 }
 
 /* ENHANCED Dark mode dotted background with better consistency */
 .dark .dotted-background::before {
-  background-image: 
-    radial-gradient(circle at 1px 1px, #2a2a2a 1px, transparent 0);
+  background-image:
+    radial-gradient(circle at 2px 2px, #2a2a2a 2px, transparent 0);
 }
 
 .dark .dotted-background::after {
-  background-image: 
-    radial-gradient(circle at 1px 1px, #3a3a3a 0.8px, transparent 0);
+  background-image:
+    radial-gradient(circle at 2px 2px, #3a3a3a 1.6px, transparent 0);
 }
 
 /* Blog Card Enhancements */
@@ -260,7 +260,7 @@ footer * {
   top: 0;
   bottom: 0;
   width: 1px;
-  border-left: 1px dotted #cbd5e1;
+  border-left: 2px dotted #cbd5e1;
   z-index: -1;
 }
 
@@ -658,6 +658,26 @@ footer * {
   .dotted-background::before,
   .dotted-background::after {
     background-size: 16px 16px;
+  }
+
+  .dotted-background::before {
+    background-image:
+      radial-gradient(circle at 1.5px 1.5px, #e2e8f0 1.5px, transparent 0);
+  }
+
+  .dotted-background::after {
+    background-image:
+      radial-gradient(circle at 1.5px 1.5px, #cbd5e1 1.2px, transparent 0);
+  }
+
+  .dark .dotted-background::before {
+    background-image:
+      radial-gradient(circle at 1.5px 1.5px, #2a2a2a 1.5px, transparent 0);
+  }
+
+  .dark .dotted-background::after {
+    background-image:
+      radial-gradient(circle at 1.5px 1.5px, #3a3a3a 1.2px, transparent 0);
   }
 }
 

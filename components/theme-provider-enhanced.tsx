@@ -2,12 +2,10 @@
 
 import { createContext, useContext, useEffect, useState, useCallback, useMemo, ReactNode } from "react"
 
-// Enhanced theme types with better TypeScript support
 type Theme = "light" | "dark" | "system"
 type ActualTheme = "light" | "dark"
 type ThemeMode = "light" | "dark" | "system"
 
-// Enhanced props with more configuration options
 interface ThemeProviderProps {
   children: ReactNode
   defaultTheme?: Theme
@@ -18,7 +16,6 @@ interface ThemeProviderProps {
   nonce?: string
 }
 
-// Enhanced state with more detailed information
 interface ThemeProviderState {
   theme: Theme
   actualTheme: ActualTheme
@@ -30,7 +27,6 @@ interface ThemeProviderState {
   hasError: boolean
 }
 
-// Initial state with better defaults
 const initialState: ThemeProviderState = {
   theme: "system",
   actualTheme: "light",
@@ -42,11 +38,9 @@ const initialState: ThemeProviderState = {
   hasError: false,
 }
 
-// Create context with display name for better debugging
 const ThemeProviderContext = createContext<ThemeProviderState>(initialState)
 ThemeProviderContext.displayName = "ThemeProvider"
 
-// Enhanced theme provider with performance optimizations
 export function ThemeProvider({
   children,
   defaultTheme = "system",
@@ -56,20 +50,18 @@ export function ThemeProvider({
   enableAnimations = true,
   ...props
 }: ThemeProviderProps) {
-  // State management with better initialization
+
   const [theme, setThemeState] = useState<Theme>(defaultTheme)
   const [systemTheme, setSystemTheme] = useState<ActualTheme>("light")
   const [isMounted, setIsMounted] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
 
-  // Memoized values for performance
   const isSystemTheme = useMemo(() => theme === "system", [theme])
   const actualTheme = useMemo((): ActualTheme => {
     return isSystemTheme ? systemTheme : theme as ActualTheme
   }, [theme, systemTheme, isSystemTheme])
 
-  // Enhanced system theme detection with error handling
   const getSystemTheme = useCallback((): ActualTheme => {
     try {
       if (typeof window === "undefined") return "light"

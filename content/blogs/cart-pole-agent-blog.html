@@ -1,232 +1,125 @@
-<h3>Mastering Reinforcement Learning: Building a CartPole Agent with Deep Q-Networks</h3>
-
-    <p>In the fascinating world of artificial intelligence, reinforcement learning (RL) stands out as one of the most promising approaches to creating intelligent agents that can learn and adapt through interaction with their environment. In this comprehensive guide, we'll dive deep into reinforcement learning concepts while exploring a practical implementation: a CartPole balancing agent built using Deep Q-Networks (DQN).</p>
-
-    <h3>What is Reinforcement Learning?</h3>
-
-    <p>Reinforcement learning is a type of machine learning where an agent learns to make decisions by interacting with an environment. Unlike supervised learning, where we have labeled training data, RL agents learn through trial and error, receiving rewards or penalties for their actions.</p>
-
-    <div>
-        <strong>Key Components of RL:</strong>
-        <ul>
-            <li><strong>Agent:</strong> The learner or decision-maker</li>
-            <li><strong>Environment:</strong> The world the agent interacts with</li>
-            <li><strong>Actions:</strong> Choices the agent can make</li>
-            <li><strong>States:</strong> Representations of the environment</li>
-            <li><strong>Rewards:</strong> Feedback signals that guide learning</li>
-        </ul>
-    </div>
-
-    <h3>The RL Learning Loop</h3>
-
-    <p>The reinforcement learning process follows a continuous cycle:</p>
-
-    <ol>
-        <li>The agent observes the current state of the environment</li>
-        <li>Based on this state, the agent selects an action</li>
-        <li>The environment responds to the action, transitioning to a new state</li>
-        <li>The agent receives a reward (positive or negative)</li>
-        <li>The agent updates its knowledge based on this experience</li>
-        <li>The cycle repeats</li>
-    </ol>
-
-    <h3>The CartPole Problem: A Classic RL Challenge</h3>
-
-    <p>The CartPole environment, part of OpenAI's Gym toolkit, presents a perfect playground for RL algorithms. The challenge is deceptively simple yet surprisingly complex:</p>
-
-    <div>
-        [CartPole Environment Visualization]
-    </div>
-
-    <h3>Understanding the CartPole Dynamics</h3>
-
-    <p>In the CartPole environment:</p>
-
-    <ul>
-        <li>A cart moves along a frictionless track</li>
-        <li>A pole is attached to the cart via a joint</li>
-        <li>The agent can apply force to the cart (left or right)</li>
-        <li>The goal is to keep the pole balanced upright</li>
-        <li>The episode ends if the pole falls beyond a certain angle or the cart moves off the track</li>
-    </ul>
-
-    <p>The state is represented by four continuous variables:</p>
-
-    <pre><code>state = [cart_position, cart_velocity, pole_angle, pole_angular_velocity]</code></pre>
-
-    <h2>Deep Q-Learning: Bridging RL and Deep Learning</h2>
-
-    <p>Traditional Q-learning works well for discrete, small state spaces, but struggles with continuous or high-dimensional states. Deep Q-Learning (DQN) solves this by using a neural network to approximate the Q-function.</p>
-
-    <h3>The Q-Function</h3>
-
-    <p>The Q-function, or action-value function, tells us the expected future reward for taking a specific action in a given state:</p>
-
-    <pre><code>Q(s, a) = Expected reward for taking action 'a' in state 's' and following optimal policy thereafter</code></pre>
-
-    <h3>Neural Network Approximation</h3>
-
-    <p>In DQN, we use a neural network to approximate Q(s, a). The network takes the state as input and outputs Q-values for each possible action:</p>
-
-    <pre><code>Input: state (4 values for CartPole)
-Hidden Layers: Fully connected layers with ReLU activation
-Output: Q-values for each action (2 values for CartPole: left/right)</code></pre>
-
-    <h3>Experience Replay: Breaking the Correlation</h3>
-
-    <p>One of the key innovations in DQN is experience replay. Instead of learning from consecutive experiences, we store experiences in a buffer and sample random batches:</p>
-
-    <div>
-        <strong>Benefits of Experience Replay:</strong>
-        <ul>
-            <li>Breaks correlation between consecutive samples</li>
-            <li>Allows reuse of experiences</li>
-            <li>Improves sample efficiency</li>
-            <li>Reduces variance in updates</li>
-        </ul>
-    </div>
-
-    <h3>The Target Network: Stabilizing Training</h3>
-
-    <p>DQN uses two neural networks:</p>
-
-    <ul>
-        <li><strong>Policy Network:</strong> Used to select actions and compute current Q-values</li>
-        <li><strong>Target Network:</strong> Used to compute target Q-values for training</li>
-    </ul>
-
-    <p>The target network is updated periodically with the policy network's weights, providing stable targets for learning.</p>
-
-    <h3>Building the CartPole Agent</h3>
-
-    <p>Now let's explore the implementation of our DQN-based CartPole agent. The project is built using Python and leverages several key libraries:</p>
-
-    <h3>Tech Stack</h3>
-
-    <ul>
-        <li><strong>PyTorch:</strong> Deep learning framework for neural networks</li>
-        <li><strong>OpenAI Gym:</strong> RL environment and toolkit</li>
-        <li><strong>Pygame:</strong> Interactive visualization</li>
-        <li><strong>NumPy:</strong> Numerical computations</li>
-    </ul>
-
-    <h3>Project Architecture</h3>
-
-    <pre><code>cart-pole-agent/
-├── agent.py          # DQN agent implementation
-├── model.py          # Neural network architecture
-├── replay_buffer.py  # Experience replay buffer
-├── train.py          # Training script
-├── console_game.py   # Interactive training interface
-├── play.py           # Inference script
-└── record_video.py   # Video recording utility</code></pre>
-
-    <h3>Key Implementation Details</h3>
-
-    <h4>Neural Network Architecture</h4>
-
-    <p>The DQN model uses a simple feedforward architecture:</p>
-
-    <pre><code>class DQN(nn.Module):
-    def __init__(self, obs_dim, action_dim):
-        super().__init__()
-        self.net = nn.Sequential(
-            nn.Linear(obs_dim, 128),
-            nn.ReLU(),
-            nn.Linear(128, 64),
-            nn.ReLU(),
-            nn.Linear(64, action_dim)
-        )</code></pre>
-</div>
-
-    <h4>Epsilon-Greedy Exploration</h4>
-
-    <p>The agent balances exploration and exploitation using epsilon-greedy strategy:</p>
-
-    <pre><code>def select_action(self, state, epsilon):
-    if random.random() < epsilon:
-        return random.randrange(self.action_dim)  # Explore
-    else:
-        return self.policy_net(state).argmax()    # Exploit</code></pre>
-</div>
-
-    <h4>Reward Shaping</h4>
-
-    <p>To improve learning, we implement reward shaping that provides additional incentives:</p>
-
-    <pre><code>def get_shaped_reward(self, state, next_state, reward, done, step, max_steps):
-    if done and step < max_steps - 1:
-        return -100.0  # Strong penalty for falling
-
-    # Stability bonus
-    angle_reward = max(0, 1.0 - abs(pole_angle) / 0.3) * 0.5
-    position_reward = max(0, 1.0 - abs(cart_pos) / 2.4) * 0.3
-
-    return reward + angle_reward + position_reward</code></pre>
-</div>
-
-    <h3>Training and Results</h3>
-
-    <p>The agent is trained using the following hyperparameters:</p>
-
-    <ul>
-        <li>Learning Rate: 5e-4</li>
-        <li>Discount Factor (γ): 0.995</li>
-        <li>Batch Size: 32</li>
-        <li>Replay Buffer Size: 10,000</li>
-        <li>Target Network Update: Every 2,000 steps</li>
-    </ul>
-
-    <div class="image-placeholder">
-        [Training Performance Graph]
-    </div>
-
-    <p>With proper tuning, the agent can achieve the CartPole solving criterion of maintaining an average score of 195+ over 100 consecutive episodes.</p>
-
-    <h2>Interactive Features</h2>
-
-    <p>The project includes several interactive components:</p>
-
-    <h3>Real-time Training Visualization</h3>
-
-    <p>The console_game.py script provides a Pygame-based interface that shows:</p>
-
-    <ul>
-        <li>Live cart-pole animation</li>
-        <li>Current score and target</li>
-        <li>Performance statistics</li>
-        <li>Training progress charts</li>
-    </ul>
-
-    <h3>Model Playback</h3>
-
-    <p>Trained models can be loaded and run for demonstration:</p>
-
-    <pre><code>python play.py  # Run trained agent
-python record_video.py  # Record gameplay videos</code></pre>
-</div>
-
-    <h3>Lessons Learned and Best Practices</h3>
-
-    <div>
-        <strong>Key Takeaways from Building this RL Agent:</strong>
-        <ul>
-            <li>Experience replay is crucial for stable training</li>
-            <li>Proper reward shaping can significantly improve performance</li>
-            <li>Target networks help prevent training instability</li>
-            <li>Hyperparameter tuning is essential for RL success</li>
-            <li>Visualization aids in understanding and debugging</li>
-        </ul>
-    </div>
-
-    <h3>Conclusion</h3>
-
-    <p>Building a CartPole agent with Deep Q-Learning provides an excellent introduction to reinforcement learning concepts while demonstrating practical implementation techniques. The project showcases how RL can solve complex control problems through trial and error, with neural networks approximating optimal decision-making.</p>
-
-    <p>This implementation serves as a solid foundation for exploring more advanced RL techniques and applying them to real-world problems. Whether you're a student learning RL or a practitioner looking to implement DQN, this project offers valuable insights and reusable code.</p>
-
-    <p>Ready to dive deeper into the code and experiment with your own modifications?</p>
-
-    <a href="https://github.com/yourusername/cart-pole-agent" target="_blank">
-        View Repository on GitHub →
-    </a>
+<h2>Introduction to Reinforcement Learning and the CartPole Problem</h2>
+<p>Reinforcement Learning (RL) is a type of machine learning where an agent learns to make decisions by interacting with an environment. Unlike supervised learning, RL doesn't rely on labeled training data. Instead, the agent receives rewards or penalties based on its actions, learning through trial and error to maximize cumulative rewards.</p>
+
+<p>The CartPole problem is a classic RL benchmark from OpenAI Gym. It involves balancing a pole on a moving cart by applying forces (left or right) to the cart. The environment provides four observations: cart position, cart velocity, pole angle, and pole angular velocity. The goal is to keep the pole upright for as long as possible, with the episode ending if the pole falls beyond a certain angle or the cart moves out of bounds.</p>
+
+<p>This project implements a Deep Q-Network (DQN) agent to solve the CartPole problem, demonstrating key RL concepts including Q-learning, experience replay, and neural network approximation of value functions.</p>
+
+<img src="/images/blog/game.png" alt="CartPole Environment Visualization" style="display: block; margin: 0 auto;">
+
+<h2>Understanding Deep Q-Learning (DQN)</h2>
+<p>Traditional Q-learning uses a table to store Q-values for each state-action pair. However, for continuous or high-dimensional state spaces like CartPole, this becomes impractical. Deep Q-Learning addresses this by using a neural network to approximate the Q-function.</p>
+
+<p>The core idea is to train a neural network that takes the current state as input and outputs Q-values for each possible action. The agent selects actions using an epsilon-greedy policy: with probability ε, it explores by choosing a random action, and with probability 1-ε, it exploits by choosing the action with the highest Q-value.</p>
+
+<p>Key components of our DQN implementation include:</p>
+<ul>
+    <li><strong>Neural Network Architecture</strong>: A simple feedforward network with two hidden layers (128 and 64 neurons) using ReLU activation</li>
+    <li><strong>Target Network</strong>: A separate network for computing target Q-values, updated periodically to improve stability</li>
+    <li><strong>Experience Replay</strong>: A buffer storing past experiences to break correlation between consecutive samples</li>
+    <li><strong>Double DQN</strong>: Uses the policy network for action selection and target network for evaluation to reduce overestimation</li>
+</ul>
+
+<h2>Reward Shaping and Training Stability</h2>
+<p>Effective reward shaping is crucial for stable learning. Our implementation includes:</p>
+<ul>
+    <li><strong>Survival Bonus</strong>: Additional rewards for keeping the pole upright and centering the cart</li>
+    <li><strong>Failure Penalty</strong>: Strong negative reward (-100) when the pole falls</li>
+    <li><strong>Velocity Penalties</strong>: Small penalties for high velocities to encourage smooth control</li>
+</ul>
+
+<p>Training stability is enhanced through:</p>
+<ul>
+    <li><strong>Gradient Clipping</strong>: Prevents exploding gradients by limiting the norm of gradients</li>
+    <li><strong>Q-Value Clipping</strong>: Constrains Q-values between -10 and 10 to prevent instability</li>
+    <li><strong>Target Network Updates</strong>: Less frequent updates (every 2000 steps) for better convergence</li>
+</ul>
+
+<h2>Tech Stack and Implementation Details</h2>
+<p>The project is built using Python with several key libraries:</p>
+<ul>
+    <li><strong>PyTorch</strong>: Deep learning framework for implementing the neural networks and optimization</li>
+    <li><strong>OpenAI Gym</strong>: Provides the CartPole environment and standardized RL interfaces</li>
+    <li><strong>Pygame</strong>: Creates an interactive training interface with real-time visualization</li>
+    <li><strong>NumPy</strong>: Handles numerical computations and data manipulation</li>
+</ul>
+
+<p>The codebase is organized into several modules:</p>
+<ul>
+    <li><code>agent.py</code>: Contains the DQNAgent class with training logic, action selection, and reward shaping</li>
+    <li><code>model.py</code>: Defines the DQN neural network architecture</li>
+    <li><code>replay_buffer.py</code>: Implements the experience replay mechanism</li>
+    <li><code>train.py</code>: Command-line training script with configurable hyperparameters</li>
+    <li><code>console_game.py</code>: Interactive Pygame-based training interface</li>
+    <li><code>play.py</code>: Inference script for running trained models</li>
+</ul>
+
+<h2>Interactive Training Interface</h2>
+<p>One of the standout features is the interactive training interface built with Pygame. This provides:</p>
+<ul>
+    <li><strong>Real-time Visualization</strong>: Live rendering of the cart-pole system</li>
+    <li><strong>Performance Metrics</strong>: Displays current score, target score, and statistics panel</li>
+    <li><strong>Progress Tracking</strong>: Shows recent episode scores and performance history chart</li>
+    <li><strong>Automatic Model Saving</strong>: Saves the model when achieving the target score (>150)</li>
+</ul>
+
+<p>The interface uses a clean layout with the game area on the left and statistics panel on the right, making it easy to monitor training progress.</p>
+
+<img src="/images/blog/game-win.png" alt="CartPole Game Win" style="display: block; margin: 0 auto;">
+
+<h2>Training Results and Performance</h2>
+<p>The agent is trained using the following key hyperparameters:</p>
+<ul>
+    <li>Learning Rate: 5e-4 (agent.py) / 1e-3 (train.py)</li>
+    <li>Discount Factor (γ): 0.995</li>
+    <li>Batch Size: 32-64</li>
+    <li>Replay Buffer Capacity: 10,000-30,000</li>
+    <li>Epsilon Decay: From 1.0 to 0.02 over 10,000-20,000 steps</li>
+</ul>
+
+<p>The project achieves the CartPole solving criteria:</p>
+<ul>
+    <li><strong>Gym Standard</strong>: Average score > 195 over 100 consecutive episodes</li>
+    <li><strong>Interactive Target</strong>: Score > 150 in a single episode</li>
+</ul>
+
+<p>Training typically converges within 500-1000 episodes, depending on the hyperparameters and random seed.</p>
+
+<h2>Key Techniques and Best Practices</h2>
+<p>Several advanced techniques are implemented to improve learning:</p>
+<ul>
+    <li><strong>Experience Replay</strong>: Random sampling from past experiences reduces correlation and improves sample efficiency</li>
+    <li><strong>Double DQN</strong>: Mitigates Q-value overestimation by separating action selection and evaluation</li>
+    <li><strong>Target Network</strong>: Provides stable targets for Q-value updates</li>
+    <li><strong>Epsilon-Greedy Exploration</strong>: Balances exploration and exploitation with decaying epsilon</li>
+    <li><strong>Reward Shaping</strong>: Provides denser reward signals to guide learning</li>
+</ul>
+
+<h2>Model Persistence and Inference</h2>
+<p>The project includes comprehensive model saving and loading functionality:</p>
+<ul>
+    <li><strong>Checkpoint Saving</strong>: Saves model weights, optimizer state, and training progress</li>
+    <li><strong>Inference Mode</strong>: Greedy policy execution for evaluation</li>
+    <li><strong>Video Recording</strong>: Optional video capture of agent performance</li>
+</ul>
+
+<p>This allows for easy deployment and evaluation of trained models.</p>
+
+<h2>Conclusion and Future Improvements</h2>
+<p>This CartPole agent project demonstrates the power of Deep Q-Learning in solving continuous control problems. The implementation includes modern RL techniques and provides both command-line and interactive training options.</p>
+
+<p>Potential improvements could include:</p>
+<ul>
+    <li><strong>Prioritized Experience Replay</strong>: Focus on important experiences</li>
+    <li><strong>Multi-step Learning</strong>: Consider n-step returns for better credit assignment</li>
+    <li><strong>Distributional RL</strong>: Learn value distributions instead of expected values</li>
+    <li><strong>Advanced Architectures</strong>: Incorporate attention mechanisms or convolutional layers</li>
+</ul>
+
+<p>The project serves as an excellent starting point for understanding and implementing reinforcement learning algorithms, with clear code organization and comprehensive documentation.</p>
+
+<h2>Explore the Codebase</h2>
+<p>Ready to dive deeper into the implementation? Check out the complete source code, documentation, and setup instructions on GitHub: <a href="#" target="_blank">View on GitHub</a></p>
+
+</body>
+</html>

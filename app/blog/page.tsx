@@ -9,7 +9,7 @@ const BlogIndexPageClient = dynamic(() => import("../../components/blog-index-pa
         <div className="w-full max-w-6xl">
           <div className="px-6 sm:px-8 py-6 sm:py-8">
             <header className="mb-3 sm:mb-4">
-              <h1 className="text-2xl sm:text-3xl font-semibold">Blog</h1>
+              <h1 className="text-3xl sm:text-4xl font-semibold">Blog</h1>
               <p className="text-muted-foreground mt-2 max-w-2xl text-sm sm:text-base">Writings on frontend, accessibility, and product craft.</p>
             </header>
             <div className="animate-pulse">

@@ -16,12 +16,12 @@ export function Header() {
       {/* Match blog page frame: max-w-6xl + px-6 sm:px-8 */}
       <div className="mx-auto max-w-6xl px-6 sm:px-8 py-3 relative flex items-center">
         {/* Left: Name aligned with blog title */}
-        <Link href="#top" className="font-semibold tracking-tight text-lg mr-8">
+        <Link href="#top" className="font-semibold tracking-tight text-lg mr-20">
           Nikhil Choudhary
         </Link>
 
         {/* Center: Navigation pill, centered relative to content frame */}
-        <nav className="hidden sm:flex absolute left-1/2 -translate-x-1/2 items-center gap-10 px-8 py-2 rounded-full bg-muted/40 shadow-sm">
+        <nav className="hidden sm:flex absolute left-1/2 -translate-x-1/2 items-center gap-20 px-8 py-2 rounded-full bg-muted/40 shadow-sm">
           <Link href="#projects" className="text-sm hover:underline">
             Projects
           </Link>

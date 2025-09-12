@@ -22,11 +22,20 @@ export default function BlogIndexPageClient() {
     setActiveCategory(category)
   }
 
+  // Format date from YYYY-MM-DD to D MMM YY
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString)
+    const day = date.getDate()
+    const month = date.toLocaleString('en-US', { month: 'short' })
+    const year = date.getFullYear().toString().slice(-2)
+    return `${day} ${month} ${year}`
+  }
+
   return (
     <main className="min-h-dvh flex flex-col bg-[#fafafa] dark:bg-[#0f1419]">
-      <div className="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+      <div className="flex-1 flex items-center justify-center p-2 sm:p-6 lg:p-8" style={{ minHeight: 'calc(100vh - 200px)' }}>
         <div className="w-full max-w-6xl">
-          <div className="px-6 sm:px-8 py-6 sm:py-8">
+          <div className="px-3 sm:px-8 py-6 sm:py-8">
             <header className="mb-3 sm:mb-4">
               <h1 className="text-2xl sm:text-3xl font-semibold">Blog</h1>
               <p className="text-muted-foreground mt-2 max-w-2xl text-sm sm:text-base">Writings on frontend, accessibility, and product craft.</p>
@@ -38,58 +47,58 @@ export default function BlogIndexPageClient() {
         />
 
         {filteredPosts.length > 0 ? (
-          <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
-            {filteredPosts.map((post, index) => (
-              <li
-                key={post.slug}
-                className={`border-gray-200 dark:border-gray-700 ${
-                  index < filteredPosts.length - 1 ? 'border-r border-b' : ''
-                } ${index % 3 !== 2 ? 'lg:border-r' : ''} ${
-                  Math.floor(index / 3) < Math.floor((filteredPosts.length - 1) / 3) ? 'border-b' : ''
-                }`}
-                style={{ borderStyle: 'solid' }}
-              >
-                <article className="flex flex-col h-full">
-                  {post.image && (
-                    <div className="relative aspect-[16/10] w-full p-2 sm:p-3">
-                      <div className="relative w-full h-full rounded-lg overflow-hidden">
-                        <Image
-                          src={post.image}
-                          alt={post.imageAlt || post.title}
-                          fill
-                          className="object-cover"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        />
+          <div className="relative rounded-lg overflow-hidden bg-white dark:bg-gray-800 shadow-lg">
+            {/* Fixed vertical dotted lines */}
+            <div className="absolute inset-0 pointer-events-none z-0">
+              <div className="hidden lg:block absolute left-1/3 top-0 bottom-0 w-px border-r border-dotted border-gray-300 dark:border-gray-600"></div>
+              <div className="hidden lg:block absolute left-2/3 top-0 bottom-0 w-px border-r border-dotted border-gray-300 dark:border-gray-600"></div>
+            </div>
+            <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 relative z-10">
+              {filteredPosts.map((post, index) => (
+                <li
+                  key={post.slug}
+                  className="border-dotted border-gray-200 dark:border-gray-700"
+                  style={{ borderStyle: 'dotted' }}
+                >
+                <Link href={`/blog/${post.slug}`} className="group block h-full hover:opacity-90 transition-opacity">
+                  <article className="flex flex-col h-full">
+                    {post.image && (
+                      <div className="relative aspect-[16/10] w-full p-2 sm:p-3">
+                        <div className="relative w-full h-full rounded-lg overflow-hidden border border-gray-200 dark:border-gray-600">
+                          <Image
+                            src={post.image}
+                            alt={post.imageAlt || post.title}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          />
+                        </div>
                       </div>
-                    </div>
-                  )}
-                  <div className="px-3 sm:px-4 pb-3 sm:pb-4 flex flex-col gap-2 flex-grow">
-                    {/* Category and Date Row */}
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs px-2 py-1 bg-muted text-muted-foreground rounded-full font-medium">
-                        {post.category}
-                      </span>
-                      <div className="text-xs text-muted-foreground font-mono">
-                        {post.date}
+                    )}
+                    <div className="px-3 sm:px-4 pb-6 sm:pb-8 flex flex-col gap-2 flex-grow">
+                      {/* Category and Date Row */}
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs px-2 py-1 bg-muted text-muted-foreground rounded-full font-medium">
+                          {post.category}
+                        </span>
+                        <div className="text-xs text-muted-foreground font-sans">
+                          {formatDate(post.date)}
+                        </div>
                       </div>
-                    </div>
 
-                    {/* Title */}
-                    <h2 className="text-sm sm:text-base font-semibold leading-tight">
-                      <Link href={`/blog/${post.slug}`} className="hover:underline">
+                      {/* Title */}
+                      <h2 className="text-sm sm:text-base font-semibold leading-tight" style={{ fontSize: '20px' }}>
                         {post.title}
-                      </Link>
-                    </h2>
+                      </h2>
 
-                    <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">{post.excerpt}</p>
-                    <Link className="mt-2 text-xs sm:text-sm text-primary hover:underline w-fit" href={`/blog/${post.slug}`}>
-                      Read more
-                    </Link>
-                  </div>
-                </article>
+                      <p className="text-xs sm:text-sm text-muted-foreground group-hover:text-foreground line-clamp-2 transition-colors duration-200">{post.excerpt}</p>
+                    </div>
+                  </article>
+                </Link>
               </li>
             ))}
-          </ul>
+            </ul>
+          </div>
         ) : (
           <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-8 sm:p-12 text-center">
             <div className="max-w-md mx-auto">

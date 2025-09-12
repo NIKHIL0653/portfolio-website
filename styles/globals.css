@@ -121,6 +121,17 @@
     @apply border-border outline-ring/50;
   }
   body {
+    font-family: "__X_400de2", sans-serif !important;
     @apply bg-background text-foreground;
+  }
+
+  /* Remove underlines from all links on hover */
+  a:hover {
+    text-decoration: none !important;
+  }
+
+  /* Ensure all link states don't show underlines */
+  a:link, a:visited, a:hover, a:active, a:focus {
+    text-decoration: none !important;
   }
 }

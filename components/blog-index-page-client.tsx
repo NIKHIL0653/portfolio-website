@@ -61,13 +61,24 @@ export default function BlogIndexPageClient() {
                     </div>
                   )}
                   <div className="px-3 sm:px-4 pb-3 sm:pb-4 flex flex-col gap-2 flex-grow">
+                    {/* Category and Date Row */}
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs px-2 py-1 bg-muted text-muted-foreground rounded-full font-medium">
+                        {post.category}
+                      </span>
+                      <div className="text-xs text-muted-foreground font-mono">
+                        {post.date}
+                      </div>
+                    </div>
+
+                    {/* Title */}
                     <h2 className="text-sm sm:text-base font-semibold leading-tight">
                       <Link href={`/blog/${post.slug}`} className="hover:underline">
                         {post.title}
                       </Link>
                     </h2>
+
                     <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">{post.excerpt}</p>
-                    <div className="text-xs text-muted-foreground font-mono mt-auto">{post.date}</div>
                     <Link className="mt-2 text-xs sm:text-sm text-primary hover:underline w-fit" href={`/blog/${post.slug}`}>
                       Read more
                     </Link>

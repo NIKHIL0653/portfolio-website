@@ -2,14 +2,14 @@
 
 import { useState } from "react"
 
-type Category = 'All' | 'Development' | 'AI/ML' | 'Data' | 'Blogging'
+type Category = 'All Posts' | 'Development' | 'AI/ML' | 'Data' | 'Blogging'
 
 interface BlogFiltersProps {
   onFilterChange: (category: Category) => void
   activeCategory: Category
 }
 
-const categories: Category[] = ['All', 'Development', 'AI/ML', 'Data', 'Blogging']
+const categories: Category[] = ['All Posts', 'Development', 'AI/ML', 'Data', 'Blogging']
 
 export function BlogFilters({ onFilterChange, activeCategory }: BlogFiltersProps) {
   return (
@@ -18,10 +18,10 @@ export function BlogFilters({ onFilterChange, activeCategory }: BlogFiltersProps
         <button
           key={category}
           onClick={() => onFilterChange(category)}
-          className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 ${
+          className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-colors duration-200 whitespace-nowrap flex-shrink-0 border border-transparent ${
             activeCategory === category
-              ? 'bg-primary text-primary-foreground shadow-md'
-              : 'bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground'
+              ? 'bg-primary text-primary-foreground shadow-md border-primary/20 dark:!bg-white dark:!text-black dark:!shadow-lg dark:!border-white'
+              : 'bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground border-muted dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-slate-600 dark:hover:text-slate-100 dark:border-slate-600'
           }`}
         >
           {category}

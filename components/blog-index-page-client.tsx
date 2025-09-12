@@ -6,13 +6,13 @@ import { useState, useMemo } from "react"
 import { posts } from "@/data/blogs"
 import { BlogFilters } from "@/components/blog-filters"
 
-type Category = 'All' | 'Development' | 'AI/ML' | 'Data' | 'Blogging'
+type Category = 'All Posts' | 'Development' | 'AI/ML' | 'Data' | 'Blogging'
 
 export default function BlogIndexPageClient() {
-  const [activeCategory, setActiveCategory] = useState<Category>('All')
+  const [activeCategory, setActiveCategory] = useState<Category>('All Posts')
 
   const filteredPosts = useMemo(() => {
-    if (activeCategory === 'All') {
+    if (activeCategory === 'All Posts') {
       return posts
     }
     return posts.filter(post => post.category === activeCategory)
@@ -113,7 +113,7 @@ export default function BlogIndexPageClient() {
               </p>
               <div className="mt-6">
                 <button
-                  onClick={() => handleFilterChange('All')}
+                  onClick={() => handleFilterChange('All Posts')}
                   className="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:bg-primary/90 transition-colors"
                 >
                   View All Posts

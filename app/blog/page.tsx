@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic"
 
 // Dynamically import the client component to avoid hydration issues
-const BlogIndexPageClient = dynamic(() => import("@/components/blog-index-page-client"), {
+const BlogIndexPageClient = dynamic(() => import("../../components/blog-index-page-client"), {
   ssr: false,
   loading: () => (
     <main className="mx-auto max-w-7xl px-4 py-8 sm:py-12 md:py-16">

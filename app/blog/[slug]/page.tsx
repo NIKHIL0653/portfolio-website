@@ -87,9 +87,13 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
                 {post.author && (
                   <>
                     <div className="flex items-center justify-center sm:justify-start gap-2">
-                      <div className="author-avatar">
-                        {post.author.split(' ').map(n => n[0]).join('')}
-                      </div>
+                      <Image
+                        src="/images/blog/avatar_img.png"
+                        alt="Author avatar"
+                        width={20}
+                        height={20}
+                        className="author-avatar"
+                      />
                       <span className="font-medium text-slate-700 dark:text-slate-300">{post.author}</span>
                     </div>
                     <div className="hidden sm:block text-slate-400"> | </div>

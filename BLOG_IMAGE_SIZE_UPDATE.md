@@ -197,3 +197,5 @@ h-48            /* Mobile: 192px */
    - Touch-friendly interactions
 
 Your blog article images now provide a much more engaging and professional reading experience with content-width sizing and enhanced spacing that creates a magazine-quality layout!
+
+

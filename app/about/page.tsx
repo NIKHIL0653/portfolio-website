@@ -9,14 +9,14 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="min-h-dvh flex flex-col bg-[#fafafa] dark:bg-[#0f1419]">
+    <main className="min-h-dvh flex flex-col bg-[#fafafa] dark:bg-[#121212]">
       <div className="flex-1 flex items-center justify-center p-2 sm:p-6 lg:p-8">
         <div className="w-full max-w-6xl">
           {/* 2-Column Layout */}
           <div className="px-3 sm:px-8 py-6 sm:py-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 relative">
               {/* Vertical Dotted Separator Line */}
-              <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px border-l border-dotted border-gray-300 dark:border-gray-600 transform -translate-x-1/2"></div>
+              <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px border-l border-dashed border-border transform -translate-x-1/2"></div>
 
               {/* Left Column: Name, Text Content, and Maps Card */}
               <div className="flex flex-col space-y-8 sm:space-y-12">
@@ -64,3 +64,6 @@ export default function AboutPage() {
     </main>
   )
 }
+
+
+

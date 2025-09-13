@@ -13,3 +13,5 @@ Suggested image content:
 - Code editor with Next.js project
 - Modern web development setup
 - Developer working on React application
+
+

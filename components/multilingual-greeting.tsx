@@ -93,9 +93,15 @@ export function MultilingualGreeting() {
   return (
     <section className="mx-auto max-w-5xl px-4 py-8 sm:py-10 border-t">
       <div className="text-center">
-        <div className="font-mono text-lg sm:text-xl font-medium h-[2rem] flex items-center justify-center">
+        <div className="h-[2rem] flex items-center justify-center">
           <span
             className={`transition-all duration-200 text-muted-foreground ${isScrambling ? "opacity-60" : "opacity-80"}`}
+            style={{
+              fontFamily: '__geistMono_bb3bb8',
+              fontWeight: '500',
+              fontSize: '20px',
+              lineHeight: '24px'
+            }}
           >
             {displayText}
           </span>

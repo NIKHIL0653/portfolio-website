@@ -9,13 +9,13 @@ import Link from "next/link"
 
 export default function HomePage() {
   return (
-    <main className="min-h-dvh flex flex-col bg-[#fafafa] dark:bg-[#0f1419]">
+    <main className="min-h-dvh flex flex-col bg-[#fafafa] dark:bg-[#121212]">
       <div className="flex-1 flex items-center justify-center p-4 sm:p-6 md:p-16 lg:p-8">
-        <div className="w-full max-w-6xl bg-white dark:bg-[#161A1D] rounded-2xl shadow-lg border border-gray-200/60 dark:border-gray-700/60 overflow-hidden">
+        <div className="w-full max-w-6xl bg-card rounded-2xl border border-border overflow-hidden">
           <InteractiveHero />
 
           {/* Activity Section */}
-          <section id="activity" className="px-6 sm:px-8 py-6 sm:py-8 border-t border-dotted border-gray-300 dark:border-gray-600">
+          <section id="activity" className="px-6 sm:px-8 py-6 sm:py-8 border-t border-dashed border-border">
             <header className="mb-3 sm:mb-4">
               <h2 className="text-2xl sm:text-3xl font-semibold text-center flex items-center justify-center gap-2"><Github className="h-6 w-6" /> Coding Activity</h2>
             </header>
@@ -25,7 +25,7 @@ export default function HomePage() {
           </section>
 
           {/* Tech Stack marquee section */}
-          <section id="tech" className="px-6 sm:px-8 py-6 sm:py-8 border-t border-dotted border-gray-300 dark:border-gray-600">
+          <section id="tech" className="px-6 sm:px-8 py-6 sm:py-8 border-t border-dashed border-border">
             <header className="mb-3 sm:mb-4">
               <h2 className="text-2xl sm:text-3xl font-semibold text-center flex items-center justify-center gap-2"><Wrench className="h-6 w-6" /> Tech Stack</h2>
             </header>
@@ -33,7 +33,7 @@ export default function HomePage() {
           </section>
 
           {/* Navigation Section */}
-          <section id="navigation" className="px-6 sm:px-8 py-6 sm:py-8 border-t border-dotted border-gray-300 dark:border-gray-600">
+          <section id="navigation" className="px-6 sm:px-8 py-6 sm:py-8 border-t border-dashed border-gray-300 dark:border-gray-600">
             <header className="mb-0 sm:mb-8">
               <h2 className="text-2xl sm:text-3xl font-semibold text-center flex items-center justify-center gap-3">
                 <Eye className="h-7 w-7 text-muted-foreground" />
@@ -53,9 +53,9 @@ export default function HomePage() {
                   <p className="text-muted-foreground text-center leading-relaxed text-sm max-w-xs">Discover my latest projects and technical implementations</p>
                 </div>
                 {/* Dotted divider for desktop - extended to connect with top/bottom */}
-                <div className="hidden md:block absolute -top-6 bottom-2 right-0 w-px border-r border-dotted border-gray-300 dark:border-gray-600"></div>
+                <div className="hidden md:block absolute -top-6 bottom-2 right-0 w-px border-r border-dotted border-border"></div>
                 {/* Horizontal dotted divider for mobile */}
-                <div className="md:hidden absolute -bottom-1 left-4 right-4 h-px border-t border-dotted border-gray-300 dark:border-gray-600"></div>
+                <div className="md:hidden absolute -bottom-1 left-4 right-4 h-px border-t border-dotted border-border"></div>
               </Link>
 
               {/* Blog Column */}
@@ -70,9 +70,9 @@ export default function HomePage() {
                   <p className="text-muted-foreground text-center leading-relaxed text-sm max-w-xs">Read my thoughts on development, design, and technology</p>
                 </div>
                 {/* Dotted divider for desktop - extended to connect with top/bottom */}
-                <div className="hidden md:block absolute -top-6 bottom-2 right-0 w-px border-r border-dotted border-gray-300 dark:border-gray-600"></div>
+                <div className="hidden md:block absolute -top-6 bottom-2 right-0 w-px border-r border-dotted border-border"></div>
                 {/* Horizontal dotted divider for mobile */}
-                <div className="md:hidden absolute -bottom-1 left-4 right-4 h-px border-t border-dotted border-gray-300 dark:border-gray-600"></div>
+                <div className="md:hidden absolute -bottom-1 left-4 right-4 h-px border-t border-dotted border-border"></div>
               </Link>
 
               {/* About Column */}
@@ -91,7 +91,7 @@ export default function HomePage() {
           </section>
 
           {/* Let's Connect */}
-          <section id="connect" className="px-6 sm:px-8 py-4 sm:py-6 border-t border-dotted border-gray-300 dark:border-gray-600">
+          <section id="connect" className="px-6 sm:px-8 py-4 sm:py-6 border-t border-dashed border-border">
             <header className="mb-3 sm:mb-4">
               <h2 className="text-2xl sm:text-3xl font-semibold text-center">Let's connect</h2>
               <p className="text-muted-foreground mt-2 max-w-2xl mx-auto text-center">
@@ -109,3 +109,6 @@ export default function HomePage() {
     </main>
   )
 }
+
+
+

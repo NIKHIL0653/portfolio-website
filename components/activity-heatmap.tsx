@@ -1,6 +1,6 @@
 "use client"
 import useSWR from "swr"
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import { cn } from "@/lib/utils"
 
 type ActivityResponse = {
@@ -11,6 +11,8 @@ type ActivityResponse = {
 const fetcher = (url: string) => fetch(url).then((r) => r.json())
 
 export function ActivityHeatmap() {
+  const [hoveredDay, setHoveredDay] = useState<{ date: string; contributions: number } | null>(null)
+
   const { data, isLoading, error } = useSWR<ActivityResponse>("/api/activity", fetcher, {
     revalidateOnFocus: true,
     revalidateOnReconnect: true,
@@ -69,7 +71,10 @@ export function ActivityHeatmap() {
     <div className="w-full">
       {!isLoading && !error && (
         <p className="text-center text-sm text-muted-foreground mb-2">
-          Total contributions: {totalContributions}
+          {hoveredDay
+            ? `${hoveredDay.contributions} contribution${hoveredDay.contributions !== 1 ? 's' : ''} on ${new Date(hoveredDay.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`
+            : `Total contributions: ${totalContributions}`
+          }
         </p>
       )}
 
@@ -88,12 +93,18 @@ export function ActivityHeatmap() {
                     <div
                       key={day.key ?? di}
                       className={cn(
-                        "h-3.5 w-3.5 rounded-sm border transition-colors duration-200",
+                        "h-3.5 w-3.5 rounded-sm border transition-colors duration-200 cursor-pointer",
                         typeof day.key === "string" && day.key.startsWith("pad-") && "opacity-0",
                         heat(levelFor(day.val)),
                       )}
                       title={`${day.key}: ${day.val} activities`}
                       aria-label={`${day.key}: ${day.val} activities`}
+                      onMouseEnter={() => {
+                        if (typeof day.key === "string" && !day.key.startsWith("pad-")) {
+                          setHoveredDay({ date: day.key, contributions: day.val })
+                        }
+                      }}
+                      onMouseLeave={() => setHoveredDay(null)}
                     />
                   ))}
                 </div>
@@ -132,3 +143,6 @@ function heat(level: number) {
       return "bg-transparent"
   }
 }
+
+
+

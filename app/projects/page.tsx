@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function ProjectsPage() {
   return (
-    <main className="min-h-dvh flex flex-col bg-[#fafafa] dark:bg-[#0f1419]">
+    <main className="min-h-dvh flex flex-col bg-[#fafafa] dark:bg-[#121212]">
       <div className="flex-1 p-2 sm:p-6 lg:p-8">
         <div className="w-full max-w-6xl mx-auto">
           <div className="px-3 sm:px-8 py-6 sm:py-8">
@@ -23,3 +23,6 @@ export default function ProjectsPage() {
     </main>
   )
 }
+
+
+

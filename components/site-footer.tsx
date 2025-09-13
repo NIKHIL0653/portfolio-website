@@ -18,7 +18,7 @@ function XLogo({ className }: { className?: string }) {
 
 export function SiteFooter() {
   return (
-    <footer id="contact" className="border-t">
+    <footer id="contact" className="border-t bg-background">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8 sm:py-12">
         {/* Mobile: 2x2 grid, Desktop: 4 column grid */}
         <div className="grid gap-6 sm:gap-8 md:gap-12 grid-cols-2 md:grid-cols-4 place-items-start">
@@ -107,3 +107,6 @@ export function SiteFooter() {
     </footer>
   )
 }
+
+
+

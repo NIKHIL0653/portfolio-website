@@ -23,9 +23,17 @@ export function ProjectsSection() {
     const rotateX = (mouseY / (rect.height / 2)) * -12 // Max 12 degrees for more noticeable effect
     const rotateY = (mouseX / (rect.width / 2)) * 12 // Max 12 degrees
 
+    // Calculate cursor position for glow effect (0-100%)
+    const cursorX = ((e.clientX - rect.left) / rect.width) * 100
+    const cursorY = ((e.clientY - rect.top) / rect.height) * 100
+
     // Smooth transition with CSS transition
     card.style.transition = "transform 0.1s ease-out"
     card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`
+
+    // Set CSS custom properties for glow position
+    card.style.setProperty('--cursor-x', `${cursorX}%`)
+    card.style.setProperty('--cursor-y', `${cursorY}%`)
   }
 
   const handleMouseLeave = (index: number) => {
@@ -35,6 +43,10 @@ export function ProjectsSection() {
     // Smooth return to original position
     card.style.transition = "transform 0.3s ease-out"
     card.style.transform = "perspective(1200px) rotateX(0deg) rotateY(0deg) scale(1)"
+
+    // Reset glow position
+    card.style.setProperty('--cursor-x', '50%')
+    card.style.setProperty('--cursor-y', '50%')
   }
 
   return (
@@ -44,7 +56,7 @@ export function ProjectsSection() {
           <li
             key={p.title}
             ref={(el) => { cardRefs.current[index] = el }}
-            className="group relative border-2 border-border rounded-lg p-4 bg-white dark:bg-gray-800 hover:border-primary hover:shadow-lg transition-all duration-300 overflow-hidden"
+            className="group relative border-2 border-border rounded-lg p-4 bg-card hover:border-primary transition-all duration-300 overflow-hidden shadow-lg"
             style={{
               transformStyle: "preserve-3d",
               transform: "perspective(1200px) rotateX(0deg) rotateY(0deg) scale(1)",
@@ -102,3 +114,6 @@ export function ProjectsSection() {
     </section>
   )
 }
+
+
+

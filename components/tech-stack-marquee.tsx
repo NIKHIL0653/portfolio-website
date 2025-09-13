@@ -83,12 +83,12 @@ export function TechStackMarquee({ className }: { className?: string }) {
 
   // Dynamic gradient color based on theme - enhanced blur intensity with system support
   const isDark = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches)
-  const gradientColor = isDark ? "#161A1D" : "white"
+  const gradientColor = isDark ? "#121212" : "white"
   const gradientOpacity = isDark ? "0.95" : "0.98"
 
   React.useEffect(() => {
-    const rgbaColor = isDark ? `rgba(22, 26, 29, ${gradientOpacity})` : `rgba(255, 255, 255, ${gradientOpacity})`
-    const midColor = isDark ? `rgba(22, 26, 29, 0.4)` : `rgba(255, 255, 255, 0.5)`
+    const rgbaColor = isDark ? `rgba(18, 18, 18, ${gradientOpacity})` : `rgba(255, 255, 255, ${gradientOpacity})`
+    const midColor = isDark ? `rgba(18, 18, 18, 0.4)` : `rgba(255, 255, 255, 0.5)`
 
     setGradientStyle({
       left: `radial-gradient(ellipse 140% 110% at 100% 50%, transparent 0%, ${midColor} 50%, ${rgbaColor} 80%, ${rgbaColor} 100%)`,
@@ -133,3 +133,5 @@ export function TechStackMarquee({ className }: { className?: string }) {
     </div>
   )
 }
+
+

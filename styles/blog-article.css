@@ -17,14 +17,14 @@
 
 /* Blog Article Page Background */
 .dark .blog-article-page {
-  background-color: #000000; /* Black background for blog posts */
+  background-color: #121212; /* Black background for blog posts */
 }
 
 /* Blog Article Card Styling - FIXED TO MATCH LANDING PAGE */
 .dark .blog-article-card {
-  background-color: #161A1D !important; /* Matching landing page vertical card color */
-  border-color: #2a2a2a !important; /* Slightly lighter border for better definition */
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 0 4px 10px rgba(0, 0, 0, 0.3) !important; /* Enhanced shadow for depth */
+  background-color: #0F0F0F !important; /* Matching landing page vertical card color */
+  border: 1px solid #4a4a4a !important; /* Thin border to match landing page cards */
+  box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.15) !important; /* Enhanced inset glow with increased range and intensity */
 }
 
 /* Prevent dotted background in footer - comprehensive fix */
@@ -169,7 +169,7 @@ footer * {
 
 /* ENHANCED Links with better dark mode colors */
 .blog-content a {
-  color: #3182ce !important;
+  color: #0F0F0F !important;
   text-decoration: none !important;
   font-weight: 500 !important;
   border-bottom: 1px solid transparent !important;
@@ -177,79 +177,35 @@ footer * {
 }
 
 .blog-content a:hover {
-  color: #2c5282 !important;
-  border-bottom-color: #3182ce !important;
+  color: #0F0F0F !important;
+  border-bottom-color: #0F0F0F !important;
 }
 
 .dark .blog-content a {
-  color: #60a5fa !important; /* Better blue for dark mode */
+  color: #b3b3b3 !important; /* Muted text color for links */
 }
 
 .dark .blog-content a:hover {
-  color: #93c5fd !important;
-  border-bottom-color: #60a5fa !important;
+  color: #e5e5e5 !important;
+  border-bottom-color: #666666 !important;
 }
 
-/* ENHANCED Dotted Background Pattern for better dark mode */
-.dotted-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  opacity: 0.3; /* Reduced opacity for better readability */
-  pointer-events: none;
-  z-index: 0;
-}
-
-.dotted-background::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image:
-    radial-gradient(circle at 2px 2px, #e2e8f0 2px, transparent 0);
-  background-size: 20px 20px;
-  background-position: 0 0;
-}
-
-.dotted-background::after {
-  content: '';
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  right: 0;
-  bottom: 0;
-  background-image:
-    radial-gradient(circle at 2px 2px, #cbd5e1 1.6px, transparent 0);
-  background-size: 20px 20px;
-  background-position: 0 0;
-}
-
-/* ENHANCED Dark mode dotted background with better consistency */
-.dark .dotted-background::before {
-  background-image:
-    radial-gradient(circle at 2px 2px, #2a2a2a 2px, transparent 0);
-}
-
-.dark .dotted-background::after {
-  background-image:
-    radial-gradient(circle at 2px 2px, #3a3a3a 1.6px, transparent 0);
-}
+/* Dotted background pattern removed for cleaner design */
 
 /* Blog Card Enhancements */
 .blog-article-card {
   position: relative;
   z-index: 10;
   background: white;
-  border-radius: 1rem;
-  box-shadow:
-    0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow-card);
   border: 1px solid #e2e8f0;
   overflow: hidden;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.blog-article-card:hover {
+  box-shadow: var(--shadow-card-hover);
 }
 
 /* Vertical Dotted Lines */
@@ -260,7 +216,7 @@ footer * {
   top: 0;
   bottom: 0;
   width: 1px;
-  border-left: 2px dotted #cbd5e1;
+  border-left: 2px dotted #e2e8f0;
   z-index: -1;
 }
 
@@ -272,31 +228,12 @@ footer * {
   right: 33.333%;
 }
 
-/* In mobile, show only one dotted line at center */
-@media (max-width: 767px) {
-  .blog-article-card::before {
-    left: 50%;
-  }
-
-  .blog-article-card::after {
-    display: none;
-  }
-}
-
-/* Dark mode vertical lines */
+/* Dark mode vertical lines - darker for better contrast */
 .dark .blog-article-card::before,
 .dark .blog-article-card::after {
-  border-left-color: #4a5568;
+  border-left-color: #2a2a2a;
 }
 
-/* ENHANCED Dark mode blog card to match landing page exactly */
-.dark .blog-article-card {
-  background: #161A1D !important; /* Exact match with landing page */
-  border-color: #2a2a2a !important;
-  box-shadow: 
-    0 20px 25px -5px rgba(0, 0, 0, 0.5),
-    0 10px 10px -5px rgba(0, 0, 0, 0.3) !important;
-}
 
 /* ENHANCED Author Avatar with better dark mode */
 .author-avatar {
@@ -328,7 +265,7 @@ footer * {
   padding: 1.5rem !important;
   overflow-x: auto !important;
   margin: 1.5rem 0 !important;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: var(--shadow-card) !important;
   position: relative !important;
   font-family: 'JetBrains Mono', 'Monaco', 'Consolas', 'Courier New', monospace !important;
   font-size: 0.875rem !important;
@@ -336,18 +273,27 @@ footer * {
   white-space: pre !important;
   word-wrap: break-word !important;
   tab-size: 2 !important;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.blog-content pre:hover {
+  box-shadow: var(--shadow-card-hover) !important;
 }
 
 .dark .blog-content pre {
   background: #1a1a1a !important; /* Darker, more consistent background */
   border-color: #3a3a3a !important;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4) !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+.dark .blog-content pre:hover {
+  box-shadow: var(--shadow-card-hover) !important;
 }
 
 
 .blog-content code {
-  background: #edf2f7 !important;
-  color: #d53f8c !important;
+  background: #f7fafc !important;
+  color: #374151 !important;
   padding: 0.125rem 0.375rem !important;
   border-radius: 4px !important;
   font-size: 0.875rem !important;
@@ -358,9 +304,9 @@ footer * {
 }
 
 .dark .blog-content code {
-  background: #2a2a2a !important;
-  color: #f87171 !important; /* Better red for dark mode */
-  border-color: #3a3a3a !important;
+  background: #1a1a1a !important;
+  color: #b3b3b3 !important;
+  border-color: #333333 !important;
 }
 
 
@@ -377,13 +323,18 @@ footer * {
 /* ENHANCED Blockquotes with better dark mode */
 .blog-content blockquote {
   background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%) !important;
-  border-left: 4px solid #3182ce !important;
+  border-left: 4px solid #0F0F0F !important;
   padding: 1.5rem 2rem !important;
   margin: 2rem 0 !important;
   border-radius: 0 12px 12px 0 !important;
   position: relative !important;
   font-style: italic !important;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: var(--shadow-card) !important;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.blog-content blockquote:hover {
+  box-shadow: var(--shadow-card-hover) !important;
 }
 
 .blog-content blockquote::before {
@@ -398,7 +349,12 @@ footer * {
 
 .dark .blog-content blockquote {
   background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%) !important;
-  border-left-color: #60a5fa !important;
+  border-left-color: #0F0F0F !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+.dark .blog-content blockquote:hover {
+  box-shadow: var(--shadow-card-hover) !important;
 }
 
 .dark .blog-content blockquote::before {
@@ -409,16 +365,27 @@ footer * {
 .blog-content img {
   border-radius: 12px !important;
   border: 2px solid #e2e8f0 !important;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: var(--shadow-card) !important;
   margin: 2rem auto !important;
   display: block !important;
   max-width: 100% !important;
   height: auto !important;
+  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.blog-content img:hover {
+  box-shadow: var(--shadow-card-hover) !important;
+  transform: translateY(-2px);
 }
 
 .dark .blog-content img {
-  border-color: #3a3a3a !important;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4) !important;
+  border-color: #141414 !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+.dark .blog-content img:hover {
+  box-shadow: var(--shadow-card-hover) !important;
+  transform: translateY(-2px);
 }
 
 /* ENHANCED Table Styling with better dark mode */
@@ -429,8 +396,28 @@ footer * {
   background: #ffffff !important;
   border-radius: 12px !important;
   overflow: hidden !important;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: var(--shadow-card) !important;
   border: 1px solid #e2e8f0 !important;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+/* Mobile responsive tables */
+@media (max-width: 768px) {
+  .blog-content table {
+    display: block !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+  }
+
+  .blog-content th,
+  .blog-content td {
+    white-space: normal !important;
+    min-width: 120px !important; /* Prevent columns from being too narrow */
+  }
+}
+
+.blog-content table:hover {
+  box-shadow: var(--shadow-card-hover) !important;
 }
 
 .blog-content th {
@@ -449,9 +436,13 @@ footer * {
 }
 
 .dark .blog-content table {
-  background: #161A1D !important; /* Match blog card background */
+  background: #0F0F0F !important; /* Match blog card background */
   border-color: #3a3a3a !important;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4) !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+.dark .blog-content table:hover {
+  box-shadow: var(--shadow-card-hover) !important;
 }
 
 .dark .blog-content th {
@@ -494,7 +485,7 @@ footer * {
 }
 
 .dark .blog-image-frame-large {
-  background: #161A1D !important; /* Match blog card background */
+  background: #0F0F0F !important; /* Match blog card background */
   border-color: #3a3a3a !important;
 }
 
@@ -524,15 +515,25 @@ footer * {
   background: #ffffff;
   border: 2px solid #e2e8f0;
   border-radius: 0.75rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-card);
   transition: all 0.3s ease;
   overflow: hidden;
 }
 
+.blog-image-frame:hover {
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+
 .dark .blog-image-frame {
-  background: #161A1D !important; /* Match blog card background */
+  background: #0F0F0F !important; /* Match blog card background */
   border-color: #3a3a3a !important;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3) !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+.dark .blog-image-frame:hover {
+  box-shadow: var(--shadow-card-hover) !important;
+  transform: translateY(-2px);
 }
 
 /* Image inside the frame */
@@ -595,6 +596,69 @@ footer * {
     padding-right: 0.5rem;
   }
 
+  /* Increase blog article card width on mobile by reducing container padding */
+  .blog-article-container {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+
+  /* Increase large card (outer container) width on blog client page by reducing horizontal padding */
+  .blog-client-container {
+    padding-left: 0.25rem !important;
+    padding-right: 0.25rem !important;
+  }
+
+  /* Reduce font weight of "Nikhil Choudhary" in header on mobile */
+  .site-header-name {
+    font-weight: 500 !important;
+  }
+
+  /* Reduce "Hi I'm Nikhil" text to 24px on mobile */
+  .typewriter-text {
+    font-size: 24px !important;
+    line-height: 24px !important;
+  }
+
+  /* Remove background and rounded corners from mobile menu button */
+  .mobile-menu-button {
+    background: transparent !important;
+    border-radius: 0 !important;
+  }
+
+  .mobile-menu-button:hover {
+    background: transparent !important;
+  }
+
+  /* Ensure no background in dark mode as well */
+  .dark .mobile-menu-button {
+    background: transparent !important;
+  }
+
+  .dark .mobile-menu-button:hover {
+    background: transparent !important;
+  }
+
+
+  /* Hide vertical lines and add single horizontal dotted line in middle for mobile */
+  .blog-article-card::before,
+  .blog-article-card::after {
+    display: none !important;
+  }
+
+  .blog-article-card::after {
+    display: block !important;
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    border-left: 2px dotted #e2e8f0;
+    transform: translateX(-50%);
+    z-index: -1;
+  }
+
+
   .blog-content h1 {
     font-size: 1rem;
     margin: 2rem 0 1rem 0;
@@ -643,7 +707,7 @@ footer * {
   left: 0;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, #60a5fa, #a78bfa); /* Better colors for dark mode compatibility */
+  background: linear-gradient(90deg, #666666, #999999); /* Better colors for dark mode compatibility */
   transform-origin: left;
   z-index: 50;
 }
@@ -727,18 +791,27 @@ footer * {
   border-radius: 12px !important;
   padding: 1.5rem !important;
   margin: 2rem 0 !important;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: var(--shadow-card) !important;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.blog-content .card:hover {
+  box-shadow: var(--shadow-card-hover) !important;
 }
 
 .dark .blog-content .card {
-  background: linear-gradient(135deg, #0f1419 0%, #1a1a1a 100%) !important;
+  background: linear-gradient(135deg, #121212 0%, #1a1a1a 100%) !important;
   border-color: #1a1a1a !important;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4) !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+.dark .blog-content .card:hover {
+  box-shadow: var(--shadow-card-hover) !important;
 }
 
 .blog-content .badge {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-  color: white !important;
+  background: linear-gradient(135deg, #333333 0%, #404040 100%) !important;
+  color: #e5e5e5 !important;
   padding: 0.25rem 0.75rem !important;
   border-radius: 9999px !important;
   font-size: 0.75rem !important;
@@ -819,7 +892,7 @@ footer * {
 }
 
 .dark ::-webkit-scrollbar-track {
-  background: #161A1D;
+  background: #0F0F0F;
   border-radius: 4px;
 }
 
@@ -834,7 +907,7 @@ footer * {
 }
 
 .dark ::-webkit-scrollbar-corner {
-  background: #161A1D;
+  background: #0F0F0F;
 }
 
 /* Firefox scrollbar support */
@@ -844,24 +917,24 @@ footer * {
 }
 
 .dark * {
-  scrollbar-color: #3a3a3a #161A1D;
+  scrollbar-color: #3a3a3a #0F0F0F;
 }
 
 /* Better selection colors for dark mode */
 .dark ::selection {
-  background: #60a5fa;
+  background: #0F0F0F;
   color: #ffffff;
 }
 
 .dark ::-moz-selection {
-  background: #60a5fa;
+  background: #0F0F0F;
   color: #ffffff;
 }
 
 /* Focus states for better accessibility in dark mode */
 .dark .blog-content a:focus,
 .dark .blog-content button:focus {
-  outline: 2px solid #60a5fa;
+  outline: 2px solid #666666;
   outline-offset: 2px;
 }
 
@@ -877,8 +950,8 @@ footer * {
 .dark input:focus,
 .dark textarea:focus,
 .dark select:focus {
-  border-color: #60a5fa !important;
-  box-shadow: 0 0 0 1px #60a5fa !important;
+  border-color: #666666 !important;
+  box-shadow: 0 0 0 1px #666666 !important;
 }
 
 /* Enhanced button styles for dark mode consistency */
@@ -908,5 +981,7 @@ footer * {
   background: #1a1a1a !important;
   border-color: #3a3a3a !important;
   color: #d1d5db !important;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4) !important;
+  box-shadow: var(--shadow-card) !important;
 }
+
+

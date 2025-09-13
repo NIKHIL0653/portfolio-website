@@ -3,8 +3,8 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { usePathname } from "next/navigation"
-import { useState } from "react"
-import { Menu, X } from "lucide-react"
+import { useState, useEffect } from "react"
+import { Menu, X as CloseIcon, Mail, Twitter, Github, Linkedin, ChevronDown, ChevronUp } from "lucide-react"
 
 const RESUME_URL = process.env.NEXT_PUBLIC_RESUME_URL
 
@@ -12,6 +12,17 @@ export function SiteHeader() {
   const pathname = usePathname()
   const hasResume = Boolean(RESUME_URL)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isSocialDropdownOpen, setIsSocialDropdownOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const nav = [
     { href: "/", label: "Home" },
@@ -20,13 +31,24 @@ export function SiteHeader() {
     { href: "/about", label: "About" },
   ]
 
+  const socialLinks = [
+    { href: "mailto:nikhil0653@example.com", icon: Mail, label: "Email" },
+    { href: "https://x.com/Nikhil0653", icon: Twitter, label: "X" },
+    { href: "https://github.com/Nikhil0653", icon: Github, label: "GitHub" },
+    { href: "https://linkedin.com/in/nikhil-choudhary-0653", icon: Linkedin, label: "LinkedIn" },
+  ]
+
   return (
-    <header className="sticky top-0 z-40 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+    <header className={`sticky top-0 z-40 bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60 border-b transition-all duration-300 ${
+      isScrolled
+        ? 'border-border'
+        : 'border-background'
+    }`}>
       <div className="mx-auto max-w-5xl px-4 py-3">
         {/* Desktop Layout */}
         <div className="hidden sm:grid sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:gap-2">
           {/* Left: Name */}
-          <Link href="/" className="font-semibold tracking-tight">
+          <Link href="/" className="font-medium tracking-tight site-header-name">
             Nikhil Choudhary
           </Link>
 
@@ -45,7 +67,7 @@ export function SiteHeader() {
                       aria-current={active ? "page" : undefined}
                       className={
                         active
-                          ? "text-sm font-semibold text-foreground"
+                          ? "text-sm font-semibold text-muted-foreground"
                           : "text-sm text-muted-foreground hover:text-foreground transition-colors"
                       }
                     >
@@ -61,12 +83,12 @@ export function SiteHeader() {
           <div className="flex justify-end">
             <Button
               asChild
-              className="ml-4"
+              className="ml-4 rounded-full font-medium"
               disabled={!hasResume}
               title={hasResume ? "View Resume" : "Set NEXT_PUBLIC_RESUME_URL in Project Settings"}
             >
-              <a href={hasResume ? RESUME_URL : "#"} target={hasResume ? "_blank" : "_self"} rel="noopener noreferrer">
-                View Resume
+              <a href={hasResume ? RESUME_URL : "#"} target={hasResume ? "_blank" : "_self"} rel="noopener noreferrer" style={{ fontFamily: '__geistSans_3dfc64', fontWeight: 500 }}>
+                Resume
               </a>
             </Button>
           </div>
@@ -75,7 +97,7 @@ export function SiteHeader() {
         {/* Mobile Layout */}
         <div className="flex items-center justify-between sm:hidden">
           {/* Left: Name */}
-          <Link href="/" className="font-semibold tracking-tight">
+          <Link href="/" className="font-semibold tracking-tight" style={{ fontFamily: '__geistSans_3dfc64', fontWeight: 600 }}>
             Nikhil Choudhary
           </Link>
 
@@ -84,20 +106,21 @@ export function SiteHeader() {
             <Button
               asChild
               size="sm"
+              className="rounded-full font-medium"
               disabled={!hasResume}
               title={hasResume ? "View Resume" : "Set NEXT_PUBLIC_RESUME_URL in Project Settings"}
             >
-              <a href={hasResume ? RESUME_URL : "#"} target={hasResume ? "_blank" : "_self"} rel="noopener noreferrer">
+              <a href={hasResume ? RESUME_URL : "#"} target={hasResume ? "_blank" : "_self"} rel="noopener noreferrer" style={{ fontFamily: '__geistSans_3dfc64', fontWeight: 500 }}>
                 Resume
               </a>
             </Button>
 
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-md hover:bg-muted transition-colors"
+              className="p-2 rounded-md hover:bg-muted transition-colors mobile-menu-button"
               aria-label="Toggle mobile menu"
             >
-              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              {isMobileMenuOpen ? <CloseIcon size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
@@ -124,11 +147,52 @@ export function SiteHeader() {
                         {item.label}
                       </Link>
                       {index < nav.length - 1 && (
-                        <div className="border-t border-dotted border-gray-300 dark:border-gray-600 mx-2" />
+                        <div className="border-t border-border mx-2" />
                       )}
                     </li>
                   )
                 })}
+
+                {/* Social Links Dropdown */}
+                <li>
+                  <button
+                    onClick={() => setIsSocialDropdownOpen(!isSocialDropdownOpen)}
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center justify-between w-full py-2 px-2"
+                    aria-expanded={isSocialDropdownOpen}
+                    aria-controls="social-links-dropdown"
+                  >
+                    <span>Social Links</span>
+                    {isSocialDropdownOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                  </button>
+                  <div className="border-t border-border mx-2" />
+                </li>
+
+                {/* Social Links */}
+                {isSocialDropdownOpen && (
+                  <li id="social-links-dropdown">
+                    <div className="grid grid-cols-2 gap-2 mt-2 mb-2 px-2">
+                      {socialLinks.map((social) => {
+                        const IconComponent = social.icon
+                        return (
+                          <a
+                            key={social.label}
+                            href={social.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center w-full h-10 rounded-md bg-background/40 backdrop-blur-sm border border-border/50 hover:bg-background/60 transition-colors"
+                            aria-label={social.label}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            <IconComponent
+                              size={18}
+                              className="text-muted-foreground hover:text-foreground transition-colors"
+                            />
+                          </a>
+                        )
+                      })}
+                    </div>
+                  </li>
+                )}
               </ul>
             </nav>
           </div>
@@ -137,3 +201,6 @@ export function SiteHeader() {
     </header>
   )
 }
+
+
+

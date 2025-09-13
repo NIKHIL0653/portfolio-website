@@ -118,3 +118,5 @@ When creating a new blog post:
 3. **Create content** at `content/blogs/my-new-post.md`
 
 That's it! Your blog cards will now display beautiful hero images that match your content themes.
+
+

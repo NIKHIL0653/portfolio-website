@@ -23,7 +23,7 @@ export const posts: BlogPostMeta[] = [
     readTime: "5 min read",
     image: "/images/blog/nextjs-hero.jpg",
     imageAlt: "Next.js logo with modern web development setup",
-    category: "Development"
+    category: "Data"
   },
   {
     slug: "clarity-over-complexity",
@@ -97,3 +97,6 @@ export const posts: BlogPostMeta[] = [
   //   imageAlt: "Modular design system components arranged in a scalable architecture"
   // }
 ]
+
+
+

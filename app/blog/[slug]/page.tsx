@@ -17,7 +17,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
         <div className="dotted-background" />
 
         <div className="relative mx-auto max-w-4xl">
-        <div className="blog-article-card bg-white dark:bg-[#1E1E1E] rounded-2xl shadow-xl shadow-white/10 dark:shadow-white/5 overflow-hidden border border-slate-200 dark:border-slate-500">
+        <div className="blog-article-card bg-white dark:bg-[#1E1E1E] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-500">
           {/* Back Link - Inside the card at top */}
           <div className="text-center pt-4 sm:pt-6 md:pt-8 lg:pt-12">
             <Link href="/blog" className="inline-flex items-center text-sm text-primary hover:underline">
@@ -68,7 +68,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
 
       <div className="relative mx-auto max-w-4xl md:max-w-[56rem]">
         {/* Main Article Card */}
-        <article className="blog-article-card bg-white dark:bg-[#121212] rounded-2xl shadow-xl shadow-white/10 dark:shadow-white/5 overflow-hidden border border-slate-200 dark:border-slate-500">
+        <article className="blog-article-card bg-card rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-500">
           {/* Back Link - Inside the card at top */}
           <div className="text-center pt-8 sm:pt-6 md:pt-8 lg:pt-12 pb-1 sm:pb-2">
             <Link href="/blog" className="inline-flex items-center text-sm text-primary relative z-20">

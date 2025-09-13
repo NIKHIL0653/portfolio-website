@@ -158,7 +158,13 @@ export function InteractiveHero() {
         <div className="max-w-2xl text-center">
           <div className="mx-auto mb-4 flex justify-center">
             <h2
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium font-mono tracking-tight"
+              className="tracking-tight"
+              style={{
+                fontSize: '48px',
+                fontFamily: '__geistMono_bb3bb8',
+                fontWeight: '500',
+                lineHeight: '48px'
+              }}
               aria-live="polite"
               aria-label="Hi, I'm Nikhil typing"
             >
@@ -237,3 +243,6 @@ export function InteractiveHero() {
     </section>
   )
 }
+
+
+

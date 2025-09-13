@@ -3,3 +3,6 @@ export const manualExtraActivity: { date: string; count: number }[] = [
   // { date: "2025-09-01", count: 2 },
   // { date: "2025-09-02", count: 1 },
 ]
+
+
+

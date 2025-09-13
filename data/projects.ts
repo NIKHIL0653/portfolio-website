@@ -42,3 +42,6 @@ export const projects: Project[] = [
     year: "2024",
   },
 ]
+
+
+

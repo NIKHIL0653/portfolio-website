@@ -4,6 +4,7 @@ import Image from "next/image"
 import { Calendar } from "lucide-react"
 import { posts } from "@/data/blogs"
 import { getBlogContent, formatDateWithOrdinal } from "@/lib/blog-utils"
+import { SiteHeader } from "@/components/site-header"
 
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
   const post = posts.find((p) => p.slug === params.slug)
@@ -12,9 +13,9 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   const content = await getBlogContent(params.slug)
   if (!content) {
     return (
-      <main className="blog-article-container min-h-screen bg-slate-50 dark:bg-black py-8 px-4">
-        {/* Enhanced Dotted Background Pattern */}
-        <div className="dotted-background" />
+      <main className="blog-article-container min-h-screen bg-slate-50 dark:bg-[#121212] py-8 px-4">
+          {/* Enhanced Dotted Background Pattern */}
+          <div className="dotted-background" />
 
         <div className="relative mx-auto max-w-4xl">
         <div className="blog-article-card bg-white dark:bg-[#1E1E1E] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-500">
@@ -62,9 +63,9 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   }
 
   return (
-    <main className="blog-article-container min-h-screen bg-[#fafafa] dark:bg-black py-2 sm:py-8 md:py-16 px-4">
-      {/* Enhanced Dotted Background Pattern */}
-      <div className="dotted-background" />
+    <main className="blog-article-container min-h-screen bg-[#fafafa] dark:bg-[#121212] py-2 sm:py-8 md:py-16 px-4">
+        {/* Enhanced Dotted Background Pattern */}
+        <div className="dotted-background" />
 
       <div className="relative mx-auto max-w-4xl md:max-w-[56rem]">
         {/* Main Article Card */}

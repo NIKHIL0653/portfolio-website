@@ -46,9 +46,9 @@
 
 .dark {
   --background: #171717; /* User's specified dark theme color for all pages */
-  --foreground: #e8e8e8;  /* Softer white for less contrast */
+  --foreground: #f4f4f5;  /* Darker shade of white for better contrast */
   --card: #0F0F0F;        /* Slightly lighter than background for cards - removes blue tone */
-  --card-foreground: #e8e8e8;
+  --card-foreground: #f4f4f5;
   --popover: #0F0F0F;     /* Match card color */
   --popover-foreground: #ffffff;
   --primary: #ffffff;      /* Primary elements in white */

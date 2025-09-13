@@ -39,11 +39,18 @@ export function SiteHeader() {
   ]
 
   return (
-    <header className={`sticky top-0 z-40 bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60 border-b transition-all duration-300 ${
-      isScrolled
-        ? 'border-border'
-        : 'border-background'
-    }`}>
+    <header
+      className={`sticky top-0 z-40 backdrop-blur-md supports-[backdrop-filter]:bg-background/60 border-b transition-all duration-300 ${
+        isScrolled
+          ? 'bg-background/80 dark:bg-[#121212]/80'
+          : ''
+      } ${
+        isScrolled
+          ? 'border-border'
+          : 'border-transparent'
+      }`}
+      style={!isScrolled ? { backgroundColor: '#121212' } : undefined}
+    >
       <div className="mx-auto max-w-5xl px-4 py-3">
         {/* Desktop Layout */}
         <div className="hidden sm:grid sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:gap-2">

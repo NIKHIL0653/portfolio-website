@@ -33,7 +33,7 @@ export function SiteHeader() {
 
   const socialLinks = [
     { href: "mailto:nikhil0653@example.com", icon: Mail, label: "Email" },
-    { href: "https://x.com/Nikhil0653", icon: Twitter, label: "X" },
+    { href: "https://x.com/Nikhil0653", icon: Twitter, label: "Twitter" },
     { href: "https://github.com/Nikhil0653", icon: Github, label: "GitHub" },
     { href: "https://linkedin.com/in/nikhil-choudhary-0653", icon: Linkedin, label: "LinkedIn" },
   ]
@@ -43,13 +43,12 @@ export function SiteHeader() {
       className={`sticky top-0 z-40 backdrop-blur-md supports-[backdrop-filter]:bg-background/60 border-b transition-all duration-300 ${
         isScrolled
           ? 'bg-background/80 dark:bg-[#121212]/80'
-          : ''
+          : 'bg-[#fafafa] dark:bg-[#121212]'
       } ${
         isScrolled
           ? 'border-border'
           : 'border-transparent'
       }`}
-      style={!isScrolled ? { backgroundColor: '#121212' } : undefined}
     >
       <div className="mx-auto max-w-5xl px-4 py-3">
         {/* Desktop Layout */}
@@ -137,7 +136,7 @@ export function SiteHeader() {
           <div className="sm:hidden mt-4 pb-4 border-t border-border pt-4">
             <nav aria-label="Mobile navigation">
               <ul className="flex flex-col gap-1">
-                {nav.map((item, index) => {
+                {nav.map((item) => {
                   const active = pathname === item.href
                   return (
                     <li key={item.href}>
@@ -153,9 +152,7 @@ export function SiteHeader() {
                       >
                         {item.label}
                       </Link>
-                      {index < nav.length - 1 && (
-                        <div className="border-t border-border mx-2" />
-                      )}
+                      <div className="border-t border-border mx-2" />
                     </li>
                   )
                 })}
@@ -186,7 +183,7 @@ export function SiteHeader() {
                             href={social.href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center justify-center w-full h-10 rounded-md bg-background/40 backdrop-blur-sm border border-border/50 hover:bg-background/60 transition-colors"
+                            className="flex items-center justify-center gap-2 w-full h-10 rounded-md bg-[#121212]/40 backdrop-blur-sm border border-border/50 hover:bg-[#121212]/60 transition-colors"
                             aria-label={social.label}
                             onClick={() => setIsMobileMenuOpen(false)}
                           >
@@ -194,6 +191,9 @@ export function SiteHeader() {
                               size={18}
                               className="text-muted-foreground hover:text-foreground transition-colors"
                             />
+                            <span className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                              {social.label}
+                            </span>
                           </a>
                         )
                       })}

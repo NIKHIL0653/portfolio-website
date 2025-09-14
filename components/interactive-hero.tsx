@@ -186,33 +186,31 @@ export function InteractiveHero() {
           <p className="mt-4 text-pretty text-sm sm:text-base md:text-lg leading-relaxed text-muted-foreground mx-auto max-w-xl px-2">
             I build performant interfaces and systems with a product mindset.
           </p>
-        </div>
-      </div>
 
-      {/* Scroll Down Indicator */}
-      <div
-        className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-10 transition-opacity duration-300"
-        style={{ opacity: scrollOpacity }}
-      >
-        <div className="flex flex-col items-center space-y-1 text-muted-foreground">
-          <span className="text-xs font-medium">Scroll Down</span>
-          <div className="animate-bounce">
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="text-muted-foreground"
-            >
-              <path
-                d="M7 13L12 18L17 13M7 6L12 11L17 6"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+          {/* Scroll Down Indicator */}
+          <div
+            className="mt-8 flex flex-col items-center space-y-1 text-muted-foreground transition-opacity duration-300"
+            style={{ opacity: scrollOpacity }}
+          >
+            <span className="text-xs font-medium">Scroll Down</span>
+            <div className="animate-bounce">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="text-muted-foreground"
+              >
+                <path
+                  d="M7 13L12 18L17 13M7 6L12 11L17 6"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
           </div>
         </div>
       </div>

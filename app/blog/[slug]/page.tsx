@@ -79,7 +79,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           {/* Back Link - Inside the card at top */}
           <div className="text-center pt-8 sm:pt-6 md:pt-8 lg:pt-12 pb-0">
             <Link href="/blog" className="inline-flex items-center text-sm text-primary relative z-20">
-              ← <span className="mx-1 text-slate-500 dark:text-slate-400">Blog</span> / {post.category}
+              ← <span className="mx-1 text-[#737373] dark:text-[#d1d5db]">Blog</span> / {post.category}
             </Link>
           </div>
 
@@ -103,14 +103,14 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
                         height={20}
                         className="author-avatar"
                       />
-                      <span className="font-medium text-slate-700 dark:text-slate-300">{post.author}</span>
+                      <span className="font-medium text-[#737373] dark:text-[#d1d5db]">{post.author}</span>
                     </div>
                     <div className="hidden sm:block text-slate-400"> | </div>
                   </>
                 )}
                 <div className="flex items-center justify-center gap-2">
-                  <Calendar className="h-4 w-4 text-slate-500 dark:text-slate-400" />
-                  <time className="font-medium text-slate-700 dark:text-slate-300">
+                  <Calendar className="h-4 w-4 text-[#737373] dark:text-[#d1d5db]" />
+                  <time className="font-medium text-[#737373] dark:text-[#d1d5db]">
                     {formatDateWithOrdinal(post.date)}
                   </time>
                 </div>

@@ -119,10 +119,10 @@ export function SiteHeader() {
             </Link>
 
             <nav
-              className="flex items-center rounded-full border bg-background/50 px-4 py-1 shadow-sm"
+              className="flex items-center rounded-full border bg-[#FFFFFF] px-4 py-1 shadow-sm"
               aria-label="Primary"
             >
-              <ul className="flex items-center gap-6">
+              <ul className="flex items-center gap-8">
                 {nav.map((item) => {
                   const active = pathname === item.href
                   return (

@@ -151,10 +151,10 @@ export function InteractiveHero() {
   return (
     <section id="top" className="relative">
       <div className="absolute inset-0">
-        <canvas ref={canvasRef} className="block h-[75vh] sm:h-[85vh] w-full" aria-hidden="true" />
+        <canvas ref={canvasRef} className="block h-[85vh] sm:h-[95vh] w-full" aria-hidden="true" />
       </div>
 
-      <div className="relative z-10 h-[75vh] sm:h-[85vh] px-6 sm:px-8 flex items-center justify-center">
+      <div className="relative z-10 h-[85vh] sm:h-[95vh] px-6 sm:px-8 flex items-center justify-center">
         <div className="max-w-2xl text-center">
           <div className="mx-auto mb-4 flex justify-center">
             <h2

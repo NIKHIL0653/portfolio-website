@@ -15,7 +15,7 @@ export default function HomePage() {
           <InteractiveHero />
 
           {/* Activity Section */}
-          <section id="activity" className="px-6 sm:px-8 py-6 sm:py-8 border-t border-dashed border-border">
+          <section id="activity" className="hidden sm:block px-6 sm:px-8 py-6 sm:py-8 border-t border-dashed border-border">
             <header className="mb-3 sm:mb-4">
               <h2 className="text-2xl sm:text-3xl font-semibold text-center flex items-center justify-center gap-2"><Github className="h-6 w-6" /> Coding Activity</h2>
             </header>

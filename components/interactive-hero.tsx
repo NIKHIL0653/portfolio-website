@@ -158,7 +158,7 @@ export function InteractiveHero() {
         <div className="max-w-2xl text-center">
           <div className="mx-auto mb-4 flex justify-center">
             <h2
-              className="tracking-tight"
+              className="tracking-tight ml-2 sm:ml-0"
               style={{
                 fontSize: '48px',
                 fontFamily: '__geistMono_bb3bb8',
@@ -219,7 +219,7 @@ export function InteractiveHero() {
 
       <style>{`
         .typewriter-text { white-space: nowrap; }
-        .caret { margin-left: 2px; display: inline-block; width: 1ch; animation: blink 1s steps(1, end) infinite; }
+        .caret { margin-left: 1px; display: inline-block; width: 2px; animation: blink 1s steps(1, end) infinite; }
         @keyframes blink { 50% { opacity: 0; } }
 
         .specialty-text {

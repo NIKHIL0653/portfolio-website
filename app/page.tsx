@@ -52,10 +52,10 @@ export default function HomePage() {
                 <div className="mt-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-500 md:group-hover:translate-y-0 md:translate-y-1">
                   <p className="text-muted-foreground text-center leading-relaxed text-sm max-w-xs">Discover my latest projects and technical implementations</p>
                 </div>
-                {/* Dotted divider for desktop - extended to connect with top/bottom */}
-                <div className="hidden md:block absolute -top-6 bottom-2 right-0 w-px border-r border-dotted border-border"></div>
-                {/* Horizontal dotted divider for mobile */}
-                <div className="md:hidden absolute -bottom-1 left-4 right-4 h-px border-t border-dotted border-border"></div>
+                {/* Custom dashed divider for desktop - extended to connect with top/bottom */}
+                <div className="hidden md:block absolute -top-6 bottom-2 right-0 custom-dashed-line" style={{width: '0.5px', height: 'auto'}}></div>
+                {/* Custom horizontal dashed divider for mobile */}
+                <div className="md:hidden absolute -bottom-1 left-4 right-4 custom-dashed-line-horizontal" style={{height: '0.5px', width: 'auto'}}></div>
               </Link>
 
               {/* Blog Column */}
@@ -69,10 +69,10 @@ export default function HomePage() {
                 <div className="mt-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-500 md:group-hover:translate-y-0 md:translate-y-1">
                   <p className="text-muted-foreground text-center leading-relaxed text-sm max-w-xs">Read my thoughts on development, design, and technology</p>
                 </div>
-                {/* Dotted divider for desktop - extended to connect with top/bottom */}
-                <div className="hidden md:block absolute -top-6 bottom-2 right-0 w-px border-r border-dotted border-border"></div>
-                {/* Horizontal dotted divider for mobile */}
-                <div className="md:hidden absolute -bottom-1 left-4 right-4 h-px border-t border-dotted border-border"></div>
+                {/* Custom dashed divider for desktop - extended to connect with top/bottom */}
+                <div className="hidden md:block absolute -top-6 bottom-2 right-0 custom-dashed-line" style={{width: '0.5px', height: 'auto'}}></div>
+                {/* Custom horizontal dashed divider for mobile */}
+                <div className="md:hidden absolute -bottom-1 left-4 right-4 custom-dashed-line-horizontal" style={{height: '0.5px', width: 'auto'}}></div>
               </Link>
 
               {/* About Column */}

@@ -119,7 +119,7 @@ export function SiteHeader() {
             </Link>
 
             <nav
-              className="flex items-center rounded-full border bg-background/50 px-4 py-1 shadow-sm"
+              className="flex items-center rounded-full border border-border bg-background/90 dark:!bg-[#171717] backdrop-blur-sm px-4 py-1 shadow-sm"
               aria-label="Primary"
             >
               <ul className="flex items-center gap-8">
@@ -132,8 +132,8 @@ export function SiteHeader() {
                         aria-current={active ? "page" : undefined}
                         className={
                           active
-                            ? "text-sm font-semibold text-muted-foreground"
-                            : "text-sm text-muted-foreground hover:text-foreground transition-colors"
+                            ? "text-sm font-semibold text-foreground"
+                            : "text-sm text-foreground/80 hover:text-foreground transition-colors"
                         }
                       >
                         {item.label}

@@ -1,6 +1,14 @@
+"use client"
+
 import { ThemeToggle } from "./theme-toggle"
-import { Github, Linkedin, FileText, Home, User } from "lucide-react"
+import { Github, Linkedin, Mail } from "lucide-react"
 import Link from "next/link"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 // Custom X (Twitter) Logo Component
 function XLogo({ className }: { className?: string }) {
@@ -17,20 +25,115 @@ function XLogo({ className }: { className?: string }) {
 }
 
 export function SiteFooter() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer id="contact" className="border-t bg-background">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8 sm:py-12">
-        {/* Mobile: 2x2 grid, Desktop: 4 column grid */}
-        <div className="grid gap-6 sm:gap-8 md:gap-12 grid-cols-2 md:grid-cols-4 place-items-start">
+        
+        {/* Mobile View */}
+        <div className="sm:hidden">
+          <div className="mb-6">
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-semibold text-foreground">
+                Nikhil Choudhary
+              </p>
+              <ThemeToggle />
+            </div>
+            <div className="flex space-x-4 pt-3">
+              <a
+                href="mailto:nikhilchoudhary0653@gmail.com"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+                aria-label="Email"
+              >
+                <Mail className="h-5 w-5" />
+              </a>
+              <a
+                href="https://x.com/Nikhil0653"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+                aria-label="X"
+              >
+                <XLogo className="h-5 w-5" />
+              </a>
+              <a
+                href="https://github.com/NIKHIL0653"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+                aria-label="GitHub"
+              >
+                <Github className="h-5 w-5" />
+              </a>
+              <a
+                href="https://linkedin.com/in/nikhil-choudhary-0653"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="h-5 w-5" />
+              </a>
+            </div>
+          </div>
           
+          <Accordion type="single" collapsible className="w-full">
+            {/* ✅ MODIFIED: Reduced bottom margin from mb-2 to mb-1 */}
+            <AccordionItem value="menu" className="dark:border-b-[#171717] mb-1">
+              <AccordionTrigger className="text-sm font-semibold text-muted-foreground hover:bg-transparent px-2">Menu</AccordionTrigger>
+              <AccordionContent>
+                <nav className="grid grid-cols-3 gap-4 pt-2 justify-items-center">
+                  <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    Home
+                  </Link>
+                  <Link href="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    About
+                  </Link>
+                  <a
+                    href="https://drive.google.com/file/d/1iAWePU4UtApS1Dx-2Vg7hK3bXRO8rUQy/view?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Resume
+                  </a>
+                </nav>
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="creative" className="border-b-0">
+              <AccordionTrigger className="text-sm font-semibold text-muted-foreground hover:bg-transparent px-2">Creative</AccordionTrigger>
+              <AccordionContent>
+                <nav className="grid grid-cols-3 gap-4 pt-2 justify-items-center">
+                  <Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    Blog
+                  </Link>
+                  <Link href="/work" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    Projects
+                  </Link>
+                </nav>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
+
+        {/* Desktop View */}
+        <div className="hidden sm:grid gap-6 sm:gap-8 md:gap-12 grid-cols-2 md:grid-cols-4 place-items-start">
           {/* Branding & Socials */}
           <div className="space-y-4">
             <p className="font-semibold tracking-tight">Nikhil Choudhary</p>
             <p className="text-sm text-muted-foreground">
-              © Nikhil Choudhary 2025,<br />
+              © {currentYear} Nikhil Choudhary,<br />
               All rights reserved.
             </p>
             <div className="flex space-x-4 pt-2">
+              <a
+                href="mailto:nikhilchoudhary0653@gmail.com"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+                aria-label="Email"
+              >
+                <Mail className="h-5 w-5" />
+              </a>
               <a
                 href="https://x.com/Nikhil0653"
                 target="_blank"
@@ -95,7 +198,7 @@ export function SiteFooter() {
             </nav>
           </div>
 
-          {/* Preferences (moved here beside Creative) */}
+          {/* Preferences */}
           <div>
             <h4 className="text-sm font-semibold text-muted-foreground">Preferences</h4>
             <div className="mt-3">
@@ -107,6 +210,3 @@ export function SiteFooter() {
     </footer>
   )
 }
-
-
-

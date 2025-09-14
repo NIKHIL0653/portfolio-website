@@ -21,14 +21,14 @@ export function Header() {
         </Link>
 
         {/* Center: Navigation pill, centered relative to content frame */}
-        <nav className="hidden sm:flex absolute left-1/2 -translate-x-1/2 items-center gap-20 px-8 py-2 rounded-full bg-muted/40 shadow-sm">
-          <Link href="#projects" className="text-sm hover:underline">
+        <nav className="hidden sm:flex absolute left-1/2 -translate-x-1/2 items-center gap-20 px-8 py-2 rounded-full bg-background/90 backdrop-blur-sm border border-border/50 shadow-sm">
+          <Link href="#projects" className="text-sm text-foreground/80 hover:text-foreground hover:underline transition-colors">
             Projects
           </Link>
-          <Link href="#blogs" className="text-sm hover:underline">
+          <Link href="#blogs" className="text-sm text-foreground/80 hover:text-foreground hover:underline transition-colors">
             Blogs
           </Link>
-          <Link href="#about" className="text-sm hover:underline">
+          <Link href="#about" className="text-sm text-foreground/80 hover:text-foreground hover:underline transition-colors">
             About
           </Link>
         </nav>

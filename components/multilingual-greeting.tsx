@@ -95,11 +95,10 @@ export function MultilingualGreeting() {
       <div className="text-center">
         <div className="h-[2rem] flex items-center justify-center">
           <span
-            className={`transition-all duration-200 text-muted-foreground ${isScrambling ? "opacity-60" : "opacity-80"}`}
+            className={`transition-all duration-200 text-muted-foreground text-lg sm:text-xl ${isScrambling ? "opacity-60" : "opacity-80"}`}
             style={{
               fontFamily: '__geistMono_bb3bb8',
               fontWeight: '500',
-              fontSize: '20px',
               lineHeight: '24px'
             }}
           >

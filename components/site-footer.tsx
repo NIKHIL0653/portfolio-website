@@ -3,12 +3,38 @@
 import { ThemeToggle } from "./theme-toggle"
 import { Github, Linkedin, Mail } from "lucide-react"
 import Link from "next/link"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
+
+// ✅ MODIFIED: SVG pattern components for a denser, darker separator
+function SeparatorPatternLight() {
+  return (
+    <svg width="7" height="7" className="absolute w-full h-full">
+      <defs>
+        {/* ✅ MODIFIED: width/height="7" for denser lines */}
+        <pattern id="pattern-light" patternUnits="userSpaceOnUse" width="7" height="7">
+          {/* ✅ MODIFIED: stroke="#71717a" for darker lines */}
+          <path d="M-1,1 l2,-2 M0,7 l7,-7 M6,8 l2,-2" stroke="#71717a" strokeWidth="0.25" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#pattern-light)" />
+    </svg>
+  );
+}
+
+function SeparatorPatternDark() {
+  return (
+    <svg width="7" height="7" className="absolute w-full h-full">
+      <defs>
+        {/* ✅ MODIFIED: width/height="7" for denser lines */}
+        <pattern id="pattern-dark" patternUnits="userSpaceOnUse" width="7" height="7">
+          {/* ✅ MODIFIED: stroke="#71717a" for darker lines */}
+          <path d="M-1,1 l2,-2 M0,7 l7,-7 M6,8 l2,-2" stroke="#71717a" strokeWidth="0.25" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#pattern-dark)" />
+    </svg>
+  );
+}
+
 
 // Custom X (Twitter) Logo Component
 function XLogo({ className }: { className?: string }) {
@@ -28,7 +54,17 @@ export function SiteFooter() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer id="contact" className="border-t bg-background">
+    <footer id="contact" className="bg-background">
+      {/* ✅ MODIFIED: Removed top border, added background color */}
+      <div className="relative h-2.5 w-full border-b border-border bg-zinc-100 dark:bg-zinc-900" aria-hidden="true">
+        <div className="block dark:hidden">
+          <SeparatorPatternLight />
+        </div>
+        <div className="hidden dark:block">
+          <SeparatorPatternDark />
+        </div>
+      </div>
+      
       <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8 sm:py-12">
         
         {/* Mobile View */}
@@ -78,43 +114,38 @@ export function SiteFooter() {
             </div>
           </div>
           
-          <Accordion type="single" collapsible className="w-full">
-            {/* ✅ MODIFIED: Reduced bottom margin from mb-2 to mb-1 */}
-            <AccordionItem value="menu" className="dark:border-b-[#171717] mb-1">
-              <AccordionTrigger className="text-sm font-semibold text-muted-foreground hover:bg-transparent px-2">Menu</AccordionTrigger>
-              <AccordionContent>
-                <nav className="grid grid-cols-3 gap-4 pt-2 justify-items-center">
-                  <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                    Home
-                  </Link>
-                  <Link href="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                    About
-                  </Link>
-                  <a
-                    href="https://drive.google.com/file/d/1iAWePU4UtApS1Dx-2Vg7hK3bXRO8rUQy/view?usp=sharing"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    Resume
-                  </a>
-                </nav>
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="creative" className="border-b-0">
-              <AccordionTrigger className="text-sm font-semibold text-muted-foreground hover:bg-transparent px-2">Creative</AccordionTrigger>
-              <AccordionContent>
-                <nav className="grid grid-cols-3 gap-4 pt-2 justify-items-center">
-                  <Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                    Blog
-                  </Link>
-                  <Link href="/work" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                    Projects
-                  </Link>
-                </nav>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+          <div className="grid grid-cols-2 gap-8">
+            <div>
+              <h4 className="text-sm font-semibold text-muted-foreground">Menu</h4>
+              <nav className="mt-3 flex flex-col space-y-2">
+                <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Home
+                </Link>
+                <Link href="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  About
+                </Link>
+                <a
+                  href="https://drive.google.com/file/d/1iAWePU4UtApS1Dx-2Vg7hK3bXRO8rUQy/view?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Resume
+                </a>
+              </nav>
+            </div>
+            <div>
+              <h4 className="text-sm font-semibold text-muted-foreground">Creative</h4>
+              <nav className="mt-3 flex flex-col space-y-2">
+                <Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Blog
+                </Link>
+                <Link href="/work" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Projects
+                </Link>
+              </nav>
+            </div>
+          </div>
         </div>
 
         {/* Desktop View */}

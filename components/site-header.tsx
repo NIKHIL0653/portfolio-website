@@ -8,8 +8,6 @@ import {
   Mail,
   Github,
   Linkedin,
-  ChevronDown,
-  ChevronUp,
 } from "lucide-react"
 import { useTheme } from "./theme-provider"
 import { ThemeToggle } from "./theme-toggle"
@@ -62,7 +60,6 @@ export function SiteHeader() {
   const pathname = usePathname()
   const hasResume = Boolean(RESUME_URL)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [isSocialDropdownOpen, setIsSocialDropdownOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
@@ -97,8 +94,7 @@ export function SiteHeader() {
   ]
 
   const closeMobileMenu = () => {
-    setIsMobileMenuOpen(_ => false)
-    setIsSocialDropdownOpen(_ => false)
+    setIsMobileMenuOpen(false)
   }
 
   return (
@@ -237,25 +233,8 @@ export function SiteHeader() {
                   </li>
 
                   <li>
-                    <button
-                      onClick={() =>
-                        setIsSocialDropdownOpen(!isSocialDropdownOpen)
-                      }
-                      className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center justify-between w-full py-2 px-2"
-                    >
-                      <span>Social Links</span>
-                      {isSocialDropdownOpen ? (
-                        <ChevronUp size={16} />
-                      ) : (
-                        <ChevronDown size={16} />
-                      )}
-                    </button>
-                    <div className="border-t border-border mx-2" />
-                  </li>
-
-                  {isSocialDropdownOpen && (
-                    <li>
-                      <div className="grid grid-cols-2 gap-2 mt-2 mb-2 px-2">
+                    <div className="py-2 px-2">
+                      <div className="grid grid-cols-2 gap-2">
                         {socialLinks.map((social) => {
                           const IconComponent = social.icon
                           return (
@@ -264,7 +243,7 @@ export function SiteHeader() {
                               href={social.href}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center justify-center gap-2 w-full h-10 rounded-md backdrop-blur-sm border border-border hover:bg-[#121212] transition-colors"
+                              className="flex items-center justify-center gap-2 w-full h-10 rounded-md backdrop-blur-sm border border-border hover:bg-[#121212] dark:hover:bg-[#2a2a2a] transition-colors"
                               onClick={closeMobileMenu}
                             >
                               <IconComponent size={16} />
@@ -273,8 +252,9 @@ export function SiteHeader() {
                           )
                         })}
                       </div>
-                    </li>
-                  )}
+                    </div>
+                    <div className="border-t border-border mx-2" />
+                  </li>
                 </ul>
               </nav>
             </div>

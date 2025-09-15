@@ -45,7 +45,7 @@ export function InteractiveHero() {
     const SPEED = 0.25
     const TURN = 0.008
 
-    const count = Math.min(290, Math.floor((width * height) / 3000))
+    const count = Math.min(450, Math.floor((width * height) / 2000))
     type Star = { x: number; y: number; r: number; a: number; v: number }
     const rand = (min: number, max: number) => Math.random() * (max - min) + min
 
@@ -86,7 +86,7 @@ export function InteractiveHero() {
         const r = Math.max(0.6, s.r + twinkle)
 
         // Smooth pulsing effect using sine wave
-        const pulseSpeed = 1.2 // Adjust pulsing speed (increased for faster pulsing)
+        const pulseSpeed = 1.8 // Adjust pulsing speed (further increased for much faster pulsing)
         const pulseOffset = i * 0.2 // Stagger pulsing for each dot
         const pulseTime = (performance.now() / 1000) * pulseSpeed + pulseOffset
         const pulseOpacity = (Math.sin(pulseTime) + 1) * 0.5 // Smooth 0-1 oscillation

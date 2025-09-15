@@ -101,7 +101,7 @@ export function SiteHeader() {
     <>
       <header
         className={`sticky top-0 z-50 backdrop-blur-md border-b transition-colors duration-300 bg-[#FAFAFA]/80 dark:bg-[#121212]/80 ${
-          isScrolled ? "border-border" : "border-transparent"
+          isMobileMenuOpen ? "border-transparent" : (isScrolled ? "border-border" : "border-transparent")
         }`}
       >
         <div className="mx-auto max-w-5xl px-4 py-3">
@@ -181,7 +181,7 @@ export function SiteHeader() {
       {/* Mobile Menu Overlay */}
       <div className={`fixed inset-0 z-40 sm:hidden ${!isMobileMenuOpen && "pointer-events-none"}`}>
         <div
-          className={`absolute inset-0 bg-[#FAFAFA]/90 dark:bg-[#121212]/90 backdrop-blur-sm transition-opacity duration-500 ease-out ${
+          className={`absolute inset-0 bg-[#FAFAFA]/80 dark:bg-[#121212]/80 backdrop-blur-md transition-opacity duration-500 ease-out ${
             isMobileMenuOpen ? "opacity-100" : "opacity-0"
           }`}
           onClick={closeMobileMenu}
@@ -258,7 +258,7 @@ export function SiteHeader() {
                               href={social.href}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center justify-center gap-2 w-full h-10 rounded-md backdrop-blur-sm border border-border hover:bg-[#121212] dark:hover:bg-[#2a2a2a] transition-colors"
+                              className="flex items-center justify-center gap-2 w-full h-10 rounded-md backdrop-blur-sm border border-border hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-all duration-200 shadow-sm hover:shadow-md"
                               onClick={closeMobileMenu}
                             >
                               <IconComponent size={16} />

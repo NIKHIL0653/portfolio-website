@@ -36,15 +36,17 @@ export default function BlogIndexPageClient() {
       <div className="flex-1 flex items-center justify-center p-2 sm:p-6 lg:p-8" style={{ minHeight: 'calc(100vh - 200px)' }}>
         <div className="w-full max-w-6xl">
           <div className="px-3 sm:px-8 py-6 sm:py-8 blog-client-container">
-            <header className="mb-3 sm:mb-4">
+            <header className="mb-3 sm:mb-4 pl-2 pr-2 sm:pl-0 sm:pr-0">
               <h1 className="text-2xl sm:text-3xl font-semibold">Blog</h1>
               <p className="text-muted-foreground mt-2 max-w-2xl text-sm sm:text-base">Writings on frontend, accessibility, and product craft.</p>
             </header>
 
-        <BlogFilters
-          onFilterChange={handleFilterChange}
-          activeCategory={activeCategory}
-        />
+        <div className="pl-2 pr-2 sm:pl-0 sm:pr-0">
+          <BlogFilters
+            onFilterChange={handleFilterChange}
+            activeCategory={activeCategory}
+          />
+        </div>
 
         {filteredPosts.length > 0 ? (
           <div className="relative rounded-md overflow-hidden bg-card border border-gray-600 shadow-lg pt-2 pb-4 pl-2 pr-2 blog-article-card">

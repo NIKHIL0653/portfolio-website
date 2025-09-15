@@ -155,20 +155,16 @@ export function SiteHeader() {
 
           {/* Mobile Layout */}
           <div className="flex items-center justify-between sm:hidden">
-            <Link href="/" className="font-semibold tracking-tight">
+            <Link
+              href="/"
+              className={`font-semibold tracking-tight transition-opacity duration-300 ${
+                isMobileMenuOpen ? 'opacity-0' : 'opacity-100'
+              }`}
+            >
               Nikhil Choudhary
             </Link>
 
             <div className="flex items-center gap-2">
-              <Button asChild size="sm" className="rounded-full font-medium" disabled={!hasResume}>
-                <a
-                  href={hasResume ? RESUME_URL : "#"}
-                  target={hasResume ? "_blank" : "_self"}
-                  rel="noopener noreferrer"
-                >
-                  Resume
-                </a>
-              </Button>
               {/* ✅ MODIFIED: Using a standard button with explicit transparent styling */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -185,7 +181,7 @@ export function SiteHeader() {
       {/* Mobile Menu Overlay */}
       <div className={`fixed inset-0 z-40 sm:hidden ${!isMobileMenuOpen && "pointer-events-none"}`}>
         <div
-          className={`absolute inset-0 bg-[#FAFAFA] dark:bg-[#121212] transition-opacity duration-500 ease-out ${
+          className={`absolute inset-0 bg-[#FAFAFA]/90 dark:bg-[#121212]/90 backdrop-blur-sm transition-opacity duration-500 ease-out ${
             isMobileMenuOpen ? "opacity-100" : "opacity-0"
           }`}
           onClick={closeMobileMenu}
@@ -200,6 +196,25 @@ export function SiteHeader() {
         >
           <div className="flex-1 overflow-y-auto">
             <div className="mt-16 pb-4 px-4">
+              {/* Mobile Resume Button - Full width, rectangular with rounded corners */}
+              {hasResume && (
+                <Button
+                  asChild
+                  variant="default"
+                  className="w-full rounded-md mb-4 py-3 h-10 backdrop-blur-sm border border-border"
+                  title="View Resume"
+                >
+                  <a
+                    href={RESUME_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={closeMobileMenu}
+                  >
+                    Resume
+                  </a>
+                </Button>
+              )}
+
               <nav aria-label="Mobile navigation">
                 <ul className="flex flex-col gap-1">
                   {nav.map((item) => {

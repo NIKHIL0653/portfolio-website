@@ -4,23 +4,19 @@ import { ThemeToggle } from "./theme-toggle"
 import { Github, Linkedin, Mail } from "lucide-react"
 import Link from "next/link"
 
-// ✅ MODIFIED: Final color adjustments for background and line contrast
+// ✅ MODIFIED: SVG pattern set to 4x4 with 0.35 stroke width
 function SeparatorPatternLight() {
   return (
-    <svg width="7" height="7" className="absolute w-full h-full">
+    <svg width="4" height="4" className="absolute w-full h-full">
       <defs>
-        {/* Pattern for left-slanting lines (\) - Medium */}
-        <pattern id="pattern-light-left" patternUnits="userSpaceOnUse" width="7" height="7">
-          <path d="M-1,6 l2,2 M0,0 l7,7 M6,-1 l2,2" stroke="#a1a1aa" strokeWidth="0.25" />
+        <pattern id="pattern-light-left" patternUnits="userSpaceOnUse" width="4" height="4">
+          <path d="M-1,3 l2,2 M0,0 l4,4 M3,-1 l2,2" stroke="#a1a1aa" strokeWidth="0.45" />
         </pattern>
-        {/* Pattern for right-slanting lines (/) - Darker */}
-        <pattern id="pattern-light-right" patternUnits="userSpaceOnUse" width="7" height="7">
-          <path d="M-1,1 l2,-2 M0,7 l7,-7 M6,8 l2,-2" stroke="#52525b" strokeWidth="0.25" />
+        <pattern id="pattern-light-right" patternUnits="userSpaceOnUse" width="4" height="4">
+          <path d="M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2" stroke="#52525b" strokeWidth="0.45" />
         </pattern>
       </defs>
-      {/* Apply left pattern to the left 50% */}
       <rect width="50%" height="100%" fill="url(#pattern-light-left)" />
-      {/* Apply right pattern to the right 50% */}
       <rect x="50%" width="50%" height="100%" fill="url(#pattern-light-right)" />
     </svg>
   );
@@ -28,15 +24,13 @@ function SeparatorPatternLight() {
 
 function SeparatorPatternDark() {
   return (
-    <svg width="7" height="7" className="absolute w-full h-full">
+    <svg width="4" height="4" className="absolute w-full h-full">
       <defs>
-        {/* Pattern for left-slanting lines (\) - Medium */}
-        <pattern id="pattern-dark-left" patternUnits="userSpaceOnUse" width="7" height="7">
-          <path d="M-1,6 l2,2 M0,0 l7,7 M6,-1 l2,2" stroke="#52525b" strokeWidth="0.25" />
+        <pattern id="pattern-dark-left" patternUnits="userSpaceOnUse" width="4" height="4">
+          <path d="M-1,3 l2,2 M0,0 l4,4 M3,-1 l2,2" stroke="#52525b" strokeWidth="0.45" />
         </pattern>
-        {/* Pattern for right-slanting lines (/) - Darker (more prominent) */}
-        <pattern id="pattern-dark-right" patternUnits="userSpaceOnUse" width="7" height="7">
-          <path d="M-1,1 l2,-2 M0,7 l7,-7 M6,8 l2,-2" stroke="#a1a1aa" strokeWidth="0.25" />
+        <pattern id="pattern-dark-right" patternUnits="userSpaceOnUse" width="4" height="4">
+          <path d="M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2" stroke="#a1a1aa" strokeWidth="0.45" />
         </pattern>
       </defs>
       <rect width="50%" height="100%" fill="url(#pattern-dark-left)" />
@@ -65,8 +59,7 @@ export function SiteFooter() {
 
   return (
     <footer id="contact" className="bg-background">
-      {/* ✅ MODIFIED: Lighter background color for the separator bar */}
-      <div className="relative h-3 w-full border-b border-border bg-zinc-50 dark:bg-zinc-800" aria-hidden="true">
+      <div className="relative h-2.5 w-full border-b border-border" aria-hidden="true">
         <div className="block dark:hidden">
           <SeparatorPatternLight />
         </div>

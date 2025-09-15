@@ -86,7 +86,7 @@ export function InteractiveHero() {
         const r = Math.max(0.6, s.r + twinkle)
 
         // Smooth pulsing effect using sine wave
-        const pulseSpeed = 0.8 // Adjust pulsing speed
+        const pulseSpeed = 1.2 // Adjust pulsing speed (increased for faster pulsing)
         const pulseOffset = i * 0.2 // Stagger pulsing for each dot
         const pulseTime = (performance.now() / 1000) * pulseSpeed + pulseOffset
         const pulseOpacity = (Math.sin(pulseTime) + 1) * 0.5 // Smooth 0-1 oscillation
@@ -178,7 +178,7 @@ export function InteractiveHero() {
           <div className="specialty-container">
             <h1
               key={currentSpecialty}
-              className="text-balance text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight specialty-text"
+              className="text-balance text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight specialty-text"
             >
               {specialties[currentSpecialty]}
             </h1>

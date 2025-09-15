@@ -14,6 +14,18 @@ export type BlogPostMeta = {
 // Blog posts metadata - content loaded from HTML files
 export const posts: BlogPostMeta[] = [
   {
+    slug: "next-project",
+    title: "Why Your Next Project Should Be a Blog",
+    excerpt: "Discover how your personal blog can become a creative playground, a learning accelerator, and the ultimate tool for building your unique brand in the tech world.",
+    date: "2025-09-15",
+    author: "Nikhil Choudhary",
+    tags: ["Personal Branding", "Blogging", "Web Development", "Career Growth"],
+    readTime: "5 min read",
+    image: "/images/blog/digital-playground-hero.jpg",
+    imageAlt: "A developer typing on a laptop with vibrant code and creative graphics flowing out of the screen.",
+    category: "Blogging"
+  },
+  {
     slug: "getting-started-with-nextjs",
     title: "Getting Started with Next.js",
     excerpt: "Learn how to build modern web applications with Next.js and React.",
@@ -36,18 +48,6 @@ export const posts: BlogPostMeta[] = [
     image: "/images/blog/architecture-hero.jpg",
     imageAlt: "Clean architecture diagram with simple, clear components",
     category: "Development"
-  },
-  {
-    slug: "next-project",
-    title: "Why Your Next Project Should Be a Blog",
-    excerpt: "Discover how your personal blog can become a creative playground, a learning accelerator, and the ultimate tool for building your unique brand in the tech world.",
-    date: "2025-09-15",
-    author: "Nikhil Choudhary",
-    tags: ["Personal Branding", "Blogging", "Web Development", "Career Growth"],
-    readTime: "5 min read",
-    image: "/images/blog/digital-playground-hero.jpg",
-    imageAlt: "A developer typing on a laptop with vibrant code and creative graphics flowing out of the screen.",
-    category: "Blogging"
   },
   {
     slug: "demystifying-rag-ai-secret-sauce",

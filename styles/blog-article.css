@@ -4,8 +4,8 @@
   font-size: 15px;
   max-width: 48rem;
   margin: 0 auto;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
   text-align: left;
 }
 
@@ -239,8 +239,8 @@ footer * {
 }
 
 
-/* Enhanced back link spacing on blog articles */
-.blog-article-card > div:first-child {
+/* Enhanced back link spacing on blog articles - exclude featured post */
+.blog-article-card > div:first-child:not(.featured-post-container) {
   padding-top: 3rem !important;
   padding-bottom: 0.5rem !important;
 }
@@ -509,7 +509,7 @@ footer * {
 /* ENHANCED Blog Image Frame Styling - Large Content Width */
 .blog-image-frame-large {
   background: #ffffff;
-  border: 1px solid #f1f5f9;
+  border: 1px solid #e2e8f0;
   border-radius: 0.75rem;
   overflow: hidden;
   max-width: 60rem;
@@ -517,7 +517,7 @@ footer * {
 
 .dark .blog-image-frame-large {
   background: #0F0F0F !important; /* Match blog card background */
-  border-color: #3a3a3a !important;
+  border-color: var(--border) !important;
 }
 
 /* Image inside the large frame */
@@ -544,7 +544,7 @@ footer * {
 /* ENHANCED Blog Image Frame Styling */
 .blog-image-frame {
   background: #ffffff;
-  border: 2px solid #e2e8f0;
+  border: 1px solid #e2e8f0;
   border-radius: 0.75rem;
   box-shadow: var(--shadow-card);
   transition: all 0.3s ease;
@@ -558,7 +558,7 @@ footer * {
 
 .dark .blog-image-frame {
   background: #0F0F0F !important; /* Match blog card background */
-  border-color: #3a3a3a !important;
+  border-color: var(--border) !important;
   box-shadow: var(--shadow-card) !important;
 }
 
@@ -637,6 +637,22 @@ footer * {
   .blog-client-container {
     padding-left: 0rem !important;
     padding-right: 0rem !important;
+  }
+
+  /* MODIFICATION: Make blog images and frames wider on mobile, reduce spacing further, and match border color */
+  .blog-content .blog-image-frame-large,
+  .blog-content img {
+    width: 100vw;
+    max-width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw !important; /* Pull image to left edge */
+    margin-right: -50vw !important; /* Pull image to right edge */
+    border-radius: 0 !important;
+    border: 2px solid var(--border) !important; /* Changed to use var(--border) for the outer border */
+    border-left-width: 0 !important; /* Remove side borders to stretch full width */
+    border-right-width: 0 !important; /* Remove side borders to stretch full width */
   }
 
   /* Reduce font weight of "Nikhil Choudhary" in header on mobile */
@@ -1021,5 +1037,3 @@ footer * {
   color: #d1d5db !important;
   box-shadow: var(--shadow-card) !important;
 }
-
-

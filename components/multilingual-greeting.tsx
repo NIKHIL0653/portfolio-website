@@ -65,11 +65,9 @@ export function MultilingualGreeting() {
 
       const scrambleInterval = setInterval(() => {
         if (scrambleCount < maxScrambles) {
-          // Generate scrambled text with same length as target
-          const nextIdx = getNextIndex(currentIndex, displayCount + 1)
-          const targetText = greetings[nextIdx].text
+          // Generate scrambled text with fixed length (20 characters)
           const scrambled = Array.from(
-            { length: targetText.length },
+            { length: 20 },
             () => scrambleChars[Math.floor(Math.random() * scrambleChars.length)],
           ).join("")
 

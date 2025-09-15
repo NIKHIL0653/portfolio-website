@@ -185,6 +185,8 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    /* Instant theme transitions */
+    transition: background-color 0s, border-color 0s, color 0s;
   }
   body {
     font-family: "__X_400de2", sans-serif !important;
@@ -208,6 +210,20 @@
     outline: 2px solid var(--ring);
     outline-offset: 2px;
     box-shadow: var(--shadow-focus);
+  }
+
+  /* Instant transitions for social media links in mobile menu */
+  .grid.grid-cols-2.gap-2 a {
+    transition: none !important;
+  }
+
+  /* Prevent multilingual greeting overflow on mobile */
+  @media (max-width: 640px) {
+    .h-\[2rem\] {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 
   /* Reduce motion for users who prefer it */

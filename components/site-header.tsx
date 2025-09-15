@@ -100,7 +100,7 @@ export function SiteHeader() {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 backdrop-blur-md border-b transition-colors duration-300 bg-[#FAFAFA]/80 dark:bg-[#121212]/80 ${
+        className={`sticky top-0 z-50 backdrop-blur-md dark:backdrop-blur-none border-b transition-colors duration-300 bg-[#FAFAFA]/80 dark:bg-[#121212]/80 ${
           isMobileMenuOpen ? "border-transparent" : (isScrolled ? "border-border" : "border-transparent")
         }`}
       >

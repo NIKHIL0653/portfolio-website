@@ -68,11 +68,6 @@ export default function BlogIndexPageClient() {
                                 sizes="(max-width: 768px) 100vw, 70vw"
                               />
                             )}
-                            <div className="absolute top-3 right-3 z-10">
-                              <span className="text-gray-700 dark:text-[#e4e4e7] text-xs font-semibold px-3 py-1 rounded-full border border-border bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rotate-2">
-                                Featured
-                              </span>
-                            </div>
                           </div>
                           
                           <div className="relative py-4 px-2 bg-card">
@@ -124,7 +119,7 @@ export default function BlogIndexPageClient() {
                                         {formatDate(post.date)}
                                       </div>
                                     </div>
-                                    <h2 className="text-sm sm:text-base font-semibold leading-tight text-foreground" style={{ fontSize: '16px' }}>
+                                    <h2 className="text-sm sm:text-base font-semibold leading-tight text-foreground" style={{ fontSize: '18px' }}>
                                       {post.title}
                                     </h2>
                                     <p className="text-sm text-muted-foreground line-clamp-2 leading-tight" style={{ fontSize: '13px' }}>{post.excerpt}</p>
@@ -167,7 +162,7 @@ export default function BlogIndexPageClient() {
                                     {formatDate(post.date)}
                                   </div>
                                 </div>
-                                <h2 className="text-sm sm:text-base font-semibold leading-tight text-foreground" style={{ fontSize: '16px' }}>
+                                <h2 className="text-sm sm:text-base font-semibold leading-tight text-foreground" style={{ fontSize: '18px' }}>
                                   {post.title}
                                 </h2>
                                 <p className="text-sm text-muted-foreground line-clamp-2 leading-tight" style={{ fontSize: '13px' }}>{post.excerpt}</p>

@@ -14,6 +14,209 @@
   border-color: #333333 !important;
 }
 
+/* Blog client page card hover effects - subtle gradient overlay on images, dim text on hover/touch */
+@media (min-width: 768px) {
+  /* Desktop hover effects for grid posts */
+  .group\/article .group\/image {
+    position: relative;
+  }
+
+  .group\/article .group\/image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.05) 50%, transparent 100%);
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .dark .group\/article .group\/image::after {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.1) 50%, transparent 100%);
+  }
+
+  .group\/article:hover .group\/image::after {
+    opacity: 0;
+  }
+
+  /* Featured post effects */
+  .blog-article-card a[href*="/blog/"] > div:first-child {
+    position: relative;
+  }
+
+  .blog-article-card a[href*="/blog/"] > div:first-child::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.05) 50%, transparent 100%);
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .dark .blog-article-card a[href*="/blog/"] > div:first-child::after {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.1) 50%, transparent 100%);
+  }
+
+  .blog-article-card a[href*="/blog/"]:hover > div:first-child::after {
+    opacity: 0;
+  }
+
+  /* Featured post description and date dimming */
+  .blog-article-card p.text-sm.line-clamp-2,
+  .blog-article-card .text-xs.text-muted-foreground.font-sans {
+    color: rgba(0, 0, 0, 0.5);
+    transition: color 0.3s ease;
+  }
+
+  .dark .blog-article-card p.text-sm.line-clamp-2,
+  .dark .blog-article-card .text-xs.text-muted-foreground.font-sans {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .blog-article-card a[href*="/blog/"]:hover p.text-sm.line-clamp-2,
+  .blog-article-card a[href*="/blog/"]:hover .text-xs.text-muted-foreground.font-sans {
+    color: rgba(0, 0, 0, 1);
+  }
+
+  .dark .blog-article-card a[href*="/blog/"]:hover p.text-sm.line-clamp-2,
+  .dark .blog-article-card a[href*="/blog/"]:hover .text-xs.text-muted-foreground.font-sans {
+    color: rgba(255, 255, 255, 1);
+  }
+
+  /* Grid post description and date dimming */
+  .group\/article p,
+  .group\/article .text-xs.text-muted-foreground.font-sans {
+    color: rgba(0, 0, 0, 0.5);
+    transition: color 0.3s ease;
+  }
+
+  .dark .group\/article p,
+  .dark .group\/article .text-xs.text-muted-foreground.font-sans {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .group\/article:hover p,
+  .group\/article:hover .text-xs.text-muted-foreground.font-sans {
+    color: rgba(0, 0, 0, 1);
+  }
+
+  .dark .group\/article:hover p,
+  .dark .group\/article:hover .text-xs.text-muted-foreground.font-sans {
+    color: rgba(255, 255, 255, 1);
+  }
+}
+
+@media (max-width: 767px) {
+  /* Mobile touch effects for grid posts */
+  .group\/article .group\/image {
+    position: relative;
+  }
+
+  .group\/article .group\/image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.05) 50%, transparent 100%);
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .dark .group\/article .group\/image::after {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.1) 50%, transparent 100%);
+  }
+
+  .group\/article:hover .group\/image::after,
+  .group\/article:active .group\/image::after {
+    opacity: 0;
+  }
+
+  /* Featured post effects for mobile */
+  .blog-article-card a[href*="/blog/"] > div:first-child {
+    position: relative;
+  }
+
+  .blog-article-card a[href*="/blog/"] > div:first-child::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.05) 50%, transparent 100%);
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .dark .blog-article-card a[href*="/blog/"] > div:first-child::after {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.1) 50%, transparent 100%);
+  }
+
+  .blog-article-card a[href*="/blog/"]:hover > div:first-child::after,
+  .blog-article-card a[href*="/blog/"]:active > div:first-child::after {
+    opacity: 0;
+  }
+
+  /* Featured post description and date dimming for mobile */
+  .blog-article-card p.text-sm.line-clamp-2,
+  .blog-article-card .text-xs.text-muted-foreground.font-sans {
+    color: rgba(0, 0, 0, 0.5);
+    transition: color 0.2s ease;
+  }
+
+  .dark .blog-article-card p.text-sm.line-clamp-2,
+  .dark .blog-article-card .text-xs.text-muted-foreground.font-sans {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .blog-article-card a[href*="/blog/"]:hover p.text-sm.line-clamp-2,
+  .blog-article-card a[href*="/blog/"]:hover .text-xs.text-muted-foreground.font-sans,
+  .blog-article-card a[href*="/blog/"]:active p.text-sm.line-clamp-2,
+  .blog-article-card a[href*="/blog/"]:active .text-xs.text-muted-foreground.font-sans {
+    color: rgba(0, 0, 0, 1);
+  }
+
+  .dark .blog-article-card a[href*="/blog/"]:hover p.text-sm.line-clamp-2,
+  .dark .blog-article-card a[href*="/blog/"]:hover .text-xs.text-muted-foreground.font-sans,
+  .dark .blog-article-card a[href*="/blog/"]:active p.text-sm.line-clamp-2,
+  .dark .blog-article-card a[href*="/blog/"]:active .text-xs.text-muted-foreground.font-sans {
+    color: rgba(255, 255, 255, 1);
+  }
+
+  /* Grid post description and date dimming for mobile */
+  .group\/article p,
+  .group\/article .text-xs.text-muted-foreground.font-sans {
+    color: rgba(0, 0, 0, 0.5);
+    transition: color 0.2s ease;
+  }
+
+  .dark .group\/article p,
+  .dark .group\/article .text-xs.text-muted-foreground.font-sans {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .group\/article:hover p,
+  .group\/article:hover .text-xs.text-muted-foreground.font-sans,
+  .group\/article:active p,
+  .group\/article:active .text-xs.text-muted-foreground.font-sans {
+    color: rgba(0, 0, 0, 1);
+  }
+
+  .dark .group\/article:hover p,
+  .dark .group\/article:hover .text-xs.text-muted-foreground.font-sans,
+  .dark .group\/article:active p,
+  .dark .group\/article:active .text-xs.text-muted-foreground.font-sans {
+    color: rgba(255, 255, 255, 1);
+  }
+}
+
 @media (min-width: 768px) {
   .blog-content {
     max-width: 48rem;

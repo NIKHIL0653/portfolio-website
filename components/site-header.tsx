@@ -97,16 +97,16 @@ export function SiteHeader() {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 w-full transition-all duration-700 ease-out ${
+        className={`sticky top-0 z-50 w-full ${
           isScrolled && !isMobileMenuOpen
-            ? "border-b border-border bg-background/80 backdrop-blur-md"
-            : "border-transparent bg-transparent"
+            ? "border-b border-border bg-background/80 backdrop-blur-md transition-all duration-300 ease-out delay-75"
+            : "border-transparent dark:bg-[#121212] bg-transparent transition-all duration-100 ease-out"
         }`}
       >
-        <div className="mx-auto max-w-5xl px-4 py-1">
-          <div className="hidden sm:relative sm:flex h-[46px] items-center justify-center">
+        <div className="mx-auto max-w-5xl px-2 py-1">
+          <div className="hidden sm:flex h-[46px] items-center">
             
-            <div className="absolute left-0 flex items-center -ml-30">
+            <div className="flex items-center -ml-30">
               <Link
                 href="/"
                 className="font-medium tracking-tight site-header-name"
@@ -115,17 +115,21 @@ export function SiteHeader() {
               </Link>
             </div>
 
-            <div>
+            <div className="flex-1 flex justify-center mx-8 relative">
               <nav
-                className={`flex items-center px-3 py-0.5 transition-all duration-700 ease-out ${
-                  isScrolled
-                    ? 'rounded-none border-transparent shadow-none bg-transparent backdrop-blur-none'
-                    // ✅ MODIFIED: Changed bg-background to bg-[#FFFFFF] and removed shadow-sm
-                    : 'rounded-full border border-border dark:bg-[#171717] bg-[#FFFFFF] backdrop-blur-sm'
-                }`}
+                className="flex items-center relative"
                 aria-label="Primary"
               >
-                <ul className="flex items-center gap-8">
+                {/* Expandable pill background */}
+                <div 
+                  className={`absolute inset-0 -z-10 transition-all duration-250 ease-out ${
+                    isScrolled
+                      ? 'scale-x-[8] scale-y-[2] rounded-none border-transparent shadow-none bg-transparent backdrop-blur-none'
+                      : 'scale-x-100 scale-y-100 rounded-full border border-border dark:bg-[#171717] bg-[#FFFFFF] backdrop-blur-sm'
+                  }`}
+                />
+                
+                <ul className="flex items-center gap-8 px-4 py-0.5 relative z-10">
                   {nav.map((item) => {
                     const active = pathname === item.href
                     return (
@@ -148,7 +152,7 @@ export function SiteHeader() {
               </nav>
             </div>
 
-            <div className="absolute right-0 flex items-center -mr-30">
+            <div className="flex items-center -mr-30">
               <Button asChild className="rounded-full font-medium" disabled={!hasResume}>
                 <a
                   href={hasResume ? RESUME_URL : "#"}
@@ -161,21 +165,30 @@ export function SiteHeader() {
             </div>
           </div>
 
-          {/* Mobile Layout (Unchanged) */}
+          {/* Mobile Layout */}
           <div className="flex items-center justify-between sm:hidden">
+            {/* ✅ MODIFIED 1: Added ml-2 to move text to the right */}
             <Link
               href="/"
-              className={`font-semibold tracking-tight transition-opacity duration-300 ${
+              className={`font-semibold tracking-tight transition-opacity duration-300 ml-2 ${
                 isMobileMenuOpen ? 'opacity-0' : 'opacity-100'
               }`}
             >
               Nikhil Choudhary
             </Link>
 
-            <div className="flex items-center gap-2">
+            {/* ✅ MODIFIED 2: Changed -mr-2 to mr-2 to move icon to the left */}
+            <div className="flex items-center gap-2 mr-0.1">
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-transparent text-black dark:text-[#121212] hover:bg-accent hover:text-accent-foreground relative z-[60] appearance-none border-none outline-none focus-visible:outline-none focus-visible:ring-0"
+                className="flex items-center justify-center w-10 h-10 text-foreground relative z-[60] p-0 m-0 !border-none !outline-none !bg-transparent hover:!bg-transparent focus:!bg-transparent active:!bg-transparent"
+                style={{ 
+                  background: 'none !important', 
+                  backgroundColor: 'transparent !important', 
+                  border: 'none !important',
+                  outline: 'none !important',
+                  boxShadow: 'none !important'
+                }}
                 aria-label="Toggle mobile menu"
               >
                 <HamburgerIcon isOpen={isMobileMenuOpen} />
@@ -185,7 +198,7 @@ export function SiteHeader() {
         </div>
       </header>
 
-      {/* Mobile Menu Overlay (Unchanged) */}
+      {/* Mobile Menu Overlay */}
       <div className={`fixed inset-0 z-40 sm:hidden ${!isMobileMenuOpen && "pointer-events-none"}`}>
         <div
           className={`absolute inset-0 bg-[#FAFAFA]/80 dark:bg-[#121212]/80 backdrop-blur-md transition-opacity duration-500 ease-out ${
@@ -202,24 +215,27 @@ export function SiteHeader() {
           }`}
         >
           <div className="flex-1 overflow-y-auto">
-            <div className="mt-16 pb-4 px-4">
+            <div className="mt-12 pb-4 px-2">
               {/* Mobile Resume Button */}
               {hasResume && (
-                <Button
-                  asChild
-                  variant="default"
-                  className="w-full rounded-md mb-4 py-3 h-10 backdrop-blur-sm border border-border"
-                  title="View Resume"
-                >
-                  <a
-                    href={RESUME_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={closeMobileMenu}
+                <div className="px-2">
+                  <Button
+                    asChild
+                    variant="default"
+                    // ✅ MODIFIED 3: Changed rounded-md to rounded
+                    className="w-full rounded mb-4 py-3 h-10 backdrop-blur-sm border border-border"
+                    title="View Resume"
                   >
-                    Resume
-                  </a>
-                </Button>
+                    <a
+                      href={RESUME_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={closeMobileMenu}
+                    >
+                      Resume
+                    </a>
+                  </Button>
+                </div>
               )}
 
               <nav aria-label="Mobile navigation">

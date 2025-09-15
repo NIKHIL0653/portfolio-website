@@ -49,33 +49,33 @@
   --foreground: #e4e4e7;  /* Darker shade of white for better contrast */
   --card: #0F0F0F;        /* Slightly lighter than background for cards - removes blue tone */
   --card-foreground: #e4e4e7;
-  --popover: #0F0F0F;     /* Match card color */
+  --popover: #0F0F0F;      /* Match card color */
   --popover-foreground: #f4f4f5;
   --primary: #f4f4f5;      /* Primary elements in slightly darker white */
   --primary-foreground: #171717;
   --secondary: #2a2a2a;   /* Neutral gray instead of blue-tinted #2a2e33 */
   --secondary-foreground: #f4f4f5;
-  --muted: #2a2a2a;       /* Match secondary for consistency */
+  --muted: #2a2a2a;        /* Match secondary for consistency */
   --muted-foreground: #a1a1aa;
-  --accent: #2a2a2a;      /* Match secondary for consistency */
+  --accent: rgba(244, 244, 245, 0.1); /* Subtle, transparent glow for hover effects. */
   --accent-foreground: #f4f4f5;
   --destructive: #dc2626; /* Keep destructive as red */
   --destructive-foreground: #ffffff;
   --border: #333333;      /* Subtle border that's not too dark, removes blue tone */
-  --input: #2a2a2a;       /* Match secondary */
-  --ring: #0F0F0F;       /* Ring color */
-  --chart-1: #0F0F0F;    /* Chart colors */
+  --input: #2a2a2a;        /* Match secondary */
+  --ring: #0F0F0F;        /* Ring color */
+  --chart-1: #0F0F0F;      /* Chart colors */
   --chart-2: #34d399;
   --chart-3: #fbbf24;
   --chart-4: #f87171;
   --chart-5: #0F0F0F;
-  --sidebar: #0F0F0F;     /* Match card color for consistency */
+  --sidebar: #0F0F0F;      /* Match card color for consistency */
   --sidebar-foreground: #f4f4f5;
   --sidebar-primary: #0F0F0F;
   --sidebar-primary-foreground: #f4f4f5;
-  --sidebar-accent: #2a2a2a;    /* Match secondary */
+  --sidebar-accent: #2a2a2a;      /* Match secondary */
   --sidebar-accent-foreground: #f4f4f5;
-  --sidebar-border: #333333;    /* Match border */
+  --sidebar-border: #333333;      /* Match border */
   --sidebar-ring: #0F0F0F;
   --shadow-subtle: 0 1px 2px 0 rgba(0, 0, 0, 0.15);
   --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.25), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
@@ -209,12 +209,3 @@
 .dark .project-card-glow:hover::before {
   opacity: 1;
 }
-
-
-/* Perform the following color replacements in the portfolio-website directory (relative path: portfolio-website):
-
-1. Replace all occurrences of the exact string "rgb(30, 41, 57)" with "rgb(15, 15, 15)".
-2. Replace all occurrences of the exact string "oklch(0.28 0.03 258)" with "oklch(0.17 0.00 NaN)". 
-3. Replace all occurrences of the exact string "rgba(15, 15, 15, 1)" with "rgba(15, 15, 15, 1)". */
-
-/* replace the color "#1E2939" on the entire website to "#0F0F0F" @/portfolio-website */

@@ -51,77 +51,77 @@
 }
 
 .dark {
-   /* Base backgrounds */
-   --background: #121212;
-   --bg-card: #0F0F0F;
-   --bg-secondary: #1a1a1a;
-   --bg-hover: #262626;
-   --bg-border: #333333;
+    /* Base backgrounds */
+    --background: #121212;
+    --bg-card: #0F0F0F;
+    --bg-secondary: #1a1a1a;
+    --bg-hover: #262626;
+    --bg-border: #333333;
 
-   /* Text hierarchy */
-   --text-primary: #ffffff;
-   --text-secondary: #e5e5e5;
-   --text-muted: #b3b3b3;
-   --text-disabled: #808080;
+    /* Text hierarchy */
+    --text-primary: #ffffff;
+    --text-secondary: #e5e5e5;
+    --text-muted: #b3b3b3;
+    --text-disabled: #808080;
 
-   /* Shadcn/ui compatible variables */
-   --foreground: #ffffff;
-   --card: #0F0F0F;
-   --card-foreground: #ffffff;
-   --popover: #0F0F0F;
-   --popover-foreground: #ffffff;
-   --primary: #ffffff;
-   --primary-foreground: #0F0F0F;
-   --secondary: #1a1a1a;
-   --secondary-foreground: #e5e5e5;
-   --muted: #262626;
-   --muted-foreground: #b3b3b3;
-   --accent: #333333;
-   --accent-foreground: #ffffff;
-   --destructive: #404040;
-   --destructive-foreground: #ffffff;
-   --border: #333333;
-   --input: #1a1a1a;
-   --ring: #666666;
-   --chart-1: #0F0F0F;
-   --chart-2: #1a1a1a;
-   --chart-3: #262626;
-   --chart-4: #333333;
-   --chart-5: #404040;
-   --sidebar: #0F0F0F;
-   --sidebar-foreground: #ffffff;
-   --sidebar-primary: #0F0F0F;
-   --sidebar-primary-foreground: #ffffff;
-   --sidebar-accent: #1a1a1a;
-   --sidebar-accent-foreground: #ffffff;
-   --sidebar-border: #333333;
-   --sidebar-ring: #666666;
+    /* Shadcn/ui compatible variables */
+    --foreground: #ffffff;
+    --card: #0F0F0F;
+    --card-foreground: #ffffff;
+    --popover: #0F0F0F;
+    --popover-foreground: #ffffff;
+    --primary: #ffffff;
+    --primary-foreground: #0F0F0F;
+    --secondary: #1a1a1a;
+    --secondary-foreground: #e5e5e5;
+    --muted: #262626;
+    --muted-foreground: #b3b3b3;
+    --accent: #333333;
+    --accent-foreground: #ffffff;
+    --destructive: #404040;
+    --destructive-foreground: #ffffff;
+    --border: #333333;
+    --input: #1a1a1a;
+    --ring: #666666;
+    --chart-1: #0F0F0F;
+    --chart-2: #1a1a1a;
+    --chart-3: #262626;
+    --chart-4: #333333;
+    --chart-5: #404040;
+    --sidebar: #0F0F0F;
+    --sidebar-foreground: #ffffff;
+    --sidebar-primary: #0F0F0F;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #1a1a1a;
+    --sidebar-accent-foreground: #ffffff;
+    --sidebar-border: #333333;
+    --sidebar-ring: #666666;
 
-   /* White shadow hierarchy for dark theme */
-   --shadow-subtle: none;
-   --shadow-card: none;
-   --shadow-hero: none;
-   --shadow-hover: none;
-   --shadow-focus: none;
+    /* White shadow hierarchy for dark theme */
+    --shadow-subtle: none;
+    --shadow-card: none;
+    --shadow-hero: none;
+    --shadow-hover: none;
+    --shadow-focus: none;
 
-   /* Performance optimization for shadow transitions */
-   --shadow-transition: box-shadow 0.3s ease-out;
+    /* Performance optimization for shadow transitions */
+    --shadow-transition: box-shadow 0.3s ease-out;
  
  /* Mobile performance optimization - reduce shadow complexity on small screens */
 @media (max-width: 768px) {
- :root {
-   --shadow-card: none;
-   --shadow-hero: none;
-   --shadow-hover: none;
-   --shadow-focus: none;
- }
+  :root {
+    --shadow-card: none;
+    --shadow-hero: none;
+    --shadow-hover: none;
+    --shadow-focus: none;
+  }
 
- .dark {
-   --shadow-card: none;
-   --shadow-hero: none;
-   --shadow-hover: none;
-   --shadow-focus: none;
- }
+  .dark {
+    --shadow-card: none;
+    --shadow-hero: none;
+    --shadow-hover: none;
+    --shadow-focus: none;
+  }
 }
 }
 
@@ -236,4 +236,17 @@
       transition-duration: 0.01ms !important;
     }
   }
+}
+
+/* ✅ ADD THIS RULE AT THE END OF THE FILE */
+/* Custom rule to make the mobile menu button blend with header */
+button[aria-label="Toggle mobile menu"] {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.dark button[aria-label="Toggle mobile menu"] {
+  color: #121212 !important;
+  background-color: #121212 !important;
 }

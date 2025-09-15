@@ -31,22 +31,19 @@ function XLogo({ size = 16, className = "" }) {
 // FINAL VERSION: Guarantees a perfectly centered cross animation
 function HamburgerIcon({ isOpen }: { isOpen: boolean }) {
   return (
-    // The parent is a `relative` container, creating a coordinate system.
     <div className="relative h-6 w-6">
-      {/* Both lines are `absolute`, so they stack on top of each other. */}
-      {/* This ensures they share the exact same center for a perfect rotation. */}
       <span
         className={`absolute left-1/2 top-1/2 block h-[1.5px] w-5 -translate-x-1/2 bg-current transition-all duration-300 ease-in-out ${
           isOpen
-            ? "-translate-y-1/2 rotate-45" // When open, it's centered and rotated.
-            : "-translate-y-[4px]"         // When closed, it's moved up.
+            ? "-translate-y-1/2 rotate-45"
+            : "-translate-y-[4px]"
         }`}
       />
       <span
         className={`absolute left-1/2 top-1/2 block h-[1.5px] w-5 -translate-x-1/2 bg-current transition-all duration-300 ease-in-out ${
           isOpen
-            ? "-translate-y-1/2 -rotate-45" // When open, it's centered and rotated.
-            : "translate-y-[4px]"          // When closed, it's moved down.
+            ? "-translate-y-1/2 -rotate-45"
+            : "translate-y-[4px]"
         }`}
       />
     </div>
@@ -63,7 +60,7 @@ export function SiteHeader() {
   const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 10)
+    const handleScroll = () => setIsScrolled(window.scrollY > 50)
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
@@ -100,48 +97,59 @@ export function SiteHeader() {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 backdrop-blur-md dark:backdrop-blur-none border-b transition-colors duration-300 bg-[#FAFAFA]/80 dark:bg-[#121212]/80 ${
-          isMobileMenuOpen ? "border-transparent" : (isScrolled ? "border-border" : "border-transparent")
+        className={`sticky top-0 z-50 w-full transition-all duration-700 ease-out ${
+          isScrolled && !isMobileMenuOpen
+            ? "border-b border-border bg-background/80 backdrop-blur-md"
+            : "border-transparent bg-transparent"
         }`}
       >
-        <div className="mx-auto max-w-5xl px-4 py-3">
-          {/* Desktop Layout */}
-          <div className="hidden sm:grid sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:gap-2">
-            <Link
-              href="/"
-              className="font-medium tracking-tight site-header-name"
-            >
-              Nikhil Choudhary
-            </Link>
+        <div className="mx-auto max-w-5xl px-4 py-1">
+          <div className="hidden sm:relative sm:flex h-[46px] items-center justify-center">
+            
+            <div className="absolute left-0 flex items-center -ml-30">
+              <Link
+                href="/"
+                className="font-medium tracking-tight site-header-name"
+              >
+                Nikhil Choudhary
+              </Link>
+            </div>
 
-            <nav
-              className="flex items-center rounded-full border border-border bg-background/90 dark:!bg-[#171717] backdrop-blur-sm px-4 py-1 shadow-sm"
-              aria-label="Primary"
-            >
-              <ul className="flex items-center gap-8">
-                {nav.map((item) => {
-                  const active = pathname === item.href
-                  return (
-                    <li key={item.href}>
-                      <Link
-                        href={item.href}
-                        aria-current={active ? "page" : undefined}
-                        className={
-                          active
-                            ? "text-sm font-semibold text-foreground"
-                            : "text-sm text-foreground/80 hover:text-foreground transition-colors"
-                        }
-                      >
-                        {item.label}
-                      </Link>
-                    </li>
-                  )
-                })}
-              </ul>
-            </nav>
+            <div>
+              <nav
+                className={`flex items-center px-3 py-0.5 transition-all duration-700 ease-out ${
+                  isScrolled
+                    ? 'rounded-none border-transparent shadow-none bg-transparent backdrop-blur-none'
+                    // ✅ MODIFIED: Changed bg-background to bg-[#FFFFFF] and removed shadow-sm
+                    : 'rounded-full border border-border dark:bg-[#171717] bg-[#FFFFFF] backdrop-blur-sm'
+                }`}
+                aria-label="Primary"
+              >
+                <ul className="flex items-center gap-8">
+                  {nav.map((item) => {
+                    const active = pathname === item.href
+                    return (
+                      <li key={item.href}>
+                        <Link
+                          href={item.href}
+                          aria-current={active ? "page" : undefined}
+                          className={
+                            active
+                              ? "text-sm font-semibold text-foreground"
+                              : "text-sm text-foreground/80 hover:text-foreground transition-colors"
+                          }
+                        >
+                          {item.label}
+                        </Link>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </nav>
+            </div>
 
-            <div className="flex justify-end">
-              <Button asChild className="ml-4 rounded-full font-medium" disabled={!hasResume}>
+            <div className="absolute right-0 flex items-center -mr-30">
+              <Button asChild className="rounded-full font-medium" disabled={!hasResume}>
                 <a
                   href={hasResume ? RESUME_URL : "#"}
                   target={hasResume ? "_blank" : "_self"}
@@ -153,7 +161,7 @@ export function SiteHeader() {
             </div>
           </div>
 
-          {/* Mobile Layout */}
+          {/* Mobile Layout (Unchanged) */}
           <div className="flex items-center justify-between sm:hidden">
             <Link
               href="/"
@@ -165,10 +173,9 @@ export function SiteHeader() {
             </Link>
 
             <div className="flex items-center gap-2">
-              {/* ✅ MODIFIED: Using a standard button with explicit transparent styling */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-transparent hover:bg-accent hover:text-accent-foreground relative z-[60]"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-transparent text-black dark:text-[#121212] hover:bg-accent hover:text-accent-foreground relative z-[60] appearance-none border-none outline-none focus-visible:outline-none focus-visible:ring-0"
                 aria-label="Toggle mobile menu"
               >
                 <HamburgerIcon isOpen={isMobileMenuOpen} />
@@ -178,7 +185,7 @@ export function SiteHeader() {
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay (Unchanged) */}
       <div className={`fixed inset-0 z-40 sm:hidden ${!isMobileMenuOpen && "pointer-events-none"}`}>
         <div
           className={`absolute inset-0 bg-[#FAFAFA]/80 dark:bg-[#121212]/80 backdrop-blur-md transition-opacity duration-500 ease-out ${
@@ -196,7 +203,7 @@ export function SiteHeader() {
         >
           <div className="flex-1 overflow-y-auto">
             <div className="mt-16 pb-4 px-4">
-              {/* Mobile Resume Button - Full width, rectangular with rounded corners */}
+              {/* Mobile Resume Button */}
               {hasResume && (
                 <Button
                   asChild
@@ -258,7 +265,7 @@ export function SiteHeader() {
                               href={social.href}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center justify-center gap-2 w-full h-10 rounded-md backdrop-blur-sm border border-border hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-all duration-200 shadow-sm hover:shadow-md"
+                              className="flex items-center justify-center gap-2 w-full h-10 rounded-md backdrop-blur-sm border border-border hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-all duration-200 shadow-sm hover-md"
                               onClick={closeMobileMenu}
                             >
                               <IconComponent size={16} />

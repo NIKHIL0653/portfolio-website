@@ -23,7 +23,7 @@ export const posts: BlogPostMeta[] = [
     readTime: "5 min read",
     image: "/images/blog/nextjs-hero.jpg",
     imageAlt: "Next.js logo with modern web development setup",
-    category: "Data"
+    category: "Development"
   },
   {
     slug: "clarity-over-complexity",
@@ -38,16 +38,16 @@ export const posts: BlogPostMeta[] = [
     category: "Development"
   },
   {
-    slug: "accessibility-is-a-feature",
-    title: "Accessibility Is a Feature",
-    excerpt: "Moving accessibility from a checklist to a core product requirement.",
-    date: "2025-01-05",
+    slug: "next-project",
+    title: "Why Your Next Project Should Be a Blog",
+    excerpt: "Discover how your personal blog can become a creative playground, a learning accelerator, and the ultimate tool for building your unique brand in the tech world.",
+    date: "2025-09-15",
     author: "Nikhil Choudhary",
-    tags: ["Accessibility", "UX", "Web Development"],
-    readTime: "6 min read",
-    image: "/images/blog/accessibility-hero.jpg",
-    imageAlt: "Hands using assistive technology devices",
-    category: "Development"
+    tags: ["Personal Branding", "Blogging", "Web Development", "Career Growth"],
+    readTime: "5 min read",
+    image: "/images/blog/digital-playground-hero.jpg",
+    imageAlt: "A developer typing on a laptop with vibrant code and creative graphics flowing out of the screen.",
+    category: "Blogging"
   },
   {
     slug: "demystifying-rag-ai-secret-sauce",

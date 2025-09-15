@@ -9,8 +9,8 @@
   text-align: left;
 }
 
-/* Image wrapper border color override */
-.image-wrapper {
+/* Image wrapper border color override - dark mode only */
+.dark .image-wrapper {
   border-color: #333333 !important;
 }
 

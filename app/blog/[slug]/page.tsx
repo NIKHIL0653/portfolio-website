@@ -87,7 +87,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           <div className="p-3 sm:p-5 md:p-7 lg:p-11">
             {/* Header Section - Centered */}
             <header className="mb-1 sm:mb-2 pb-4 sm:pb-6 text-center">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 leading-tight text-slate-900 dark:text-white px-2">
+              <h1 className="blog-post-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 leading-tight text-slate-900 dark:text-white px-2">
                 {post.title}
               </h1>
 

@@ -125,7 +125,7 @@ export function InteractiveMap() {
       // Add info window
       const infoWindow = new window.google.maps.InfoWindow({
         content: `
-          <div style="font-family: system-ui, sans-serif; padding: 8px;">
+          <div style="font-family: "__X_400de2-400", sans-serif; padding: 8px;">
             <h3 style="margin: 0 0 4px 0; font-size: 16px; font-weight: 600;">Kolkata, West Bengal</h3>
             <p style="margin: 0; font-size: 14px; color: #666;">India</p>
           </div>

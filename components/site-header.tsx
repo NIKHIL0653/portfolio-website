@@ -97,16 +97,16 @@ export function SiteHeader() {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 w-full ${
+        className={`sticky top-0 z-50 w-full overflow-x-hidden overflow-y-hidden ${
           isScrolled && !isMobileMenuOpen
             ? "border-b border-border bg-background/80 backdrop-blur-md transition-all duration-300 ease-out delay-75"
             : "border-transparent dark:bg-[#121212] bg-transparent transition-all duration-100 ease-out"
         }`}
       >
-        <div className="mx-auto max-w-5xl px-2 py-1">
+        <div className="mx-auto max-w-screen-xl px-2 py-2 sm:py-1 h-12 sm:h-14">
           <div className="hidden sm:flex h-[46px] items-center">
             
-            <div className="flex items-center -ml-30">
+            <div className="flex items-center">
               <Link
                 href="/"
                 className="font-medium tracking-tight site-header-name"
@@ -152,7 +152,7 @@ export function SiteHeader() {
               </nav>
             </div>
 
-            <div className="flex items-center -mr-30">
+            <div className="flex items-center">
               <Button asChild className="rounded-full font-medium" disabled={!hasResume}>
                 <a
                   href={hasResume ? RESUME_URL : "#"}
@@ -215,10 +215,10 @@ export function SiteHeader() {
           }`}
         >
           <div className="flex-1 overflow-y-auto">
-            <div className="mt-12 pb-4 px-2">
+            <div className="mt-16 pb-4 px-2">
               {/* Mobile Resume Button */}
               {hasResume && (
-                <div className="px-2">
+                <div className="px-2 mt-4">
                   <Button
                     asChild
                     variant="default"

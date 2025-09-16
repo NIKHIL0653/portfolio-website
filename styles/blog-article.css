@@ -4,8 +4,8 @@
   font-size: 15px;
   max-width: 48rem;
   margin: 0 auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
   text-align: left;
 }
 
@@ -231,12 +231,12 @@
 /* Blog Article Card Styling - FIXED TO MATCH LANDING PAGE */
 .dark .blog-article-card {
   background-color: #0F0F0F !important; /* Matching landing page vertical card color */
-  border: 1px solid var(--border) !important; /* Thin border to match landing page cards */
+  border: 1px solid #272727 !important; /* Dark mode compatible border */
   box-shadow:
-    inset 0 -10px 25px rgba(255, 255, 255, 0.04), /* bottom glow */
-    inset -10px 0 25px rgba(255, 255, 255, 0.04), /* left glow */
-    inset 10px 0 25px rgba(255, 255, 255, 0.04), /* right glow */
-    inset 0 4px 12px rgba(255, 255, 255, 0.01) !important; /* top glow (much weaker) */
+    inset 0 -15px 45px rgba(255, 255, 255, 0.03), /* bottom glow - more intense */
+    inset -15px 0 45px rgba(255, 255, 255, 0.03), /* left glow - more intense */
+    inset 15px 0 45px rgba(255, 255, 255, 0.03), /* right glow - more intense */
+    inset 0 2px 8px rgba(255, 255, 255, 0.005) !important; /* top glow - minimal */
 }
 
 /* Prevent dotted background in footer - comprehensive fix */
@@ -343,7 +343,7 @@ footer * {
 }
 
 .dark .blog-content p {
-  color: #d1d5db !important; /* Better readability in dark mode */
+  color: #f5f5f5 !important; /* Consistent with headings for better visual hierarchy */
 }
 
 /* List Styling with Better Spacing */
@@ -360,7 +360,7 @@ footer * {
 }
 
 .dark .blog-content li {
-  color: #d1d5db !important; /* Consistent with paragraph text */
+  color: #f5f5f5 !important; /* Consistent with paragraph text and headings */
 }
 
 .blog-content ul li {
@@ -506,7 +506,7 @@ footer * {
   margin: 1.5rem 0 !important;
   box-shadow: var(--shadow-card) !important;
   position: relative !important;
-  font-family: 'JetBrains Mono', 'Monaco', 'Consolas', 'Courier New', monospace !important;
+  font-family: "__X_400de2-400", monospace !important;
   font-size: 0.875rem !important;
   line-height: 1.5 !important;
   white-space: pre !important;
@@ -537,7 +537,7 @@ footer * {
   border-radius: 4px !important;
   font-size: 0.875rem !important;
   font-weight: 500 !important;
-  font-family: 'JetBrains Mono', 'Monaco', 'Consolas', monospace !important;
+  font-family: "__X_400de2-400", monospace !important;
   border: 1px solid #e2e8f0 !important;
   letter-spacing: 0.025em !important;
 }
@@ -583,7 +583,7 @@ footer * {
   position: absolute !important;
   top: -0.5rem !important;
   left: 1rem !important;
-  font-family: serif !important;
+  font-family: "__X_400de2-400", sans-serif !important;
 }
 
 .dark .blog-content blockquote {
@@ -711,7 +711,7 @@ footer * {
 }
 
 .dark .blog-content em {
-  color: #d1d5db !important;
+  color: #f5f5f5 !important;
 }
 
 /* ENHANCED Blog Image Frame Styling - Large Content Width */
@@ -745,7 +745,7 @@ footer * {
 @media (max-width: 640px) {
   .blog-image-frame-large {
     margin: 0;
-    border-radius: 0.5rem;
+    border-radius: 0.75rem;
   }
 }
 
@@ -831,8 +831,8 @@ footer * {
 @media (max-width: 768px) {
   .blog-content {
     font-size: 14px;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   /* Increase blog article card width on mobile by reducing container padding */
@@ -1004,6 +1004,8 @@ footer * {
 @media (max-width: 480px) {
   .blog-content {
     font-size: 13px;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
   }
 
   .blog-content h1 {
@@ -1238,4 +1240,51 @@ footer * {
   border-color: #3a3a3a !important;
   color: #d1d5db !important;
   box-shadow: var(--shadow-card) !important;
+}
+
+/* Blog post title specific font */
+.blog-post-title {
+  font-family: "__fontHeading_9cf113", sans-serif !important;
+}
+
+/* Blog client page card dark mode border and glow */
+.dark .bg-card.border {
+  border-color: #272727 !important;
+  box-shadow:
+    inset 0 -15px 45px rgba(255, 255, 255, 0.03), /* bottom glow - more intense */
+    inset -15px 0 45px rgba(255, 255, 255, 0.03), /* left glow - more intense */
+    inset 15px 0 45px rgba(255, 255, 255, 0.03), /* right glow - more intense */
+    inset 0 2px 8px rgba(255, 255, 255, 0.005) !important; /* top glow - minimal */
+}
+
+/* Blog post image borders and dimming overlay on client page */
+.dark .relative.aspect-\[21\/9\],
+.dark .relative.aspect-\[16\/9\] {
+  border: 1px solid #272727 !important;
+  position: relative;
+}
+
+.dark .relative.aspect-\[21\/9\]::after,
+.dark .relative.aspect-\[16\/9\]::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.dark .relative.aspect-\[21\/9\]:hover::after,
+.dark .relative.aspect-\[16\/9\]:hover::after {
+  opacity: 0;
+}
+
+/* Blog post content hover effects - light up text to match title color */
+.dark .group\/article:hover .text-muted-foreground,
+.dark .group\/article:hover .text-xs.text-muted-foreground {
+  color: #ffffff !important;
+  transition: color 0.3s ease;
 }

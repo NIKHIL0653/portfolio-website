@@ -6,8 +6,8 @@ const BlogIndexPageClient = dynamic(() => import("../../components/blog-index-pa
   loading: () => (
     <main className="min-h-dvh flex flex-col bg-[#fafafa] dark:bg-[#121212]">
       <div className="flex-1 flex items-center justify-center p-2 sm:p-6 lg:p-8">
-        <div className="w-full max-w-6xl">
-          <div className="px-3 sm:px-8 py-6 sm:py-8">
+        <div className="w-full max-w-7xl">
+          <div className="px-6 sm:px-8 py-6 sm:py-8">
             <header className="mb-3 sm:mb-4">
               <h1 className="text-2xl sm:text-3xl font-semibold">Blog</h1>
               <p className="text-muted-foreground mt-2 max-w-2xl text-sm sm:text-base">Writings on frontend, accessibility, and product craft.</p>

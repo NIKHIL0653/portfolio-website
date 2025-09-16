@@ -126,7 +126,7 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-geist-sans);
+  --font-sans: "__X_400de2-400", sans-serif;
   --font-mono: var(--font-geist-mono);
   --color-background: var(--background);
   --color-bg-card: var(--bg-card);
@@ -189,7 +189,7 @@
     transition: background-color 0s, border-color 0s, color 0s;
   }
   body {
-    font-family: "__X_400de2", sans-serif !important;
+    font-family: "__X_400de2-400", sans-serif !important;
     @apply bg-background text-foreground;
   }
 
@@ -236,6 +236,15 @@
       transition-duration: 0.01ms !important;
     }
   }
+}
+
+/* Font family overrides */
+strong, b, h1, h2, h3, h4, h5, h6, .font-bold, .font-semibold, .font-medium {
+  font-family: "__fontHeading_9cf113", sans-serif !important;
+}
+
+.typewriter-text {
+  font-family: var(--font-mono) !important;
 }
 
 /* ✅ ADD THIS RULE AT THE END OF THE FILE */

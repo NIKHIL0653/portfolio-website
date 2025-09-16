@@ -103,7 +103,7 @@ export function SiteHeader() {
             : "border-transparent dark:bg-[#121212] bg-transparent transition-all duration-100 ease-out"
         }`}
       >
-        <div className="mx-auto max-w-screen-xl px-2 py-2 sm:py-1 h-12 sm:h-14">
+        <div className="mx-auto max-w-screen-xl px-2 pt-1 pb-2 sm:py-1 h-14 sm:h-14">
           <div className="hidden sm:flex h-[46px] items-center">
             
             <div className="flex items-center">
@@ -166,7 +166,7 @@ export function SiteHeader() {
           </div>
 
           {/* Mobile Layout */}
-          <div className="flex items-center justify-between sm:hidden">
+          <div className="flex items-center justify-between sm:hidden h-14">
             {/* ✅ MODIFIED 1: Added ml-2 to move text to the right */}
             <Link
               href="/"

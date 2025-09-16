@@ -10,7 +10,7 @@ import Link from "next/link"
 export default function HomePage() {
   return (
     <main className="min-h-dvh flex flex-col bg-[#fafafa] dark:bg-[#121212]">
-      <div className="flex-1 flex items-center justify-center p-4 sm:p-6 md:p-16 lg:p-8">
+      <div className="flex-1 flex items-center justify-center p-6 sm:p-8 md:p-20 lg:p-12">
         <div className="w-full max-w-7xl bg-card rounded-lg border border-border overflow-hidden shadow-md sm:shadow-lg">
           <InteractiveHero />
 

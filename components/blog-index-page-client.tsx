@@ -35,11 +35,12 @@ export default function BlogIndexPageClient() {
   const displayPosts = activeCategory === 'All Posts' ? filteredPosts.slice(1) : filteredPosts
 
   return (
-    <main className="blog-index-page min-h-screen bg-[#fafafa] dark:bg-[#121212] overflow-x-hidden mb-16">
+    // CLASS "mb-16" REMOVED FROM HERE
+    <main className="blog-index-page min-h-screen bg-[#fafafa] dark:bg-[#121212] overflow-x-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 py-6 sm:py-8">
 
         {/* Filters */}
-        <div className="mt-4 mb-4">
+        <div className="mt-1 md:mt-4 mb-4">
           {/* Desktop Filters */}
           <div className="hidden md:block">
             <BlogFilters
@@ -163,7 +164,6 @@ export default function BlogIndexPageClient() {
                             {formatDate(filteredPosts[0].date)}
                           </time>
                         </div>
-                        {/* FONT SIZE MODIFIED */}
                         <h2 className="blog-post-title text-xl font-semibold leading-tight text-foreground transition-colors duration-300 group-hover:text-primary">
                           {filteredPosts[0].title}
                         </h2>
@@ -227,7 +227,6 @@ export default function BlogIndexPageClient() {
                               {formatDate(post.date)}
                             </time>
                           </div>
-                          {/* FONT SIZE MODIFIED */}
                           <h3 className="blog-post-title text-xl font-semibold leading-tight text-foreground transition-colors duration-300 group-hover:text-primary line-clamp-2">
                             {post.title}
                           </h3>

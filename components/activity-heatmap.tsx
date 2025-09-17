@@ -1,8 +1,9 @@
 "use client"
 import useSWR from "swr"
-import { useMemo, useState } from "react"
+import { useMemo, useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
 
+// ... (imports and constants are unchanged)
 type ActivityResponse = {
   byDate: Record<string, number>
   range: { start: string; end: string }
@@ -10,8 +11,21 @@ type ActivityResponse = {
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json())
 
+const WEEK_COL_WIDTH_MOBILE = 18;
+
 export function ActivityHeatmap() {
+  // ... (all hooks and functions inside the component are unchanged)
   const [hoveredDay, setHoveredDay] = useState<{ date: string; contributions: number } | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
+  
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const checkMobile = () => setIsMobile(window.innerWidth < 640)
+      checkMobile()
+      window.addEventListener('resize', checkMobile)
+      return () => window.removeEventListener('resize', checkMobile)
+    }
+  }, [])
 
   const { data, isLoading, error } = useSWR<ActivityResponse>("/api/activity", fetcher, {
     revalidateOnFocus: true,
@@ -26,12 +40,10 @@ export function ActivityHeatmap() {
     const end = new Date(today.getFullYear(), today.getMonth(), today.getDate())
     const start = new Date(end)
     start.setDate(end.getDate() - 7 * 52)
-
     let maxVal = 0
     let total = 0
     const days: { date: Date; key: string; val: number }[] = []
     const todayKey = today.toISOString().slice(0, 10)
-
     for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
       const key = d.toISOString().slice(0, 10)
       let val = byDate[key] || 0
@@ -40,20 +52,29 @@ export function ActivityHeatmap() {
       total += val
       days.push({ date: new Date(d), key, val })
     }
-
-    // pad to Sunday
     const weeks: (typeof days)[] = []
     const firstDow = days[0]?.date.getDay() ?? 0
     if (firstDow !== 0) {
       const pad = new Array(firstDow).fill(null).map((_, i) => ({
         date: new Date(days[0].date.getTime() - (firstDow - i) * 86400000),
-        key: "pad-" + i,
+        key: "pad-start-" + i,
         val: 0,
       }))
       days.unshift(...pad)
     }
     for (let i = 0; i < days.length; i += 7) weeks.push(days.slice(i, i + 7))
-
+    const lastWeek = weeks[weeks.length - 1]
+    if (lastWeek && lastWeek.length < 7) {
+      const missingDays = 7 - lastWeek.length
+      const lastDate = lastWeek[lastWeek.length - 1].date
+      for (let i = 1; i <= missingDays; i++) {
+        lastWeek.push({
+          date: new Date(lastDate.getTime() + i * 86400000),
+          key: "pad-end-" + i,
+          val: 0,
+        })
+      }
+    }
     return { weeks, maxVal, totalContributions: total }
   }, [data])
 
@@ -66,83 +87,199 @@ export function ActivityHeatmap() {
     if (ratio < 0.75) return 3
     return 4
   }
+  
+  const { monthLabels, yearSeparators } = useMemo(() => {
+    if (!weeks.length) return { monthLabels: [], yearSeparators: [] };
+    
+    const monthsMap = new Map();
+    weeks.forEach((week, weekIndex) => {
+      const firstDayOfWeek = week.find(day => day && !day.key.startsWith('pad-'))
+      if (firstDayOfWeek) {
+        const month = firstDayOfWeek.date.getMonth()
+        const year = firstDayOfWeek.date.getFullYear()
+        const monthKey = `${year}-${month}`
+        if (!monthsMap.has(monthKey)) {
+          monthsMap.set(monthKey, {
+            name: firstDayOfWeek.date.toLocaleDateString('en-US', { month: 'short' }),
+            weekIndex: weekIndex,
+          })
+        }
+      }
+    })
+    
+    const sortedMonths = Array.from(monthsMap.entries())
+      .map(([key, value]) => ({ key, ...value }))
+      .sort((a, b) => a.weekIndex - b.weekIndex);
+
+    const allMonthLabels = sortedMonths.map(month => ({
+      ...month,
+      leftPosition: isMobile
+        ? `${month.weekIndex * WEEK_COL_WIDTH_MOBILE}px`
+        : `${(month.weekIndex / weeks.length) * 100}%`
+    }))
+
+    const currentYear = new Date().getFullYear()
+    const separators = []
+    weeks.forEach((week, weekIndex) => {
+      const firstDayOfWeek = week.find(day => day && !day.key.startsWith('pad-'))
+      if (firstDayOfWeek && firstDayOfWeek.date.getMonth() === 0 && firstDayOfWeek.date.getDate() <= 7) {
+        const year = firstDayOfWeek.date.getFullYear()
+        if (year !== currentYear) {
+          separators.push({
+            year: year,
+            position: isMobile
+              ? `${weekIndex * WEEK_COL_WIDTH_MOBILE}px`
+              : `${(weekIndex / weeks.length) * 100}%`
+          })
+        }
+      }
+    })
+    
+    return { monthLabels: allMonthLabels, yearSeparators: separators };
+  }, [weeks, isMobile]);
+
+  const getDayLabels = () => ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  const squareSize = "h-3.5 w-3.5 sm:h-4 sm:w-4"
+  const gapSize = "gap-1"
 
   return (
-    <div className="w-full">
-      {!isLoading && !error && (
-        <p className="text-center text-sm text-muted-foreground mb-2">
-          {hoveredDay
-            ? `${hoveredDay.contributions} contribution${hoveredDay.contributions !== 1 ? 's' : ''} on ${new Date(hoveredDay.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`
-            : `Total contributions: ${totalContributions}`
-          }
-        </p>
-      )}
+    <div className="w-full py-4">
+      {/* --- UPDATED: Increased max-width to xl for more space --- */}
+      <div className="max-w-screen-xl mx-auto">
+        {/* Header Stats */}
+        {!isLoading && !error && (
+          <div className="flex flex-col sm:flex-row items-center justify-between mb-6 px-4 gap-4 sm:gap-0">
+            <div className="text-xs sm:text-sm text-muted-foreground text-center sm:text-left">
+              {hoveredDay
+                ? `${hoveredDay.contributions} contribution${hoveredDay.contributions !== 1 ? 's' : ''} on ${new Date(hoveredDay.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`
+                : `Last 365 days`
+              }
+            </div>
+            <div className="text-center sm:text-right">
+              <div className="text-lg sm:text-2xl font-bold text-foreground">{totalContributions}</div>
+              <div className="text-xs text-muted-foreground">total contributions</div>
+            </div>
+          </div>
+        )}
 
-      {/* Heatmap container */}
-      <div className="mt-3 overflow-x-auto sm:overflow-x-visible">
-        <div className="flex justify-center">
-          <div className="flex gap-1 min-w-max justify-center">
-            {isLoading ? (
-              <p className="text-sm text-muted-foreground">Loading activity…</p>
-            ) : error ? (
-              <p className="text-sm text-destructive">Error loading activity.</p>
-            ) : (
-              weeks?.map((week, wi) => (
-                <div key={wi} className="flex flex-col gap-1">
-                  {week.map((day, di) => (
-                    <div
-                      key={day.key ?? di}
-                      className={cn(
-                        "h-3.5 w-3.5 rounded-sm border transition-colors duration-200 cursor-pointer",
-                        typeof day.key === "string" && day.key.startsWith("pad-") && "opacity-0",
-                        heat(levelFor(day.val)),
-                      )}
-                      title={`${day.key}: ${day.val} activities`}
-                      aria-label={`${day.key}: ${day.val} activities`}
-                      onMouseEnter={() => {
-                        if (typeof day.key === "string" && !day.key.startsWith("pad-")) {
-                          setHoveredDay({ date: day.key, contributions: day.val })
-                        }
-                      }}
-                      onMouseLeave={() => setHoveredDay(null)}
-                    />
+        <div className="w-full px-4 pb-4">
+          {/* --- UPDATED: Overflow is now visible on desktop, removing the scrollbar --- */}
+          <div className="overflow-x-auto sm:overflow-visible overflow-y-visible">
+            <div className="relative min-w-[600px] sm:min-w-full px-2 py-2">
+              {/* ... (Year separators and month labels are unchanged) ... */}
+              <div className="flex mb-2 ml-8 sm:ml-10">
+                <div className="flex-1 relative h-4">
+                  {monthLabels.map((month) => (
+                    <span 
+                      key={month.key}
+                      className="absolute text-[10px] sm:text-xs text-muted-foreground whitespace-nowrap"
+                      style={{ left: month.leftPosition }}
+                    >
+                      {month.name}
+                    </span>
                   ))}
                 </div>
-              ))
-            )}
+              </div>
+
+              <div className={cn("flex", gapSize)}>
+                {/* ... (Day labels are unchanged) ... */}
+                <div className={cn("flex flex-col justify-between flex-shrink-0", gapSize, "w-8 sm:w-10")}>
+                  {getDayLabels().map((day, i) => (
+                    <div key={day} className={cn(
+                      squareSize,
+                      "flex items-center text-[10px] sm:text-xs text-muted-foreground",
+                      (i === 1 || i === 3 || i === 5) ? "opacity-100" : "opacity-0"
+                    )}>
+                      <span className="hidden sm:inline">{day}</span>
+                      <span className="sm:hidden">{day.slice(0, 1)}</span>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className={cn("flex flex-1", gapSize)}>
+                  {isLoading ? (
+                    <div className="flex items-center justify-center w-full h-full"><p>Loading...</p></div>
+                  ) : error ? (
+                    <div className="flex items-center justify-center w-full h-full"><p>Error.</p></div>
+                  ) : (
+                    weeks?.map((week, wi) => (
+                      <div 
+                        key={wi} 
+                        className={cn("flex flex-col sm:flex-1", gapSize)}
+                      >
+                        {week.map((day, di) => (
+                          <div
+                            key={day?.key ?? di}
+                            className={cn(
+                              squareSize,
+                              "rounded sm:rounded-[3px]",
+                              "border transition-all duration-300 cursor-pointer",
+                              "hover:scale-110 sm:hover:scale-125 hover:shadow-lg hover:z-20 relative",
+                              day && typeof day.key === "string" && day.key.startsWith("pad-") ? "opacity-0 cursor-default pointer-events-none" : "",
+                              heat(day ? levelFor(day.val) : 0),
+                              hoveredDay?.date === (day?.key) && "ring-1 sm:ring-2 ring-primary ring-offset-1 ring-offset-background scale-110 sm:scale-125 shadow-lg z-20"
+                            )}
+                            onMouseEnter={() => {
+                              if (day && typeof day.key === "string" && !day.key.startsWith("pad-")) {
+                                setHoveredDay({ date: day.key, contributions: day.val })
+                              }
+                            }}
+                            onMouseLeave={() => setHoveredDay(null)}
+                          />
+                        ))}
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-
-      {/* Legend */}
-      <div className="mt-4 flex items-center justify-center gap-2 text-xs text-muted-foreground">
-        <span>Less</span>
-        {[0, 1, 2, 3, 4].map((lvl) => (
-          <div key={lvl} className={cn("h-3.5 w-3.5 rounded-sm border", heat(lvl))} />
-        ))}
-        <span>More</span>
+        
+        {/* Legend */}
+        <div className="mt-4 sm:mt-6 flex items-center justify-center sm:justify-between px-4">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <span className="text-[10px] sm:text-xs text-muted-foreground">Less</span>
+            <div className={cn("flex", gapSize)}>
+              {[0, 1, 2, 3, 4].map((lvl) => (
+                <div 
+                  key={lvl} 
+                  className={cn(
+                    squareSize, 
+                    "rounded sm:rounded-[3px]",
+                    "border transition-colors", 
+                    heat(lvl)
+                  )}
+                  title={`Level ${lvl}`}
+                />
+              ))}
+            </div>
+            <span className="text-[10px] sm:text-xs text-muted-foreground">More</span>
+          </div>
+          
+          <div className="text-[10px] sm:text-xs text-muted-foreground hidden sm:block">
+              Hover over squares for details
+          </div>
+        </div>
       </div>
     </div>
   )
 }
 
-// Heatmap color levels
 function heat(level: number) {
+  // ... (function is unchanged)
   switch (level) {
     case 0:
-      return "bg-transparent border-gray-300 dark:border-gray-700"
+      return "bg-muted/30 border-muted-foreground/20 hover:bg-muted/50"
     case 1:
-      return "bg-primary/10 border-transparent"
+      return "bg-primary/20 border-primary/30 hover:bg-primary/30"
     case 2:
-      return "bg-primary/30 border-transparent"
+      return "bg-primary/40 border-primary/50 hover:bg-primary/50"
     case 3:
-      return "bg-primary/60 border-transparent"
+      return "bg-primary/70 border-primary/80 hover:bg-primary/80"
     case 4:
-      return "bg-primary border-transparent"
+      return "bg-primary border-primary hover:bg-primary/90 shadow-sm"
     default:
-      return "bg-transparent"
+      return "bg-muted/30 border-muted-foreground/20"
   }
 }
-
-
-

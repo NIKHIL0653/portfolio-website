@@ -81,34 +81,54 @@ export function TechStackMarquee({ className }: { className?: string }) {
     right: ''
   })
 
-  // Dynamic gradient color based on theme - enhanced blur intensity with system support
-  const isDark = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches)
-  const gradientColor = isDark ? "#121212" : "white"
-  const gradientOpacity = isDark ? "0.95" : "0.98"
-
   React.useEffect(() => {
-    const rgbaColor = isDark ? `rgba(18, 18, 18, ${gradientOpacity})` : `rgba(255, 255, 255, ${gradientOpacity})`
-    const midColor = isDark ? `rgba(18, 18, 18, 0.4)` : `rgba(255, 255, 255, 0.5)`
+    // Determine if dark mode with fallback
+    const isDark = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches)
+    
+    // Use reliable colors that work with most themes
+    const backgroundColor = isDark ? 'hsl(224, 71%, 4%)' : 'hsl(0, 0%, 100%)'
+    const transparentBg = isDark ? 'hsla(224, 71%, 4%, 0)' : 'hsla(0, 0%, 100%, 0)'
+    
+    // Create natural fade gradients with multiple stops
+    const leftGradient = `linear-gradient(to right, 
+      ${backgroundColor} 0%, 
+      ${backgroundColor} 15%, 
+      ${backgroundColor.replace(')', ', 0.9)')} 25%, 
+      ${backgroundColor.replace(')', ', 0.7)')} 40%, 
+      ${backgroundColor.replace(')', ', 0.5)')} 55%, 
+      ${backgroundColor.replace(')', ', 0.3)')} 70%, 
+      ${backgroundColor.replace(')', ', 0.15)')} 85%, 
+      ${transparentBg} 100%)`
+    
+    const rightGradient = `linear-gradient(to left, 
+      ${backgroundColor} 0%, 
+      ${backgroundColor} 15%, 
+      ${backgroundColor.replace(')', ', 0.9)')} 25%, 
+      ${backgroundColor.replace(')', ', 0.7)')} 40%, 
+      ${backgroundColor.replace(')', ', 0.5)')} 55%, 
+      ${backgroundColor.replace(')', ', 0.3)')} 70%, 
+      ${backgroundColor.replace(')', ', 0.15)')} 85%, 
+      ${transparentBg} 100%)`
 
     setGradientStyle({
-      left: `radial-gradient(ellipse 140% 110% at 100% 50%, transparent 0%, ${midColor} 50%, ${rgbaColor} 80%, ${rgbaColor} 100%)`,
-      right: `radial-gradient(ellipse 140% 110% at 0% 50%, transparent 0%, ${midColor} 50%, ${rgbaColor} 80%, ${rgbaColor} 100%)`
+      left: leftGradient,
+      right: rightGradient
     })
-  }, [isDark, gradientOpacity])
+  }, [theme])
 
   return (
     <div className={cn("w-full overflow-hidden py-2", className)}>
       <div className="relative" style={{ "--speed": "24s" } as React.CSSProperties}>
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 left-0 w-32 sm:w-40 z-10"
+          className="pointer-events-none absolute inset-y-0 left-0 w-32 sm:w-40 md:w-48 z-10"
           style={{
             background: gradientStyle.left,
           }}
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 right-0 w-32 sm:w-40 z-10"
+          className="pointer-events-none absolute inset-y-0 right-0 w-32 sm:w-40 md:w-48 z-10"
           style={{
             background: gradientStyle.right,
           }}
@@ -133,5 +153,3 @@ export function TechStackMarquee({ className }: { className?: string }) {
     </div>
   )
 }
-
-

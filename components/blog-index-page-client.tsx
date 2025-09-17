@@ -36,10 +36,10 @@ export default function BlogIndexPageClient() {
 
   return (
     <main className="blog-index-page min-h-screen bg-[#fafafa] dark:bg-[#121212] overflow-x-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-6 sm:pb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 md:pt-28 pb-6 sm:pb-8">
 
         {/* Filters */}
-        <div className="mt-1 md:mt-4 mb-4">
+        <div className="mt-0 md:mt-4 mb-4">
           {/* Desktop Filters */}
           <div className="hidden md:block">
             <BlogFilters

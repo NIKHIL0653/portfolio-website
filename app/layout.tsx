@@ -6,6 +6,7 @@ import "../styles/blog-article.css"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { ThemeProvider } from "@/components/theme-provider"
+import { Analytics } from '@vercel/analytics/react'
 
 export const metadata: Metadata = {
   title: "Nikhil Choudhary - Portfolio",
@@ -39,6 +40,7 @@ export default function RootLayout({
         <ThemeProvider defaultTheme="light" storageKey="portfolio-theme">
           <SiteHeader />
           <main>{children}</main>
+          <Analytics />
           <SiteFooter />
         </ThemeProvider>
       </body>

@@ -35,9 +35,8 @@ export default function BlogIndexPageClient() {
   const displayPosts = activeCategory === 'All Posts' ? filteredPosts.slice(1) : filteredPosts
 
   return (
-    // CLASS "mb-16" REMOVED FROM HERE
     <main className="blog-index-page min-h-screen bg-[#fafafa] dark:bg-[#121212] overflow-x-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 py-6 sm:py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-6 sm:pb-8">
 
         {/* Filters */}
         <div className="mt-1 md:mt-4 mb-4">
@@ -151,7 +150,8 @@ export default function BlogIndexPageClient() {
                               sizes="(max-width: 768px) 100vw, 100vw"
                               priority
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent transition-opacity duration-500 group-hover:opacity-0"></div>
+                            {/* FIXED: Changed hover:opacity-0 to group-hover:opacity-0 */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent transition-opacity duration-500 group-hover:opacity-0"></div>
                           </>
                         )}
                       </div>
@@ -200,12 +200,12 @@ export default function BlogIndexPageClient() {
               </div>
 
               <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 pt-4 pb-4 ${
-                activeCategory === 'All Posts' ? 'gap-y-6' : 'gap-y-4'
+                activeCategory === 'All Posts' ? 'gap-y-12' : 'gap-y-10'
               }`}>
                 {displayPosts.map((post) => (
                   <div key={post.slug} className="relative z-10">
                     <Link href={`/blog/${post.slug}`} className="block group">
-                      <article className="space-y-3 pb-6">
+                      <article className="space-y-3">
                         {post.image && (
                           <div className="relative aspect-[16/9] w-full rounded-lg overflow-hidden">
                             <Image
@@ -215,7 +215,8 @@ export default function BlogIndexPageClient() {
                               className="object-cover transition-opacity duration-500"
                               sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent transition-opacity duration-500 group-hover:opacity-0"></div>
+                            {/* FIXED: Changed hover:opacity-0 to group-hover:opacity-0 */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent transition-opacity duration-500 group-hover:opacity-0"></div>
                           </div>
                         )}
                         <div className="space-y-2 px-4 transition-colors duration-300">

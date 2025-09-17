@@ -10,7 +10,7 @@ import Link from "next/link"
 export default function HomePage() {
   return (
     <main className="min-h-dvh flex flex-col bg-[#fafafa] dark:bg-[#121212]">
-      <div className="flex-1 flex items-center justify-center p-6 sm:p-8 md:p-20 lg:p-12">
+      <div className="flex-1 flex items-center justify-center px-4 py-6 sm:p-8 md:p-20 lg:p-12">
         <div className="w-full max-w-7xl bg-card rounded-lg border border-border overflow-hidden shadow-md sm:shadow-lg">
           <InteractiveHero />
 
@@ -33,7 +33,7 @@ export default function HomePage() {
           </section>
 
           {/* Navigation Section */}
-          <section id="navigation" className="px-6 sm:px-8 py-6 sm:py-8 border-t border-dashed border-gray-300 dark:border-gray-600">
+          <section id="navigation" className="px-6 sm:px-8 py-6 sm:py-8 border-t border-dashed border-border">
             <header className="mb-0 sm:mb-8">
               <h2 className="text-2xl sm:text-3xl font-semibold text-center flex items-center justify-center gap-3">
                 <Eye className="h-7 w-7 text-muted-foreground" />

@@ -8,6 +8,8 @@ export function InteractiveHero() {
   const { theme } = useTheme()
   const [currentSpecialty, setCurrentSpecialty] = useState(0)
   const [scrollOpacity, setScrollOpacity] = useState(1)
+  const [isExpanded, setIsExpanded] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   const specialties = [
     "Software Engineer",
@@ -148,68 +150,99 @@ export function InteractiveHero() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   return (
     <section id="top" className="relative">
       <div className="absolute inset-0">
         <canvas ref={canvasRef} className="block h-[85vh] sm:h-[95vh] w-full" aria-hidden="true" />
       </div>
 
-      <div className="relative z-10 h-[85vh] sm:h-[95vh] px-6 sm:px-8 flex items-center justify-center">
+      <div className="relative z-10 h-[85vh] sm:h-[95vh] px-6 sm:px-8 flex flex-col items-center justify-center">
         <div className="max-w-2xl text-center">
-          <div className="mx-auto mb-4 flex justify-center">
-            <h2
-              className="tracking-tight ml-2 sm:ml-0"
-              style={{
-                fontSize: '48px',
-                fontFamily: '__geistMono_bb3bb8',
-                fontWeight: '500',
-                lineHeight: '48px'
-              }}
-              aria-live="polite"
-              aria-label="Hi, I'm Nikhil typing"
-            >
-              <span className="typewriter-text">{typed}</span>
-              <span className="caret" aria-hidden="true">
-                |
-              </span>
-            </h2>
+          {/* Profile Image Container with dynamic spacing */}
+          <div className={`flex justify-center transition-all duration-500 ${
+            isExpanded ? 'mb-4' : 'mb-3'
+          }`}>
+            <div className="profile-image-wrapper">
+              <img
+                src="/images/blog/avatar_img.png"
+                alt="Nikhil's profile"
+                className={`profile-image transition-all duration-500 cursor-pointer ${
+                  isExpanded ? 'expanded' : ''
+                }`}
+                onMouseEnter={!isMobile ? () => setIsExpanded(true) : undefined}
+                onMouseLeave={!isMobile ? () => setIsExpanded(false) : undefined}
+                onClick={isMobile ? () => setIsExpanded(!isExpanded) : undefined}
+              />
+            </div>
           </div>
-
-          <div className="specialty-container">
-            <h1
-              key={currentSpecialty}
-              className="text-balance text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight specialty-text"
-            >
-              {specialties[currentSpecialty]}
-            </h1>
-          </div>
-          <p className="mt-4 text-pretty text-sm sm:text-base md:text-lg leading-relaxed text-muted-foreground mx-auto max-w-xl px-2">
-            I build performant interfaces and systems with a product mindset.
-          </p>
-
-          {/* Scroll Down Indicator */}
-          <div
-            className="mt-8 flex flex-col items-center space-y-1 text-muted-foreground transition-opacity duration-300"
-            style={{ opacity: scrollOpacity }}
-          >
-            <span className="text-xs font-medium">Scroll Down</span>
-            <div className="animate-bounce">
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="text-muted-foreground"
+          
+          {/* Content Container with push-down animation */}
+          <div className={`content-container transition-all duration-500 ${
+            isExpanded ? 'content-pushed' : ''
+          }`}>
+            <div className="mx-auto mb-4 flex justify-center">
+              <h2
+                className="tracking-tight ml-2 sm:ml-0"
+                style={{
+                  fontSize: '48px',
+                  fontFamily: '__geistMono_bb3bb8',
+                  fontWeight: '500',
+                  lineHeight: '48px'
+                }}
+                aria-live="polite"
+                aria-label="Hi, I'm Nikhil typing"
               >
-                <path
-                  d="M7 13L12 18L17 13M7 6L12 11L17 6"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+                <span className="typewriter-text">{typed}</span>
+                <span className="caret" aria-hidden="true">
+                  |
+                </span>
+              </h2>
+            </div>
+
+            <div className="specialty-container">
+              <h1
+                key={currentSpecialty}
+                className="text-balance text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight specialty-text"
+              >
+                {specialties[currentSpecialty]}
+              </h1>
+            </div>
+            <p className="mt-4 text-pretty text-sm sm:text-base md:text-lg leading-relaxed text-muted-foreground mx-auto max-w-xl px-2">
+              I build performant interfaces and systems with a product mindset.
+            </p>
+
+            {/* Scroll Down Indicator */}
+            <div
+              className="mt-8 flex flex-col items-center space-y-1 text-muted-foreground transition-opacity duration-300"
+              style={{ opacity: scrollOpacity }}
+            >
+              <span className="text-xs font-medium">Scroll Down</span>
+              <div className="animate-bounce">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="text-muted-foreground"
+                >
+                  <path
+                    d="M7 13L12 18L17 13M7 6L12 11L17 6"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
             </div>
           </div>
         </div>
@@ -235,12 +268,56 @@ export function InteractiveHero() {
           }
         }
 
+        .profile-image-wrapper {
+          position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .profile-image {
+          width: 96px;
+          height: 96px;
+          border-radius: 50%;
+          object-fit: cover;
+          filter: grayscale(100%);
+          transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .profile-image.expanded {
+          width: 160px;
+          height: 160px;
+          filter: grayscale(0%);
+        }
+
+        .content-container {
+          transform: translateY(0);
+        }
+
+        .content-container.content-pushed {
+          transform: translateY(16px);
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 767px) {
+          .profile-image {
+            width: 80px;
+            height: 80px;
+          }
+          
+          .profile-image.expanded {
+            width: 128px;
+            height: 128px;
+          }
+          
+          .content-container.content-pushed {
+            transform: translateY(12px);
+          }
+        }
+
       `}</style>
 
       {!mounted && <span className="sr-only">Interactive hero background</span>}
     </section>
   )
 }
-
-
-

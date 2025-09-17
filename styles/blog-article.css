@@ -605,7 +605,7 @@ footer * {
   border-radius: 12px !important;
   border: 2px solid #e2e8f0 !important;
   box-shadow: var(--shadow-card) !important;
-  margin: 2rem auto !important;
+  margin: 2rem 1rem !important;
   display: block !important;
   max-width: 100% !important;
   height: auto !important;
@@ -831,8 +831,8 @@ footer * {
 @media (max-width: 768px) {
   .blog-content {
     font-size: 14px;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 1.8rem;
+    padding-right: 1.8rem;
   }
 
   /* Increase blog article card width on mobile by reducing container padding */
@@ -852,7 +852,7 @@ footer * {
   .blog-content img {
     width: 100%;
     max-width: 100%;
-    margin: 2rem auto !important; /* Center images with auto margins */
+    margin: 2rem 0.5rem !important; /* Center images with reduced horizontal margins */
     border-radius: 12px !important;
     border: 2px solid var(--border) !important;
   }
@@ -943,7 +943,7 @@ footer * {
   }
 
   .blog-content img {
-    margin: 1rem auto !important;
+    margin: 1rem 0.5rem !important;
   }
 
   .blog-content table {
@@ -1004,8 +1004,8 @@ footer * {
 @media (max-width: 480px) {
   .blog-content {
     font-size: 13px;
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 
   .blog-content h1 {

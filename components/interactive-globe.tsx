@@ -43,10 +43,10 @@ export function InteractiveGlobe() {
     // Create the globe sphere
     const globeGeometry = new THREE.SphereGeometry(1, 64, 64)
     const globeMaterial = new THREE.MeshPhongMaterial({
-      color: theme === 'dark' ? 0x1f2937 : 0xf3f4f6,
+      color: 0xffffff, // Pure white for water areas
       transparent: true,
-      opacity: 0.7,
-      shininess: 30
+      opacity: 0.8,
+      shininess: 50
     })
     const globeMesh = new THREE.Mesh(globeGeometry, globeMaterial)
     globeGroup.add(globeMesh)
@@ -99,7 +99,7 @@ export function InteractiveGlobe() {
       pointsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3))
 
       const pointsMaterial = new THREE.PointsMaterial({
-        color: theme === 'dark' ? 0x6b7280 : 0x9ca3af,
+        color: 0x000000, // Black dots for continents
         size: 0.012,
         transparent: true,
         opacity: 0.9
@@ -109,10 +109,10 @@ export function InteractiveGlobe() {
       globeGroup.add(points)
     })
 
-    // Kolkata marker (green pulsing dot)
+    // Kolkata marker (orange pulsing dot)
     const kolkataGeometry = new THREE.SphereGeometry(0.02, 8, 8)
     const kolkataMaterial = new THREE.MeshBasicMaterial({
-      color: 0x10b981,
+      color: 0xff6b35, // Orange color
       transparent: true
     })
     const kolkataMarker = new THREE.Mesh(kolkataGeometry, kolkataMaterial)
@@ -214,48 +214,54 @@ export function InteractiveGlobe() {
     }
   }, [theme])
 
-  // Helper function to generate continent points
+  // Helper function to generate continent points with more accurate boundaries
   function generateContinentPoints(continent: string) {
     const points = []
     const densities = {
-      'asia': 1200,
-      'europe': 600,
-      'africa': 700,
-      'north-america': 800,
-      'south-america': 600,
-      'australia': 300
+      'asia': 1500,
+      'europe': 800,
+      'africa': 900,
+      'north-america': 1000,
+      'south-america': 700,
+      'australia': 400
     }
 
     const density = densities[continent as keyof typeof densities] || 300
 
-    // Generate random points within continent boundaries
+    // Generate random points within more accurate continent boundaries
     for (let i = 0; i < density; i++) {
       let lat, lng
 
       switch (continent) {
         case 'asia':
-          lat = Math.random() * 70 - 10 // -10° to 60°N (more accurate for Asia)
-          lng = Math.random() * 90 + 25 // 25° to 115°E (adjusted for Asia)
+          // Asia: from Eastern Europe to Pacific, Arctic to Indian Ocean
+          lat = Math.random() * 70 - 10 // -10° to 60°N
+          lng = Math.random() * 120 + 25 // 25° to 145°E (includes Japan, Indonesia)
           break
         case 'europe':
+          // Europe: from Atlantic to Ural Mountains
           lat = Math.random() * 25 + 35 // 35° to 60°N
-          lng = Math.random() * 40 - 15 // -15° to 25°E
+          lng = Math.random() * 50 - 15 // -15° to 35°E
           break
         case 'africa':
+          // Africa: from Mediterranean to Cape of Good Hope
           lat = Math.random() * 55 - 35 // -35° to 20°N
-          lng = Math.random() * 60 - 25 // -25° to 35°E
+          lng = Math.random() * 55 - 20 // -20° to 35°E
           break
         case 'north-america':
+          // North America: from Arctic to Central America
           lat = Math.random() * 55 + 5 // 5° to 60°N
           lng = Math.random() * 100 - 170 // -170° to -70°E
           break
         case 'south-america':
+          // South America: from Colombia to Tierra del Fuego
           lat = Math.random() * 60 - 55 // -55° to 5°N
           lng = Math.random() * 50 - 85 // -85° to -35°E
           break
         case 'australia':
-          lat = Math.random() * 25 - 45 // -45° to -20°N
-          lng = Math.random() * 30 + 110 // 110° to 140°E
+          // Australia and Oceania
+          lat = Math.random() * 30 - 50 // -50° to -20°N
+          lng = Math.random() * 40 + 110 // 110° to 150°E
           break
         default:
           lat = (Math.random() - 0.5) * 180
@@ -269,7 +275,7 @@ export function InteractiveGlobe() {
   }
 
   return (
-    <div className="relative w-full h-48 rounded-lg overflow-hidden border border-border/50">
+    <div className="relative w-full h-full rounded-lg overflow-hidden border border-border/50">
       <div ref={mountRef} className="w-full h-full" />
     </div>
   )

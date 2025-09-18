@@ -5,8 +5,237 @@ import { ActivityHeatmap } from "@/components/activity-heatmap"
 import { TechStackMarquee } from "@/components/tech-stack-marquee"
 import { LetsConnect } from "@/components/lets-connect"
 import { MultilingualGreeting } from "@/components/multilingual-greeting"
-import { Github, Wrench, FolderOpen, FileText, User, Star, GitFork } from "lucide-react"
+import { Github, Wrench, FolderOpen, FileText, User } from "lucide-react"
 import Link from "next/link"
+import { useRef, useEffect } from 'react'
+
+// LetterGlitch Component
+const LetterGlitch = ({
+  glitchColors = ['#2b4539', '#61dca3', '#61b3dc'],
+  glitchSpeed = 50,
+  centerVignette = false,
+  outerVignette = true,
+  smooth = true,
+  characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$&*()-_+=/[]{};:<>.,0123456789'
+}: {
+  glitchColors: string[];
+  glitchSpeed: number;
+  centerVignette: boolean;
+  outerVignette: boolean;
+  smooth: boolean;
+  characters: string;
+}) => {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const animationRef = useRef<number | null>(null);
+  const letters = useRef<
+    {
+      char: string;
+      color: string;
+      targetColor: string;
+      colorProgress: number;
+    }[]
+  >([]);
+  const grid = useRef({ columns: 0, rows: 0 });
+  const context = useRef<CanvasRenderingContext2D | null>(null);
+  const lastGlitchTime = useRef(Date.now());
+
+  const lettersAndSymbols = Array.from(characters);
+
+  const fontSize = 16;
+  const charWidth = 10;
+  const charHeight = 20;
+
+  const getRandomChar = () => {
+    return lettersAndSymbols[Math.floor(Math.random() * lettersAndSymbols.length)];
+  };
+
+  const getRandomColor = () => {
+    return glitchColors[Math.floor(Math.random() * glitchColors.length)];
+  };
+
+  const hexToRgb = (hex: string) => {
+    const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, (_m, r, g, b) => {
+      return r + r + g + g + b + b;
+    });
+
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result
+      ? {
+          r: parseInt(result[1], 16),
+          g: parseInt(result[2], 16),
+          b: parseInt(result[3], 16)
+        }
+      : null;
+  };
+
+  const interpolateColor = (
+    start: { r: number; g: number; b: number },
+    end: { r: number; g: number; b: number },
+    factor: number
+  ) => {
+    const result = {
+      r: Math.round(start.r + (end.r - start.r) * factor),
+      g: Math.round(start.g + (end.g - start.g) * factor),
+      b: Math.round(start.b + (end.b - start.b) * factor)
+    };
+    return `rgb(${result.r}, ${result.g}, ${result.b})`;
+  };
+
+  const calculateGrid = (width: number, height: number) => {
+    const columns = Math.ceil(width / charWidth);
+    const rows = Math.ceil(height / charHeight);
+    return { columns, rows };
+  };
+
+  const initializeLetters = (columns: number, rows: number) => {
+    grid.current = { columns, rows };
+    const totalLetters = columns * rows;
+    letters.current = Array.from({ length: totalLetters }, () => ({
+      char: getRandomChar(),
+      color: getRandomColor(),
+      targetColor: getRandomColor(),
+      colorProgress: 1
+    }));
+  };
+
+  const resizeCanvas = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const parent = canvas.parentElement;
+    if (!parent) return;
+
+    const dpr = window.devicePixelRatio || 1;
+    const rect = parent.getBoundingClientRect();
+
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+
+    canvas.style.width = `${rect.width}px`;
+    canvas.style.height = `${rect.height}px`;
+
+    if (context.current) {
+      context.current.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    const { columns, rows } = calculateGrid(rect.width, rect.height);
+    initializeLetters(columns, rows);
+    drawLetters();
+  };
+
+  const drawLetters = () => {
+    if (!context.current || letters.current.length === 0) return;
+    const ctx = context.current;
+    const { width, height } = canvasRef.current!.getBoundingClientRect();
+    ctx.clearRect(0, 0, width, height);
+    ctx.font = `${fontSize}px monospace`;
+    ctx.textBaseline = 'top';
+
+    letters.current.forEach((letter, index) => {
+      const x = (index % grid.current.columns) * charWidth;
+      const y = Math.floor(index / grid.current.columns) * charHeight;
+      ctx.fillStyle = letter.color;
+      ctx.fillText(letter.char, x, y);
+    });
+  };
+
+  const updateLetters = () => {
+    if (!letters.current || letters.current.length === 0) return;
+
+    const updateCount = Math.max(1, Math.floor(letters.current.length * 0.05));
+
+    for (let i = 0; i < updateCount; i++) {
+      const index = Math.floor(Math.random() * letters.current.length);
+      if (!letters.current[index]) continue;
+
+      letters.current[index].char = getRandomChar();
+      letters.current[index].targetColor = getRandomColor();
+
+      if (!smooth) {
+        letters.current[index].color = letters.current[index].targetColor;
+        letters.current[index].colorProgress = 1;
+      } else {
+        letters.current[index].colorProgress = 0;
+      }
+    }
+  };
+
+  const handleSmoothTransitions = () => {
+    let needsRedraw = false;
+    letters.current.forEach(letter => {
+      if (letter.colorProgress < 1) {
+        letter.colorProgress += 0.05;
+        if (letter.colorProgress > 1) letter.colorProgress = 1;
+
+        const startRgb = hexToRgb(letter.color);
+        const endRgb = hexToRgb(letter.targetColor);
+        if (startRgb && endRgb) {
+          letter.color = interpolateColor(startRgb, endRgb, letter.colorProgress);
+          needsRedraw = true;
+        }
+      }
+    });
+
+    if (needsRedraw) {
+      drawLetters();
+    }
+  };
+
+  const animate = () => {
+    const now = Date.now();
+    if (now - lastGlitchTime.current >= glitchSpeed) {
+      updateLetters();
+      drawLetters();
+      lastGlitchTime.current = now;
+    }
+
+    if (smooth) {
+      handleSmoothTransitions();
+    }
+
+    animationRef.current = requestAnimationFrame(animate);
+  };
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    context.current = canvas.getContext('2d');
+    resizeCanvas();
+    animate();
+
+    let resizeTimeout: NodeJS.Timeout;
+
+    const handleResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        cancelAnimationFrame(animationRef.current as number);
+        resizeCanvas();
+        animate();
+      }, 100);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      cancelAnimationFrame(animationRef.current!);
+      window.removeEventListener('resize', handleResize);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [glitchSpeed, smooth]);
+
+  return (
+    <div className="relative w-full h-full bg-transparent overflow-hidden">
+      <canvas ref={canvasRef} className="block w-full h-full" />
+      {outerVignette && (
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none bg-[radial-gradient(circle,_rgba(0,0,0,0)_60%,_rgba(0,0,0,1)_100%)]"></div>
+      )}
+      {centerVignette && (
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none bg-[radial-gradient(circle,_rgba(0,0,0,0.8)_0%,_rgba(0,0,0,0)_60%)]"></div>
+      )}
+    </div>
+  );
+};
 
 // Enhanced Blog Card Component
 function BlogCard() {
@@ -19,20 +248,36 @@ function BlogCard() {
   return (
     <Link href="/blog" className="group relative bg-card rounded-lg border border-border overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 min-h-[380px] block">
       <div
-        className="absolute inset-0 p-8"
+        className="absolute inset-0 p-4 pt-12"
         style={{
           maskImage: 'linear-gradient(to bottom, black 20%, transparent 100%)',
           WebkitMaskImage: 'linear-gradient(to bottom, black 20%, transparent 100%)',
         }}
       >
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 blur-[1px] group-hover:blur-sm transition-all duration-300 h-full">
+        <div className="grid grid-cols-3 gap-4 h-full blur-[0.5px] transition-all duration-300 overflow-hidden pr-0">
           {blogPosts.map((post, index) => (
             <div
               key={index}
-              className="bg-card border border-border/50 p-4 rounded-lg transition-all duration-300 hover:!blur-none hover:scale-105 cursor-pointer flex flex-col"
+              className={`bg-card border border-border/50 p-4 rounded-lg transition-all duration-300 cursor-pointer flex flex-col ${index === 2 ? 'overflow-hidden mr-0' : ''}`}
+              style={{ filter: 'blur(0.5px)' }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.filter = 'blur(0px)';
+                const parent = e.currentTarget.parentElement;
+                Array.from(parent.children).forEach((sibling, siblingIndex) => {
+                  if (siblingIndex !== index) {
+                    (sibling as HTMLElement).style.filter = 'blur(3px)';
+                  }
+                });
+              }}
+              onMouseLeave={(e) => {
+                const parent = e.currentTarget.parentElement;
+                Array.from(parent.children).forEach((sibling) => {
+                  (sibling as HTMLElement).style.filter = 'blur(0.5px)';
+                });
+              }}
             >
-              <h4 className="font-semibold text-sm mb-2 text-muted-foreground/80 line-clamp-3">{post.title}</h4>
-              <p className="text-muted-foreground/50 text-xs line-clamp-4">{post.excerpt}</p>
+              <h4 className="font-semibold text-sm mb-2 text-muted-foreground/80 line-clamp-2">{post.title}</h4>
+              <p className="text-muted-foreground/50 text-xs line-clamp-3">{post.excerpt}</p>
             </div>
           ))}
         </div>
@@ -54,59 +299,38 @@ function BlogCard() {
   );
 }
 
-// Enhanced Projects Card Component (MODIFIED)
+// Enhanced Projects Card Component with LetterGlitch effect
 function ProjectsCard() {
-  const projects = [
-    { title: "E-commerce Platform", description: "Full-stack solution with React & Node.js", tech: ["React", "Node.js"], stars: 42, forks: 12, status: "Active" },
-    { title: "Real-time Chat App", description: "WebSocket-based chat application", tech: ["Socket.io", "Express"], stars: 28, forks: 8, status: "Complete" },
-    // Removed AI assistant and Portfolio for this layout
-  ];
-
   return (
-    <Link href="/projects" className="group relative bg-card rounded-lg border border-border overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 min-h-[380px] block">
+    <Link
+      href="/projects"
+      className="group relative bg-card rounded-lg border border-border shadow-md hover:shadow-lg transition-all duration-300 min-h-[380px] block"
+    >
+      {/* Binary animation */}
       <div
-        className="absolute inset-0 p-8"
+        className="absolute inset-0 p-4 pt-6 z-0"
         style={{
-          maskImage: 'linear-gradient(to bottom, black 20%, transparent 100%)',
-          WebkitMaskImage: 'linear-gradient(to bottom, black 20%, transparent 100%)',
+          maskImage: 'linear-gradient(to bottom, black 10%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, black 10%, transparent 100%)',
         }}
       >
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 h-full blur-[1px] group-hover:blur-sm transition-all duration-300">
-          {/* Small Card - Left Column */}
-          <div className="bg-card border border-border/50 p-3 rounded-lg transition-all duration-300 hover:!blur-none hover:scale-105 cursor-pointer flex flex-col justify-between">
-            <div>
-              <div className="h-12 mb-2 rounded bg-muted/50"></div>
-              <h4 className="font-semibold text-xs mb-1 text-muted-foreground line-clamp-1">{projects[1].title}</h4>
-            </div>
-            <div className="flex items-center justify-between gap-2 text-xs text-muted-foreground/70">
-              <span className="flex items-center gap-1"><Star className="h-2 w-2" /> {projects[1].stars}</span>
-              <span className="px-1.5 py-0.5 bg-muted/50 text-muted-foreground text-[10px] rounded">{projects[1].status}</span>
-            </div>
-          </div>
-          
-          {/* Large Card - Right Column */}
-          <div className="bg-card border border-border/50 row-span-2 p-4 rounded-lg transition-all duration-300 hover:!blur-none hover:scale-105 cursor-pointer flex flex-col justify-between">
-            <div>
-              <div className="h-20 mb-3 rounded bg-muted/50"></div>
-              <h4 className="font-semibold text-sm mb-2 text-muted-foreground">{projects[0].title}</h4>
-              <p className="text-muted-foreground/70 text-xs mb-3">{projects[0].description}</p>
-            </div>
-            <div>
-              <div className="flex flex-wrap gap-1 mb-3">
-                {projects[0].tech.map((tech, techIndex) => (
-                  <span key={techIndex} className="px-2 py-1 bg-muted/50 text-muted-foreground text-xs rounded">{tech}</span>
-                ))}
-              </div>
-              <div className="flex items-center gap-3 text-xs text-muted-foreground/70">
-                <span className="flex items-center gap-1"><Star className="h-3 w-3" /> {projects[0].stars}</span>
-                <span className="flex items-center gap-1"><GitFork className="h-3 w-3" /> {projects[0].forks}</span>
-              </div>
-            </div>
-          </div>
+        <div className="w-full h-full">
+          <LetterGlitch
+            glitchColors={['#ffffff', '#e5e5e5', '#a3a3a3', '#525252', '#404040']}
+            glitchSpeed={120}
+            centerVignette={false}
+            outerVignette={false}
+            smooth={true}
+            characters="01"
+          />
         </div>
       </div>
-      
-      <div className="absolute bottom-10 left-8 flex flex-col-reverse items-start">
+
+      {/* Gradient Fade Overlay */}
+      <div className="absolute bottom-0 left-0 w-full h-5/6 bg-gradient-to-t from-[#FFFFFF] dark:from-[#131313] via-card/90 to-transparent z-5 rounded-b-lg"></div>
+
+      {/* Text & icon content */}
+      <div className="absolute bottom-10 left-8 flex flex-col-reverse items-start z-10">
         <div className="overflow-hidden max-h-0 group-hover:max-h-40 group-hover:mt-4 transition-all duration-300 ease-in-out">
           <span className="text-foreground font-medium flex items-center gap-1">
             View all projects →
@@ -114,8 +338,12 @@ function ProjectsCard() {
         </div>
         <div className="transition-all duration-300">
           <FolderOpen className="h-12 w-12 text-foreground mb-3 group-hover:h-10 group-hover:w-10 transition-all duration-300" />
-          <h3 className="text-2xl font-bold text-foreground group-hover:text-3xl transition-all duration-300">Featured Projects</h3>
-          <p className="text-muted-foreground text-base mt-1.5">My latest technical work.</p>
+          <h3 className="text-2xl font-bold text-foreground group-hover:text-3xl transition-all duration-300">
+            Featured Projects
+          </h3>
+          <p className="text-muted-foreground text-base mt-1.5">
+            My latest technical work.
+          </p>
         </div>
       </div>
     </Link>
@@ -126,7 +354,6 @@ function ProjectsCard() {
 function AboutCard() {
   return (
     <Link href="/about" className="group relative bg-card rounded-lg border border-border overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 min-h-[380px] block">
-      
       <div className="absolute bottom-10 left-8 flex flex-col-reverse items-start">
         <div className="overflow-hidden max-h-0 group-hover:max-h-40 group-hover:mt-4 transition-all duration-300 ease-in-out">
           <span className="text-foreground font-medium flex items-center gap-1">
@@ -156,24 +383,24 @@ export default function HomePage() {
 
           {/* Merged Tech Stack & Activity Card */}
           <div className="bg-card rounded-lg border border-border overflow-hidden shadow-md p-6 sm:p-8">
-            {/* --- Tech Stack Section --- */}
+            {/* --- Activity Section --- */}
             <div className="text-center mb-6">
                 <div className="flex items-center justify-center gap-3">
-                    <Wrench className="h-6 w-6 text-muted-foreground" />
-                    <h2 className="text-2xl sm:text-3xl font-semibold">Tech Stack</h2>
+                    <Github className="h-6 w-6 text-muted-foreground" />
+                    <h2 className="text-2xl sm:text-3xl font-semibold">Coding Activity</h2>
                 </div>
             </div>
-            <TechStackMarquee />
+            <ActivityHeatmap />
 
-            {/* --- Activity Section --- */}
+            {/* --- Tech Stack Section --- */}
             <div className="mt-10 pt-8 border-t border-border">
                 <div className="text-center mb-4">
                     <div className="flex items-center justify-center gap-3">
-                        <Github className="h-6 w-6 text-muted-foreground" />
-                        <h2 className="text-2xl sm:text-3xl font-semibold">Coding Activity</h2>
+                        <Wrench className="h-6 w-6 text-muted-foreground" />
+                        <h2 className="text-2xl sm:text-3xl font-semibold">Tech Stack</h2>
                     </div>
                 </div>
-                <ActivityHeatmap />
+                <TechStackMarquee />
             </div>
           </div>
 

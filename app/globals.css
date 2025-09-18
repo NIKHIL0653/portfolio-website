@@ -211,3 +211,41 @@
 .dark .project-card-glow:hover::before {
   opacity: 1;
 }
+
+/* ============================= */
+/* Card Gradient Fade + Glow Fix */
+/* ============================= */
+
+/* Attach this class to any card you want faded */
+.dark .card-fade {
+  position: relative;
+  overflow: hidden; /* keep gradient inside */
+}
+
+/* Gradient fade overlay (bottom half) */
+.dark .card-fade::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 65%; /* extend fade deeper */
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(15, 15, 15, 0.95) 100% /* blend with dark card bg */
+  );
+  pointer-events: none;
+  z-index: 0; /* stays below glow (::before) */
+}
+
+/* Ensure glow (::before) always renders above gradient */
+.dark .project-card-glow::before {
+  z-index: 1;
+}
+
+/* Ensure content stays above both */
+.dark .card-fade .card-content {
+  position: relative;
+  z-index: 2;
+}

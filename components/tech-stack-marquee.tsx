@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import { cn } from "@/lib/utils"
-import { useTheme } from "./theme-provider"
 
 import {
   siJavascript,
@@ -56,7 +55,7 @@ function Tile({ icon }: { icon: IconDef }) {
   return (
     <div
       className="group relative h-12 w-12 md:h-14 md:w-14 rounded-lg border bg-muted/40 flex items-center justify-center
-                 text-foreground/75 transition-all duration-300"
+               text-foreground/75 transition-all duration-300"
       aria-label={icon.title}
       title={icon.title}
     >
@@ -73,48 +72,15 @@ function Tile({ icon }: { icon: IconDef }) {
   )
 }
 
+// SIMPLIFIED AND FIXED TechStackMarquee
 export function TechStackMarquee({ className }: { className?: string }) {
-  const { theme } = useTheme()
-  const base = React.useMemo(() => ICONS, [])
-  const [gradientStyle, setGradientStyle] = React.useState({
-    left: '',
-    right: ''
-  })
+  const base = React.useMemo(() => ICONS, []);
 
-  React.useEffect(() => {
-    // Determine if dark mode with fallback
-    const isDark = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches)
-    
-    // Use reliable colors that work with most themes
-    const backgroundColor = isDark ? 'hsl(224, 71%, 4%)' : 'hsl(0, 0%, 100%)'
-    const transparentBg = isDark ? 'hsla(224, 71%, 4%, 0)' : 'hsla(0, 0%, 100%, 0)'
-    
-    // Create natural fade gradients with multiple stops
-    const leftGradient = `linear-gradient(to right, 
-      ${backgroundColor} 0%, 
-      ${backgroundColor} 15%, 
-      ${backgroundColor.replace(')', ', 0.9)')} 25%, 
-      ${backgroundColor.replace(')', ', 0.7)')} 40%, 
-      ${backgroundColor.replace(')', ', 0.5)')} 55%, 
-      ${backgroundColor.replace(')', ', 0.3)')} 70%, 
-      ${backgroundColor.replace(')', ', 0.15)')} 85%, 
-      ${transparentBg} 100%)`
-    
-    const rightGradient = `linear-gradient(to left, 
-      ${backgroundColor} 0%, 
-      ${backgroundColor} 15%, 
-      ${backgroundColor.replace(')', ', 0.9)')} 25%, 
-      ${backgroundColor.replace(')', ', 0.7)')} 40%, 
-      ${backgroundColor.replace(')', ', 0.5)')} 55%, 
-      ${backgroundColor.replace(')', ', 0.3)')} 70%, 
-      ${backgroundColor.replace(')', ', 0.15)')} 85%, 
-      ${transparentBg} 100%)`
-
-    setGradientStyle({
-      left: leftGradient,
-      right: rightGradient
-    })
-  }, [theme])
+  // Use theme-aware CSS variables for the fade effect
+  const gradientStyle = {
+    left: `linear-gradient(to right, var(--card), var(--marquee-transparent) 80%)`,
+    right: `linear-gradient(to left, var(--card), var(--marquee-transparent) 80%)`,
+  };
 
   return (
     <div className={cn("w-full overflow-hidden py-2", className)}>
@@ -151,5 +117,5 @@ export function TechStackMarquee({ className }: { className?: string }) {
         }
       `}</style>
     </div>
-  )
+  );
 }

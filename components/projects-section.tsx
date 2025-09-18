@@ -95,15 +95,23 @@ export function ProjectsSection() {
   }
 
   const handleCardClick = (index: number) => {
-    // Only change active state when clicking on a different card
-    // Clicking on the same card keeps it active
-    if (activeCardIndex !== index) {
+    // Toggle active state - clicking the same card deactivates it
+    if (activeCardIndex === index) {
+      setActiveCardIndex(null)
+    } else {
       setActiveCardIndex(index)
     }
   }
 
+  const handleSectionClick = (e: React.MouseEvent) => {
+    // Clear active state when clicking on the section background
+    if (e.target === e.currentTarget) {
+      setActiveCardIndex(null)
+    }
+  }
+
   return (
-    <section id="projects">
+    <section id="projects" onClick={handleSectionClick}>
       <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 auto-rows-min">
         {projects.map((p, index) => {
           const gridClasses = gridPatterns[index]
@@ -114,7 +122,7 @@ export function ProjectsSection() {
               key={p.title}
               ref={(el) => { cardRefs.current[index] = el }}
               className={`group relative border-2 rounded-lg p-4 bg-card hover:border-primary transition-all duration-300 overflow-hidden shadow-lg ${gridClasses} ${heightClass} flex flex-col ${
-                activeCardIndex === index ? 'border-black md:border-primary' : 'border-border'
+                activeCardIndex === index ? 'border-foreground md:border-primary' : 'border-border'
               }`}
               style={{
                 transformStyle: "preserve-3d",

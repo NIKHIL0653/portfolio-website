@@ -1,9 +1,9 @@
 "use client"
+
 import useSWR from "swr"
 import { useMemo, useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
 
-// ... (imports and constants are unchanged)
 type ActivityResponse = {
   byDate: Record<string, number>
   range: { start: string; end: string }
@@ -14,7 +14,6 @@ const fetcher = (url: string) => fetch(url).then((r) => r.json())
 const WEEK_COL_WIDTH_MOBILE = 18;
 
 export function ActivityHeatmap() {
-  // ... (all hooks and functions inside the component are unchanged)
   const [hoveredDay, setHoveredDay] = useState<{ date: string; contributions: number } | null>(null)
   const [isMobile, setIsMobile] = useState(false)
   
@@ -88,8 +87,8 @@ export function ActivityHeatmap() {
     return 4
   }
   
-  const { monthLabels, yearSeparators } = useMemo(() => {
-    if (!weeks.length) return { monthLabels: [], yearSeparators: [] };
+  const { monthLabels } = useMemo(() => {
+    if (!weeks.length) return { monthLabels: [] };
     
     const monthsMap = new Map();
     weeks.forEach((week, weekIndex) => {
@@ -117,25 +116,8 @@ export function ActivityHeatmap() {
         ? `${month.weekIndex * WEEK_COL_WIDTH_MOBILE}px`
         : `${(month.weekIndex / weeks.length) * 100}%`
     }))
-
-    const currentYear = new Date().getFullYear()
-    const separators = []
-    weeks.forEach((week, weekIndex) => {
-      const firstDayOfWeek = week.find(day => day && !day.key.startsWith('pad-'))
-      if (firstDayOfWeek && firstDayOfWeek.date.getMonth() === 0 && firstDayOfWeek.date.getDate() <= 7) {
-        const year = firstDayOfWeek.date.getFullYear()
-        if (year !== currentYear) {
-          separators.push({
-            year: year,
-            position: isMobile
-              ? `${weekIndex * WEEK_COL_WIDTH_MOBILE}px`
-              : `${(weekIndex / weeks.length) * 100}%`
-          })
-        }
-      }
-    })
     
-    return { monthLabels: allMonthLabels, yearSeparators: separators };
+    return { monthLabels: allMonthLabels };
   }, [weeks, isMobile]);
 
   const getDayLabels = () => ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
@@ -144,7 +126,6 @@ export function ActivityHeatmap() {
 
   return (
     <div className="w-full py-4">
-      {/* --- UPDATED: Increased max-width to xl for more space --- */}
       <div className="max-w-screen-xl mx-auto">
         {/* Header Stats */}
         {!isLoading && !error && (
@@ -156,18 +137,17 @@ export function ActivityHeatmap() {
               }
             </div>
             <div className="text-center sm:text-right">
-              <div className="text-lg sm:text-2xl font-bold text-foreground">{totalContributions}</div>
+              {/* MODIFIED: Increased font size for the contribution count even more */}
+              <div className="text-2xl sm:text-4xl font-bold text-foreground">{totalContributions.toLocaleString()}</div>
               <div className="text-xs text-muted-foreground">total contributions</div>
             </div>
           </div>
         )}
 
         <div className="w-full px-4 pb-4">
-          {/* --- UPDATED: Overflow is now visible on desktop, removing the scrollbar --- */}
           <div className="overflow-x-auto sm:overflow-visible overflow-y-visible">
             <div className="relative min-w-[600px] sm:min-w-full px-2 py-2">
-              {/* ... (Year separators and month labels are unchanged) ... */}
-              <div className="flex mb-2 ml-8 sm:ml-10">
+              <div className="flex mb-2 ml-6 sm:ml-10">
                 <div className="flex-1 relative h-4">
                   {monthLabels.map((month) => (
                     <span 
@@ -181,9 +161,9 @@ export function ActivityHeatmap() {
                 </div>
               </div>
 
-              <div className={cn("flex", gapSize)}>
-                {/* ... (Day labels are unchanged) ... */}
-                <div className={cn("flex flex-col justify-between flex-shrink-0", gapSize, "w-8 sm:w-10")}>
+              {/* MODIFIED: Reduced horizontal gap for tighter mobile view */}
+              <div className={cn("flex gap-x-0.5 sm:gap-x-1")}>
+                <div className={cn("flex flex-col justify-between flex-shrink-0", gapSize, "w-6 sm:w-10")}>
                   {getDayLabels().map((day, i) => (
                     <div key={day} className={cn(
                       squareSize,
@@ -258,7 +238,7 @@ export function ActivityHeatmap() {
           </div>
           
           <div className="text-[10px] sm:text-xs text-muted-foreground hidden sm:block">
-              Hover over squares for details
+            Hover over squares for details
           </div>
         </div>
       </div>
@@ -267,7 +247,6 @@ export function ActivityHeatmap() {
 }
 
 function heat(level: number) {
-  // ... (function is unchanged)
   switch (level) {
     case 0:
       return "bg-muted/30 border-muted-foreground/20 hover:bg-muted/50"

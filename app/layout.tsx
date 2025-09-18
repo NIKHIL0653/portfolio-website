@@ -35,9 +35,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased light`}>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}>
       <body className="bg-background text-foreground font-sans">
-        <ThemeProvider defaultTheme="light" storageKey="portfolio-theme">
+        <ThemeProvider defaultTheme="dark" storageKey="portfolio-theme">
           <SiteHeader />
           <main>{children}</main>
           <Analytics />

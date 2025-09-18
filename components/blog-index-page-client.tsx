@@ -139,7 +139,7 @@ export default function BlogIndexPageClient() {
                 <div className="mb-4 pb-4">
                   <Link href={`/blog/${filteredPosts[0].slug}`} className="block group">
                     <article className="space-y-4">
-                      <div className="relative aspect-[16/9] sm:aspect-[21/9] w-full rounded-xl overflow-hidden">
+                      <div className="relative aspect-[16/9] w-full rounded-lg overflow-hidden">
                         {filteredPosts[0].image && (
                           <>
                             <Image

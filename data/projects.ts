@@ -97,38 +97,6 @@ export const projects: Project[] = [
     repo: "#",
     year: "2024",
   },
-  {
-    title: "Voice Assistant SDK",
-    description: "Developer toolkit for building custom voice-powered applications.",
-    tags: ["Speech Recognition", "NLP", "Python"],
-    link: "#",
-    repo: "#",
-    year: "2023",
-  },
-  {
-    title: "Blockchain Wallet",
-    description: "Multi-currency cryptocurrency wallet with DeFi integration and security features.",
-    tags: ["Solidity", "Web3.js", "React"],
-    link: "#",
-    repo: "#",
-    year: "2024",
-  },
-  {
-    title: "AR Product Viewer",
-    description: "Augmented reality application for visualizing products in real environments.",
-    tags: ["ARCore", "Unity", "C#"],
-    link: "#",
-    repo: "#",
-    year: "2023",
-  },
-  {
-    title: "DevOps Automation",
-    description: "Infrastructure as code platform with automated deployment and monitoring.",
-    tags: ["Terraform", "Kubernetes", "Jenkins"],
-    link: "#",
-    repo: "#",
-    year: "2024",
-  },
 ]
 
 

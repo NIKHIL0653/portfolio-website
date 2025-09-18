@@ -143,7 +143,7 @@ export function SiteFooter() {
                 <Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Blog
                 </Link>
-                <Link href="/work" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <Link href="/projects" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Projects
                 </Link>
               </nav>
@@ -226,7 +226,7 @@ export function SiteFooter() {
               <Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                 Blog
               </Link>
-              <Link href="/work" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <Link href="/projects" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                 Projects
               </Link>
             </nav>

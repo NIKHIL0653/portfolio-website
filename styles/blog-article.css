@@ -229,9 +229,14 @@
 }
 
 /* Blog Article Card Styling - FIXED TO MATCH LANDING PAGE */
+.blog-article-card {
+  border-radius: 1rem !important; /* Less rounded corners */
+}
+
 .dark .blog-article-card {
   background-color: #0F0F0F !important; /* Matching landing page vertical card color */
   border: 1px solid #272727 !important; /* Dark mode compatible border */
+  border-radius: 1rem !important; /* Less rounded corners for dark mode */
   box-shadow:
     inset 0 -15px 45px rgba(255, 255, 255, 0.03), /* bottom glow - more intense */
     inset -15px 0 45px rgba(255, 255, 255, 0.03), /* left glow - more intense */
@@ -379,9 +384,9 @@ footer * {
   margin: 0.25rem 0 !important;
 }
 
-/* ENHANCED Links with better dark mode colors */
+/* ENHANCED Links with proper link colors for both themes */
 .blog-content a {
-  color: #0F0F0F !important;
+  color: #2563eb !important; /* Standard blue link color */
   text-decoration: none !important;
   font-weight: 500 !important;
   border-bottom: 1px solid transparent !important;
@@ -389,17 +394,17 @@ footer * {
 }
 
 .blog-content a:hover {
-  color: #0F0F0F !important;
-  border-bottom-color: #0F0F0F !important;
+  color: #1d4ed8 !important; /* Darker blue on hover */
+  border-bottom-color: #1d4ed8 !important;
 }
 
 .dark .blog-content a {
-  color: #b3b3b3 !important; /* Muted text color for links */
+  color: #60a5fa !important; /* Light blue for dark mode */
 }
 
 .dark .blog-content a:hover {
-  color: #e5e5e5 !important;
-  border-bottom-color: #666666 !important;
+  color: #93c5fd !important; /* Lighter blue on hover in dark mode */
+  border-bottom-color: #60a5fa !important;
 }
 
 /* Dotted background pattern removed for cleaner design */
@@ -420,7 +425,7 @@ footer * {
   box-shadow: var(--shadow-card-hover);
 }
 
-/* Vertical Dotted Lines */
+/* Vertical Dashed Lines */
 .blog-article-card::before,
 .blog-article-card::after {
   content: '';
@@ -428,7 +433,7 @@ footer * {
   top: 0;
   bottom: 0;
   width: 1px;
-  border-left: 2px dotted #e2e8f0;
+  border-left: 2px dashed #e2e8f0;
   z-index: -1;
 }
 
@@ -602,10 +607,10 @@ footer * {
 
 /* ENHANCED Image Styling with better dark mode borders */
 .blog-content img {
-  border-radius: 12px !important;
+  border-radius: 8px !important;
   border: 2px solid #e2e8f0 !important;
   box-shadow: var(--shadow-card) !important;
-  margin: 2rem 1rem !important;
+  margin: 2rem auto !important;
   display: block !important;
   max-width: 100% !important;
   height: auto !important;
@@ -741,6 +746,7 @@ footer * {
     max-width: 100%;
   }
 }
+
 
 @media (max-width: 640px) {
   .blog-image-frame-large {
@@ -902,8 +908,8 @@ footer * {
     top: 0;
     bottom: 0;
     width: 0.5px;
-    background-image: linear-gradient(to bottom, #e2e8f0 0%, #e2e8f0 3px, transparent 3px, transparent 100%);
-    background-size: 0.5px 3px;
+    background-image: linear-gradient(to bottom, #e2e8f0 0%, #e2e8f0 6px, transparent 6px, transparent 100%);
+    background-size: 0.5px 6px;
     background-repeat: repeat-y;
     transform: translateX(-50%);
     z-index: -1;

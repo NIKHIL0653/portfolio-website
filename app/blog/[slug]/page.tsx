@@ -84,7 +84,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           </div>
 
           {/* Article Content */}
-          <div className="p-3 sm:p-5 md:p-7 lg:p-11">
+          <div className="p-2 sm:p-5 md:p-7 lg:p-11">
             {/* Header Section - Centered */}
             <header className="mb-1 sm:mb-2 pb-4 sm:pb-6 text-center">
               <h1 className="blog-post-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 leading-tight text-slate-900 dark:text-white px-2">
@@ -119,9 +119,9 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
 
             {/* Hero Image - Mobile Responsive */}
             {post.image && (
-              <div className="mb-2 sm:mb-4 px-0">
-                <div className="image-wrapper bg-gray-50 dark:bg-[#1F1F1F] rounded-lg sm:rounded-xl px-1.5 py-2 border border-slate-200 dark:border-slate-600 max-w-3xl md:max-w-[48rem] mx-auto">
-                  <div className="blog-image-frame-large w-full mx-auto h-40 sm:h-56 md:h-72 lg:h-96 relative rounded-md sm:rounded-lg overflow-hidden border border-slate-100 dark:border-slate-600">
+              <div className="mb-3 sm:mb-8 px-0">
+                <div className="image-wrapper bg-gray-50 dark:bg-[#1F1F1F] rounded-lg sm:rounded-xl px-1.5 py-1.5 border border-slate-200 dark:border-slate-600 max-w-3xl md:max-w-[48rem] mx-auto">
+                  <div className="blog-image-frame-large w-full mx-auto h-48 sm:h-56 md:h-72 lg:h-96 relative rounded-sm sm:rounded-md overflow-hidden border border-slate-100 dark:border-slate-600">
                     <Image
                       src={post.image}
                       alt={post.imageAlt || post.title}
@@ -135,8 +135,13 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
               </div>
             )}
 
+            {/* Horizontal Separator Line - Mobile Only */}
+            <div className="py-1 sm:hidden">
+              <div className="border-t-2 border-dashed border-[#29292B]"></div>
+            </div>
+
             {/* Article Content - HTML Structure */}
-            <div className="blog-content">
+            <div className="blog-content -mt-2 sm:mt-0">
               <div dangerouslySetInnerHTML={{ __html: content }} />
             </div>
           </div>

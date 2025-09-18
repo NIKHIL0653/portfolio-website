@@ -124,9 +124,9 @@ const LetterGlitch = ({
   };
 
   const drawLetters = () => {
-    if (!context.current || letters.current.length === 0) return;
+    if (!canvasRef.current || !context.current || letters.current.length === 0) return;
     const ctx = context.current;
-    const { width, height } = canvasRef.current!.getBoundingClientRect();
+    const { width, height } = canvasRef.current.getBoundingClientRect();
     ctx.clearRect(0, 0, width, height);
     ctx.font = `${fontSize}px monospace`;
     ctx.textBaseline = 'top';
@@ -263,6 +263,7 @@ function BlogCard() {
               onMouseEnter={(e) => {
                 e.currentTarget.style.filter = 'blur(0px)';
                 const parent = e.currentTarget.parentElement;
+                if (!parent) return;
                 Array.from(parent.children).forEach((sibling, siblingIndex) => {
                   if (siblingIndex !== index) {
                     (sibling as HTMLElement).style.filter = 'blur(3px)';
@@ -271,6 +272,7 @@ function BlogCard() {
               }}
               onMouseLeave={(e) => {
                 const parent = e.currentTarget.parentElement;
+                if (!parent) return;
                 Array.from(parent.children).forEach((sibling) => {
                   (sibling as HTMLElement).style.filter = 'blur(0.5px)';
                 });

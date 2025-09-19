@@ -196,6 +196,7 @@ const Prism: React.FC<PrismProps> = ({
         col += (n - 0.5) * uNoise;
         col = clamp(col, 0.0, 1.0);
 
+
         float L = dot(col, vec3(0.2126, 0.7152, 0.0722));
         col = clamp(mix(vec3(L), col, uSaturation), 0.0, 1.0);
 
@@ -381,16 +382,10 @@ const Prism: React.FC<PrismProps> = ({
         program.uniforms.uRot.value = setMat3FromEuler(yaw, pitch, roll, rotBuf);
         if (TS < 1e-6) continueRAF = false;
       } else {
-        rotBuf[0] = 1;
-        rotBuf[1] = 0;
-        rotBuf[2] = 0;
-        rotBuf[3] = 0;
-        rotBuf[4] = 1;
-        rotBuf[5] = 0;
-        rotBuf[6] = 0;
-        rotBuf[7] = 0;
-        rotBuf[8] = 1;
-        program.uniforms.uRot.value = rotBuf;
+        const tiltPitch = -0.3; // Tilt toward user (negative pitch)
+        const tiltRoll = 0.2; // Tilt to the left
+        const revolveYaw = time * 0.5; // Revolving speed
+        program.uniforms.uRot.value = setMat3FromEuler(revolveYaw, tiltPitch, tiltRoll, rotBuf);
         if (TS < 1e-6) continueRAF = false;
       }
 

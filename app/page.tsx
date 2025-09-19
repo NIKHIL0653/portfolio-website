@@ -355,14 +355,15 @@ function ProjectsCard() {
 }
 
 // Enhanced About Card Component with Improved Prism Effect
-function AboutCard() {
+function AboutCard({ theme }: { theme: 'light' | 'dark' | 'system' }) {
+  const prismTheme = theme === 'system' ? 'light' : theme;
   return (
-    <Link 
-      href="/about" 
-      className="group relative bg-card rounded-lg border border-border overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 min-h-[380px] block"
+    <Link
+      href="/about"
+      className="group relative bg-card rounded-lg border border-border overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 min-h-[380px] dark:shadow-[0_0_20px_rgba(139,69,193,0.1)] block"
     >
       {/* Enhanced Prism Background Effect */}
-      <div className="absolute inset-0 opacity-70 group-hover:opacity-90 transition-opacity duration-700 ease-out">
+      <div className="absolute inset-0 opacity-70 transition-opacity duration-700 ease-out">
         <Prism
           height={3.8}
           baseWidth={5.2}
@@ -379,14 +380,13 @@ function AboutCard() {
           bloom={0.8} // Reduced bloom for less brightness in light mode
           suspendWhenOffscreen={true}
           timeScale={0.4} // Slower, more elegant rotation
+          theme={prismTheme}
         />
       </div>
 
       {/* Stronger Gradient Overlay for Better Contrast */}
-      <div className="absolute inset-0 bg-gradient-to-t from-card/98 via-card/85 to-card/40 group-hover:from-card/95 group-hover:via-card/75 group-hover:to-card/30 transition-all duration-700" />
+      <div className="absolute inset-0 bg-gradient-to-t from-card/98 via-card/85 to-card/40 transition-all duration-700" />
 
-      {/* Additional subtle color overlay to enhance chromatic effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-blue-500/8 to-pink-500/5 group-hover:from-purple-500/8 group-hover:via-blue-500/12 group-hover:to-pink-500/8 transition-all duration-700" />
 
       {/* Content */}
       <div className="absolute bottom-10 left-8 flex flex-col-reverse items-start z-10">
@@ -406,8 +406,6 @@ function AboutCard() {
         </div>
       </div>
 
-      {/* Enhanced border glow effect on hover with chromatic colors */}
-      <div className="absolute inset-0 rounded-lg border border-transparent group-hover:border-purple-500/20 group-hover:shadow-[0_0_30px_rgba(139,69,193,0.15)] transition-all duration-500" />
     </Link>
   );
 }
@@ -452,7 +450,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <BlogCard />
             <ProjectsCard />
-            <AboutCard />
+            <AboutCard theme={theme} />
           </div>
 
           {/* Let's Connect Card */}

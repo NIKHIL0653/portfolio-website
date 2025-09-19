@@ -17,6 +17,7 @@ type PrismProps = {
   bloom?: number;
   suspendWhenOffscreen?: boolean;
   timeScale?: number;
+  theme?: 'light' | 'dark';
 };
 
 const Prism: React.FC<PrismProps> = ({
@@ -34,7 +35,8 @@ const Prism: React.FC<PrismProps> = ({
   inertia = 0.05,
   bloom = 3,
   suspendWhenOffscreen = false,
-  timeScale = 0.5
+  timeScale = 0.5,
+  theme = 'light'
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -448,10 +450,11 @@ const Prism: React.FC<PrismProps> = ({
     hoverStrength,
     inertia,
     bloom,
-    suspendWhenOffscreen
+    suspendWhenOffscreen,
+    theme
   ]);
 
-  return <div className="w-full h-full relative" ref={containerRef} />;
+  return <div className={`w-full h-full relative ${theme === 'light' ? 'shadow-[0_0_15px_rgba(0,0,0,0.3)]' : ''}`} ref={containerRef} />;
 };
 
 export default Prism;

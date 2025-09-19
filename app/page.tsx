@@ -8,6 +8,9 @@ import { MultilingualGreeting } from "@/components/multilingual-greeting"
 import { Github, Wrench, FolderOpen, FileText, User } from "lucide-react"
 import Link from "next/link"
 import { useRef, useEffect } from 'react'
+import { useIsMobile } from "@/hooks/use-mobile"
+import { useTheme } from "@/components/theme-provider"
+import Prism from "@/components/Prism"
 
 // LetterGlitch Component
 const LetterGlitch = ({
@@ -105,7 +108,7 @@ const LetterGlitch = ({
     const parent = canvas.parentElement;
     if (!parent) return;
 
-    const dpr = window.devicePixelRatio || 1;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2); // Cap DPR at 2 for performance
     const rect = parent.getBoundingClientRect();
 
     canvas.width = rect.width * dpr;
@@ -239,11 +242,13 @@ const LetterGlitch = ({
 
 // Enhanced Blog Card Component
 function BlogCard() {
+  const isMobile = useIsMobile();
   const blogPosts = [
     { title: "Empathy in Open Source", excerpt: "Empathy and kindness is a choice." },
     { title: "Web Development for Beginners: 7 Essential Steps To Get Started Today!", excerpt: "Discover how to unleash the power of words and advance your career." },
     { title: "Why Every Developer Should Build Their Own Blog", excerpt: "Discover the importance of building a blog as a developer, along with tips on how to set up, design, create, and share your content." }
   ];
+  const displayedPosts = isMobile ? blogPosts.slice(0, 2) : blogPosts;
 
   return (
     <Link href="/blog" className="group relative bg-card rounded-lg border border-border overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 min-h-[380px] block">
@@ -254,8 +259,8 @@ function BlogCard() {
           WebkitMaskImage: 'linear-gradient(to bottom, black 20%, transparent 100%)',
         }}
       >
-        <div className="grid grid-cols-3 gap-4 h-full blur-[0.5px] transition-all duration-300 overflow-hidden pr-0">
-          {blogPosts.map((post, index) => (
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 h-full blur-[1px] transition-all duration-300 overflow-hidden pr-0">
+          {displayedPosts.map((post, index) => (
             <div
               key={index}
               className={`bg-card border border-border/50 p-4 rounded-lg transition-all duration-300 cursor-pointer flex flex-col ${index === 2 ? 'overflow-hidden mr-0' : ''}`}
@@ -308,15 +313,15 @@ function ProjectsCard() {
       href="/projects"
       className="group relative bg-card rounded-lg border border-border shadow-md hover:shadow-lg transition-all duration-300 min-h-[380px] block"
     >
-      {/* Binary animation */}
+      {/* Binary animation with built-in fade */}
       <div
         className="absolute inset-0 p-4 pt-6 z-0"
         style={{
-          maskImage: 'linear-gradient(to bottom, black 10%, transparent 100%)',
-          WebkitMaskImage: 'linear-gradient(to bottom, black 10%, transparent 100%)',
+          maskImage: 'linear-gradient(to bottom, black 5%, black 25%, transparent 60%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, black 5%, black 25%, transparent 60%)',
         }}
       >
-        <div className="w-full h-full">
+        <div className="w-full h-full blur-[0.5px]">
           <LetterGlitch
             glitchColors={['#ffffff', '#e5e5e5', '#a3a3a3', '#525252', '#404040']}
             glitchSpeed={120}
@@ -327,9 +332,6 @@ function ProjectsCard() {
           />
         </div>
       </div>
-
-      {/* Gradient Fade Overlay */}
-      <div className="absolute bottom-0 left-0 w-full h-5/6 bg-gradient-to-t from-[#FFFFFF] dark:from-[#131313] via-card/90 to-transparent z-5 rounded-b-lg"></div>
 
       {/* Text & icon content */}
       <div className="absolute bottom-10 left-8 flex flex-col-reverse items-start z-10">
@@ -352,27 +354,67 @@ function ProjectsCard() {
   );
 }
 
-// Enhanced About Card Component
+// Enhanced About Card Component with Improved Prism Effect
 function AboutCard() {
   return (
-    <Link href="/about" className="group relative bg-card rounded-lg border border-border overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 min-h-[380px] block">
-      <div className="absolute bottom-10 left-8 flex flex-col-reverse items-start">
+    <Link 
+      href="/about" 
+      className="group relative bg-card rounded-lg border border-border overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 min-h-[380px] block"
+    >
+      {/* Enhanced Prism Background Effect */}
+      <div className="absolute inset-0 opacity-70 group-hover:opacity-90 transition-opacity duration-700 ease-out">
+        <Prism
+          height={3.8}
+          baseWidth={5.2}
+          animationType="3drotate"
+          glow={1.8} // Increased glow for more defined lines
+          offset={{ x: 0, y: -15 }}
+          noise={0.08}
+          transparent={true}
+          scale={2.2}
+          hueShift={0} // Natural rainbow spectrum without hue shift
+          colorFrequency={1.2} // Smooth color transitions for natural prism effect
+          hoverStrength={1.8}
+          inertia={0.06}
+          bloom={0.8} // Reduced bloom for less brightness in light mode
+          suspendWhenOffscreen={true}
+          timeScale={0.4} // Slower, more elegant rotation
+        />
+      </div>
+
+      {/* Stronger Gradient Overlay for Better Contrast */}
+      <div className="absolute inset-0 bg-gradient-to-t from-card/98 via-card/85 to-card/40 group-hover:from-card/95 group-hover:via-card/75 group-hover:to-card/30 transition-all duration-700" />
+
+      {/* Additional subtle color overlay to enhance chromatic effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-blue-500/8 to-pink-500/5 group-hover:from-purple-500/8 group-hover:via-blue-500/12 group-hover:to-pink-500/8 transition-all duration-700" />
+
+      {/* Content */}
+      <div className="absolute bottom-10 left-8 flex flex-col-reverse items-start z-10">
         <div className="overflow-hidden max-h-0 group-hover:max-h-40 group-hover:mt-4 transition-all duration-300 ease-in-out">
-          <span className="text-foreground font-medium flex items-center gap-1">
+          <span className="text-foreground font-medium flex items-center gap-1 drop-shadow-sm">
             Learn more about me →
           </span>
         </div>
         <div className="transition-all duration-300">
-          <User className="h-12 w-12 text-foreground mb-3 group-hover:h-10 group-hover:w-10 transition-all duration-300" />
-          <h3 className="text-2xl font-bold text-foreground group-hover:text-3xl transition-all duration-300">About Me</h3>
-          <p className="text-muted-foreground text-base mt-1.5">My story & my skills.</p>
+          <User className="h-12 w-12 text-foreground mb-3 group-hover:h-10 group-hover:w-10 transition-all duration-300 drop-shadow-sm" />
+          <h3 className="text-2xl font-bold text-foreground group-hover:text-3xl transition-all duration-300 drop-shadow-sm">
+            About Me
+          </h3>
+          <p className="text-muted-foreground text-base mt-1.5 drop-shadow-sm">
+            My story & my skills.
+          </p>
         </div>
       </div>
+
+      {/* Enhanced border glow effect on hover with chromatic colors */}
+      <div className="absolute inset-0 rounded-lg border border-transparent group-hover:border-purple-500/20 group-hover:shadow-[0_0_30px_rgba(139,69,193,0.15)] transition-all duration-500" />
     </Link>
   );
 }
 
 export default function HomePage() {
+  const { theme } = useTheme()
+
   return (
     <main className="min-h-dvh flex flex-col bg-[#fafafa] dark:bg-[#121212]">
       <div className="flex-1 px-4 py-6 sm:p-8 md:p-12 lg:p-12">

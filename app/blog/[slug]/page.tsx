@@ -4,7 +4,6 @@ import Image from "next/image"
 import { Calendar } from "lucide-react"
 import { posts } from "@/data/blogs"
 import { getBlogContent, formatDateWithOrdinal } from "@/lib/blog-utils"
-import { SiteHeader } from "@/components/site-header"
 
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
   const post = posts.find((p) => p.slug === params.slug)
@@ -24,7 +23,6 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
               <Link href="/blog" className="inline-flex items-center text-sm text-primary relative z-20">
                 ← <span className="mx-1 text-[#8f8f99]">Blog</span> / {post.category}
               </Link>
-
             </div>
 
             <div className="p-4 sm:p-6 md:p-8 lg:p-12">
@@ -87,7 +85,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           <div className="p-2 sm:p-5 md:p-7 lg:p-11">
             {/* Header Section - Centered */}
             <header className="mb-1 sm:mb-2 pb-4 sm:pb-6 text-center">
-              <h1 className="blog-post-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 leading-tight text-slate-900 dark:text-white px-2">
+              <h1 className="blog-post-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 leading-none text-slate-900 dark:text-white px-2">
                 {post.title}
               </h1>
 
@@ -117,16 +115,20 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
               </div>
             </header>
 
-            {/* Hero Image - Mobile Responsive */}
+            {/* MODIFIED: Hero Image Section */}
             {post.image && (
               <div className="mb-3 sm:mb-8 px-0">
-                <div className="image-wrapper bg-gray-50 dark:bg-[#1F1F1F] rounded-lg sm:rounded-xl px-1.5 py-1.5 border border-slate-200 dark:border-slate-600 max-w-3xl md:max-w-[48rem] mx-auto">
-                  <div className="blog-image-frame-large w-full mx-auto h-48 sm:h-56 md:h-72 lg:h-96 relative rounded-sm sm:rounded-md overflow-hidden border border-slate-100 dark:border-slate-600">
+                {/* Frame: Reduced horizontal padding (px-1.5 to px-1) and vertical padding (py-1.5 to py-1)
+                    to make the frame slightly thinner around the enlarged image. */}
+                <div className="image-wrapper bg-gray-50 dark:bg-[#1F1F1F] rounded-lg sm:rounded-xl px-1 py-1 border border-slate-200 dark:border-slate-600 max-w-md sm:max-w-2xl md:max-w-3xl mx-auto">
+                  {/* Inner div (blog-image-frame-large) now has 'rounded-md' for slightly less round corners,
+                      but still more rounded than the image itself (which is 'rounded-sm') */}
+                  <div className="blog-image-frame-large w-full mx-auto h-48 sm:h-56 md:h-64 lg:h-[22rem] relative rounded-md overflow-hidden border border-slate-100 dark:border-slate-600">
                     <Image
                       src={post.image}
                       alt={post.imageAlt || post.title}
                       fill
-                      className="object-cover"
+                      className="object-cover rounded-sm" // MODIFIED: Changed to 'rounded-sm' for less roundness
                       sizes="(max-width: 640px) 100vw, (max-width: 768px) 95vw, (max-width: 1024px) 50vw, 33vw"
                       priority
                     />
@@ -137,7 +139,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
 
             {/* Horizontal Separator Line - Mobile Only */}
             <div className="py-1 sm:hidden">
-              <div className="border-t-2 border-dashed border-[#29292B]"></div>
+              <div className="border-t border-dashed border-[#29292B]"></div>
             </div>
 
             {/* Article Content - HTML Structure */}

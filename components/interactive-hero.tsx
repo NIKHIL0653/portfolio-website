@@ -3,321 +3,203 @@ import { useEffect, useRef, useState } from "react"
 import { useTheme } from "./theme-provider"
 
 export function InteractiveHero() {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null)
-  const [mounted, setMounted] = useState(false)
-  const { theme } = useTheme()
-  const [currentSpecialty, setCurrentSpecialty] = useState(0)
-  const [scrollOpacity, setScrollOpacity] = useState(1)
-  const [isExpanded, setIsExpanded] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const [mounted, setMounted] = useState(false)
+  const { theme } = useTheme()
+  const [currentSpecialty, setCurrentSpecialty] = useState(0)
+  const [scrollOpacity, setScrollOpacity] = useState(1)
 
-  const specialties = [
-    "Software Engineer",
-    "Data Enthusiast"
-  ]
+  const specialties = [
+    "Software Engineer",
+    "Data Enthusiast"
+  ]
 
-  // Calculate if dark mode is active (including system dark mode)
-  const isDark = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches)
+  useEffect(() => {
+    setMounted(true)
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext("2d")
+    if (!ctx) return
 
-  useEffect(() => {
-    setMounted(true)
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext("2d")
-    if (!ctx) return
+    const DPR = Math.min(window.devicePixelRatio || 1, 2)
+    let width = canvas.clientWidth
+    let height = canvas.clientHeight
 
-    const DPR = Math.min(window.devicePixelRatio || 1, 2)
-    let width = canvas.clientWidth
-    let height = canvas.clientHeight
-    const resize = () => {
-      width = canvas.clientWidth
-      height = canvas.clientHeight
-      canvas.width = Math.floor(width * DPR)
-      canvas.height = Math.floor(height * DPR)
-      ctx.setTransform(DPR, 0, 0, DPR, 0, 0)
-    }
-    resize()
-    const onResize = () => resize()
-    window.addEventListener("resize", onResize)
+    const resize = () => {
+      width = canvas.clientWidth
+      height = canvas.clientHeight
+      canvas.width = Math.floor(width * DPR)
+      canvas.height = Math.floor(height * DPR)
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0)
+    }
 
-    // Starfield (calm) - Dynamic color based on theme with system support
-    const STAR_COLOR = isDark ? "#ffffff" : "#111111"
-    const STAR_MIN = 0.8
-    const STAR_MAX = 1.8
-    const SPEED = 0.25
-    const TURN = 0.008
+    const isDark = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches)
 
-    const count = Math.min(450, Math.floor((width * height) / 2000))
-    type Star = { x: number; y: number; r: number; a: number; v: number }
-    const rand = (min: number, max: number) => Math.random() * (max - min) + min
+const isMobile = window.innerWidth < 768; // Mobile breakpoint
 
-    const stars: Star[] = Array.from({ length: count }, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      r: rand(STAR_MIN, STAR_MAX),
-      a: Math.random() * Math.PI * 2,
-      v: rand(0.5, 3.0) * SPEED,
-    }))
+// Galaxy/Warp Speed Animation Logic (Kept from previous version)
+const STAR_COLOR = isDark ? "#ffffff" : "#111111";
+const STAR_COUNT = isMobile ? 400 : 1500; // Fewer stars on mobile to avoid clutter
+const MAX_DEPTH = 50;
 
-    let raf = 0
-    const tick = () => {
-      ctx.clearRect(0, 0, width, height)
-      ctx.fillStyle = STAR_COLOR
-      for (let i = 0; i < stars.length; i++) {
-        const s = stars[i]
-        // More random direction changes with occasional sharp turns
-        const randomTurn = (Math.random() - 0.5) * TURN
-        const sharpTurnChance = Math.random()
-        if (sharpTurnChance < 0.02) { // 2% chance for sharp turn
-          s.a += (Math.random() - 0.5) * TURN * 8
-        } else {
-          s.a += randomTurn
-        }
+    type Star = { x: number; y: number; z: number; px?: number; py?: number };
+    const rand = (min: number, max: number) => Math.random() * (max - min) + min;
 
-        // Add speed variation
-        const speedMultiplier = 0.8 + Math.random() * 0.4 // 0.8 to 1.2
-        s.x += Math.cos(s.a) * s.v * speedMultiplier
-        s.y += Math.sin(s.a) * s.v * speedMultiplier
+    const stars: Star[] = Array.from({ length: STAR_COUNT }, () => ({ x: 0, y: 0, z: 0 }));
 
-        if (s.x < -5) s.x = width + 5
-        if (s.x > width + 5) s.x = -5
-        if (s.y < -5) s.y = height + 5
-        if (s.y > height + 5) s.y = -5
+    const resetStar = (s: Star) => {
+      s.x = rand(-width / 2, width / 2);
+      s.y = rand(-height / 2, height / 2);
+      s.z = MAX_DEPTH;
+      s.px = undefined;
+      s.py = undefined;
+    };
 
-        const twinkle = (Math.sin((performance.now() / 1000 + i) * 0.5) + 1) * 0.08
-        const r = Math.max(0.6, s.r + twinkle)
+    stars.forEach(resetStar);
+    resize();
+    window.addEventListener("resize", resize);
 
-        // Smooth pulsing effect using sine wave
-        const pulseSpeed = 1.8 // Adjust pulsing speed (further increased for much faster pulsing)
-        const pulseOffset = i * 0.2 // Stagger pulsing for each dot
-        const pulseTime = (performance.now() / 1000) * pulseSpeed + pulseOffset
-        const pulseOpacity = (Math.sin(pulseTime) + 1) * 0.5 // Smooth 0-1 oscillation
+    let raf = 0;
+    const tick = () => {
+      ctx.clearRect(0, 0, width, height);
+      const centerX = width / 2;
+      const centerY = height / 2;
+      const focalLength = width * 0.5;
+for (let i = 0; i < stars.length; i++) {
+const s = stars[i];
+s.z -= 0.12;
+if (s.z <= 0) {
+resetStar(s);
+continue;
+}
+const k = focalLength / s.z;
+const px = s.x * k + centerX;
+const py = s.y * k + centerY;
+if (px < 0 || px > width || py < 0 || py > height) {
+resetStar(s);
+continue;
+}
+const size = (1 - s.z / MAX_DEPTH) * 3.5;
+const opacity = 1 - Math.pow(s.z / MAX_DEPTH, 2);
+        if (s.px !== undefined && s.py !== undefined) {
+          ctx.beginPath();
+          ctx.moveTo(s.px, s.py);
+          ctx.lineTo(px, py);
+          ctx.lineWidth = size;
+          ctx.strokeStyle = STAR_COLOR;
+          ctx.globalAlpha = opacity;
+          ctx.stroke();
+        }
+        s.px = px;
+        s.py = py;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
 
-        ctx.save()
-        ctx.globalAlpha = pulseOpacity
-        ctx.beginPath()
-        ctx.arc(s.x, s.y, r, 0, Math.PI * 2)
-        ctx.fill()
-        ctx.restore()
-      }
-      raf = requestAnimationFrame(tick)
-    }
-    raf = requestAnimationFrame(tick)
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", resize);
+    };
+  }, [theme]);
 
-    return () => {
-      cancelAnimationFrame(raf)
-      window.removeEventListener("resize", onResize)
-    }
-  }, [isDark])
+  const [typed, setTyped] = useState("")
+  useEffect(() => {
+    const NAME = "Hi, I'm Nikhil"
+    let i = 0
+    const typeInterval = setInterval(() => {
+      setTyped(NAME.slice(0, i + 1))
+      i++
+      if (i >= NAME.length) clearInterval(typeInterval)
+    }, 120)
+    return () => clearInterval(typeInterval)
+  }, [])
 
-  // A smoother cursive path spelling "nikhil"
-  const nikhilPath =
-    "M6 56 q10 -18 22 0 t22 0 m8 0 q8 -20 18 0 m8 0 q8 -18 18 0 m8 0 q0 -24 20 -24 t20 24 m8 0 q0 -20 18 -20 t18 20"
-  void nikhilPath
+  useEffect(() => {
+    const specialtyInterval = setInterval(() => {
+      setCurrentSpecialty((prev) => (prev + 1) % specialties.length)
+    }, 4000)
+    return () => clearInterval(specialtyInterval)
+  }, [specialties.length])
 
-  // Typing animation state for "Hi, I'm Nikhil"
-  const [typed, setTyped] = useState("")
-  useEffect(() => {
-    const NAME = "Hi,I'm Nikhil"
-    let i = 0
-    const typeInterval = setInterval(() => {
-      setTyped(NAME.slice(0, i + 1))
-      i++
-      if (i >= NAME.length) clearInterval(typeInterval)
-    }, 120) // typing speed
-    return () => clearInterval(typeInterval)
-  }, [])
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+      const opacity = Math.max(0, 1 - (scrollTop / 150))
+      setScrollOpacity(opacity)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
-  // Specialty rotation animation
-  useEffect(() => {
-    const specialtyInterval = setInterval(() => {
-      setCurrentSpecialty((prev) => (prev + 1) % specialties.length)
-    }, 4000) // Change every 4 seconds
+return (
+  <section id="top" className="relative h-[85vh] sm:h-[95vh] overflow-hidden">
+    {/* Background Animation - Ensure it's visible */}
+    <div className="absolute inset-0 z-0">
+      <canvas ref={canvasRef} className="block h-full w-full" aria-hidden="true" />
+    </div>
 
-    return () => clearInterval(specialtyInterval)
-  }, [specialties.length])
+    {/* Centered Content Layout */}
+    <div className="relative z-10 h-full flex items-center justify-center p-4 sm:p-8">
+      <div className="text-center max-w-4xl mx-auto">
+        {/* Profile Image */}
+        <img
+          src="/images/blog/avatar_img.png"
+          alt="Nikhil's profile"
+          className="w-24 h-24 sm:w-28 sm:h-28 mx-auto rounded-full object-cover border-2 border-white/20 shadow-xl mb-6"
+        />
 
-  // Scroll detection for scroll indicator
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop
-      // Gradually fade out over 150px of scroll
-      const opacity = Math.max(0, 1 - (scrollTop / 150))
-      setScrollOpacity(opacity)
-    }
+        {/* Text Content */}
+        <div className="space-y-0 sm:space-y-2">
+          {/* Name */}
+          <h2 className="font-mono text-3xl sm:text-4xl font-medium tracking-tight text-foreground">
+            <span className="typewriter-text">{typed}</span>
+            <span className="caret" aria-hidden="true">|</span>
+          </h2>
 
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  // Detect mobile device
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768)
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
-
-  return (
-    <section id="top" className="relative">
-      <div className="absolute inset-0">
-        <canvas ref={canvasRef} className="block h-[85vh] sm:h-[95vh] w-full" aria-hidden="true" />
-      </div>
-
-      <div className="relative z-10 h-[85vh] sm:h-[95vh] px-6 sm:px-8 flex flex-col items-center justify-center">
-        <div className="max-w-2xl text-center">
-          {/* Profile Image Container with dynamic spacing */}
-          <div className={`flex justify-center transition-all duration-500 ${
-            isExpanded ? 'mb-4' : 'mb-3'
-          }`}>
-            <div className="profile-image-wrapper">
-              <img
-                src="/images/blog/avatar_img.png"
-                alt="Nikhil's profile"
-                className={`profile-image transition-all duration-500 cursor-pointer ${
-                  isExpanded ? 'expanded' : ''
-                }`}
-                onMouseEnter={!isMobile ? () => setIsExpanded(true) : undefined}
-                onMouseLeave={!isMobile ? () => setIsExpanded(false) : undefined}
-                onClick={isMobile ? () => setIsExpanded(!isExpanded) : undefined}
-              />
-            </div>
+          {/* Specialty with fixed height container to prevent layout shift */}
+          <div className="min-h-[80px] sm:min-h-[100px] flex items-center justify-center">
+            <h1 key={currentSpecialty} className="text-balance text-3xl sm:text-5xl md:text-6xl font-bold leading-tight specialty-text text-foreground">
+              {specialties[currentSpecialty]}
+            </h1>
           </div>
-          
-          {/* Content Container with push-down animation */}
-          <div className={`content-container transition-all duration-500 ${
-            isExpanded ? 'content-pushed' : ''
-          }`}>
-            <div className="mx-auto mb-4 flex justify-center">
-              <h2
-                className="tracking-tight ml-2 sm:ml-0"
-                style={{
-                  fontSize: '48px',
-                  fontFamily: '__geistMono_bb3bb8',
-                  fontWeight: '500',
-                  lineHeight: '48px'
-                }}
-                aria-live="polite"
-                aria-label="Hi, I'm Nikhil typing"
-              >
-                <span className="typewriter-text">{typed}</span>
-                <span className="caret" aria-hidden="true">
-                  |
-                </span>
-              </h2>
-            </div>
 
-            <div className="specialty-container">
-              <h1
-                key={currentSpecialty}
-                className="text-balance text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight specialty-text"
-              >
-                {specialties[currentSpecialty]}
-              </h1>
-            </div>
-            <p className="mt-4 text-pretty text-sm sm:text-base md:text-lg leading-relaxed text-muted-foreground mx-auto max-w-xl px-2">
-              I build performant interfaces and systems with a product mindset.
-            </p>
+          {/* Description */}
+          <p className="text-sm sm:text-base leading-relaxed text-muted-foreground max-w-md mx-auto">
+            I build performant interfaces and systems with a product mindset.
+          </p>
 
-            {/* Scroll Down Indicator */}
-            <div
-              className="mt-8 flex flex-col items-center space-y-1 text-muted-foreground transition-opacity duration-300"
-              style={{ opacity: scrollOpacity }}
-            >
-              <span className="text-xs font-medium">Scroll Down</span>
-              <div className="animate-bounce">
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="text-muted-foreground"
-                >
-                  <path
-                    d="M7 13L12 18L17 13M7 6L12 11L17 6"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
+          {/* Scroll Down Indicator */}
+          <div className="flex flex-col items-center space-y-2 text-muted-foreground transition-opacity duration-300 mt-8" style={{ opacity: scrollOpacity }}>
+            <span className="text-xs font-medium">Scroll Down</span>
+            <div className="animate-bounce">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-muted-foreground">
+                <path d="M7 13L12 18L17 13M7 6L12 11L17 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <style>{`
-        .typewriter-text { white-space: nowrap; }
-        .caret { margin-left: 1px; display: inline-block; width: 2px; animation: blink 1s steps(1, end) infinite; }
-        @keyframes blink { 50% { opacity: 0; } }
-
+      <style>{`
+        .typewriter-text { white-space: nowrap; }
+        .caret { margin-left: 2px; display: inline-block; width: 2px; animation: blink 1s steps(1, end) infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+      
+      /* Seamless Fade Up Animation */
         .specialty-text {
-          animation: fadeInUp 0.8s ease-out;
+          animation: seamlessFadeUp 1.0s ease-out;
+          opacity: 0;
+          animation-fill-mode: forwards;
         }
-
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+        @keyframes seamlessFadeUp {
+          0% { opacity: 0; transform: translateY(25px); }
+          100% { opacity: 1; transform: translateY(0); }
         }
+      `}</style>
 
-        .profile-image-wrapper {
-          position: relative;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        .profile-image {
-          width: 96px;
-          height: 96px;
-          border-radius: 50%;
-          object-fit: cover;
-          filter: grayscale(100%);
-          transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .profile-image.expanded {
-          width: 160px;
-          height: 160px;
-          filter: grayscale(0%);
-        }
-
-        .content-container {
-          transform: translateY(0);
-        }
-
-        .content-container.content-pushed {
-          transform: translateY(16px);
-        }
-
-        /* Mobile adjustments */
-        @media (max-width: 767px) {
-          .profile-image {
-            width: 80px;
-            height: 80px;
-          }
-          
-          .profile-image.expanded {
-            width: 128px;
-            height: 128px;
-          }
-          
-          .content-container.content-pushed {
-            transform: translateY(12px);
-          }
-        }
-
-      `}</style>
-
-      {!mounted && <span className="sr-only">Interactive hero background</span>}
-    </section>
-  )
+      {!mounted && <span className="sr-only">Interactive hero background</span>}
+    </section>
+  )
 }

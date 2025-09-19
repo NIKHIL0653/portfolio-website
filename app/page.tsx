@@ -393,19 +393,26 @@ function AboutCard() {
       </div>
 
       {isLightMode && (
-        <div className="absolute inset-0 opacity-90">
+        <div className="absolute inset-0 opacity-100">
           <div
-            className="absolute inset-0 bg-gradient-radial from-gray-500/60 via-gray-400/50 to-transparent"
+            className="absolute inset-0 bg-gradient-radial from-gray-800/90 via-gray-600/70 to-transparent"
             style={{
-              filter: 'blur(40px)',
-              transform: 'scale(2.2)',
+              filter: 'blur(50px)',
+              transform: 'scale(2.5)',
             }}
           />
           <div
-            className="absolute inset-0 bg-gradient-radial from-gray-600/40 via-gray-500/30 to-transparent"
+            className="absolute inset-0 bg-gradient-radial from-gray-900/80 via-gray-700/60 to-transparent"
             style={{
-              filter: 'blur(60px)',
-              transform: 'scale(2.8)',
+              filter: 'blur(80px)',
+              transform: 'scale(3.0)',
+            }}
+          />
+          <div
+            className="absolute inset-0 bg-gradient-radial from-black/70 via-gray-800/50 to-transparent"
+            style={{
+              filter: 'blur(120px)',
+              transform: 'scale(3.5)',
             }}
           />
         </div>

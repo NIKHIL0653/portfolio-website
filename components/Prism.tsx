@@ -186,7 +186,7 @@ const Prism: React.FC<PrismProps> = ({
           q.y += centerShift;
           d = 0.1 + 0.2 * abs(sdPyramidUpInv(q));
           z -= d;
-          o += (sin((p.y + z) * cf + vec4(0.0, 1.0, 2.0, 3.0)) + 1.0) / d;
+          o += (sin((p.y + z) * cf + vec4(0.0, 1.0, 2.0, 3.0) + iTime * 0.5) + 1.0) / d;
         }
 
         o = tanh4(o * o * (uGlow * uBloom) / 1e5);

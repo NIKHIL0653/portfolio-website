@@ -244,9 +244,9 @@ const LetterGlitch = ({
 function BlogCard() {
   const isMobile = useIsMobile();
   const blogPosts = [
-    { title: "Empathy in Open Source", excerpt: "Empathy and kindness is a choice." },
-    { title: "Web Development for Beginners: 7 Essential Steps To Get Started Today!", excerpt: "Discover how to unleash the power of words and advance your career." },
-    { title: "Why Every Developer Should Build Their Own Blog", excerpt: "Discover the importance of building a blog as a developer, along with tips on how to set up, design, create, and share your content." }
+    { title: "Fine-Tune, RAG, or Prompt?", excerpt: "A practical guide to modern LLM fine-tuning. Learn when to use SFT, LoRA, QLoRA, and DPO" },
+    { title: "Why Your Next Project Should Be a Blog", excerpt: "Discover how your personal blog can become a creative playground, a learning accelerator" },
+    { title: "Getting Started with Next.js, is it better than React.js?", excerpt: "Learn how to build modern web applications with Next.js and React." }
   ];
   const displayedPosts = isMobile ? blogPosts.slice(0, 2) : blogPosts;
 

@@ -27,7 +27,7 @@ export const posts: BlogPostMeta[] = [
   },
   {
     slug: "getting-started-with-nextjs",
-    title: "Getting Started with Next.js",
+    title: "Getting Started with Next.js, is it better than React.js?",
     excerpt: "Learn how to build modern web applications with Next.js and React.",
     date: "2025-01-15",
     author: "Nikhil Choudhary",
@@ -63,7 +63,7 @@ export const posts: BlogPostMeta[] = [
   },
   {
     slug: "llm-finetuning-playbook-2025",
-    title: "Fine-Tune, RAG, or Prompt? The 2025 Decision Matrix for LLMs.",
+    title: "Fine-Tune, RAG, or Prompt?",
     excerpt: "A practical guide to modern LLM fine-tuning. Learn when to use SFT, LoRA, QLoRA, and DPO to balance quality, cost, and latency for your AI applications.",
     date: "2025-09-08",
     author: "Nikhil Choudhary",

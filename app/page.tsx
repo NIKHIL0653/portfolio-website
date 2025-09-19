@@ -420,7 +420,7 @@ function AboutCard() {
           offset={{ x: 15, y: -30 }}
           noise={0.08}
           transparent={true}
-          scale={2.2}
+          scale={2}
           hueShift={0.5}
           colorFrequency={0.8}
           hoverStrength={1.8}

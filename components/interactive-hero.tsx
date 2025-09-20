@@ -14,26 +14,26 @@ export function InteractiveHero() {
     "Data Enthusiast"
   ]
 
-  useEffect(() => {
-    setMounted(true)
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext("2d")
-    if (!ctx) return
+useEffect(() => {
+setMounted(true)
+const canvas = canvasRef.current
+if (!canvas) return
+const ctx = canvas.getContext("2d")
+if (!ctx) return
 
-    const DPR = Math.min(window.devicePixelRatio || 1, 2)
-    let width = canvas.clientWidth
-    let height = canvas.clientHeight
+const DPR = Math.min(window.devicePixelRatio || 1, 2)
+let width = canvas.clientWidth
+let height = canvas.clientHeight
 
-    const resize = () => {
-      width = canvas.clientWidth
-      height = canvas.clientHeight
-      canvas.width = Math.floor(width * DPR)
-      canvas.height = Math.floor(height * DPR)
-      ctx.setTransform(DPR, 0, 0, DPR, 0, 0)
-    }
+const resize = () => {
+width = canvas.clientWidth
+height = canvas.clientHeight
+canvas.width = Math.floor(width * DPR)
+canvas.height = Math.floor(height * DPR)
+ctx.setTransform(DPR, 0, 0, DPR, 0, 0)
+}
 
-    const isDark = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches)
+const isDark = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches)
 
 const isMobile = window.innerWidth < 768; // Mobile breakpoint
 
@@ -42,29 +42,29 @@ const STAR_COLOR = isDark ? "#ffffff" : "#111111";
 const STAR_COUNT = isMobile ? 400 : 1500; // Fewer stars on mobile to avoid clutter
 const MAX_DEPTH = 50;
 
-    type Star = { x: number; y: number; z: number; px?: number; py?: number };
-    const rand = (min: number, max: number) => Math.random() * (max - min) + min;
+type Star = { x: number; y: number; z: number; px?: number; py?: number };
+const rand = (min: number, max: number) => Math.random() * (max - min) + min;
 
-    const stars: Star[] = Array.from({ length: STAR_COUNT }, () => ({ x: 0, y: 0, z: 0 }));
+const stars: Star[] = Array.from({ length: STAR_COUNT }, () => ({ x: 0, y: 0, z: 0 }));
 
-    const resetStar = (s: Star) => {
-      s.x = rand(-width / 2, width / 2);
-      s.y = rand(-height / 2, height / 2);
-      s.z = MAX_DEPTH;
-      s.px = undefined;
-      s.py = undefined;
-    };
+const resetStar = (s: Star) => {
+s.x = rand(-width / 2, width / 2);
+s.y = rand(-height / 2, height / 2);
+s.z = MAX_DEPTH;
+s.px = undefined;
+s.py = undefined;
+};
 
-    stars.forEach(resetStar);
-    resize();
-    window.addEventListener("resize", resize);
+stars.forEach(resetStar);
+resize();
+window.addEventListener("resize", resize);
 
-    let raf = 0;
-    const tick = () => {
-      ctx.clearRect(0, 0, width, height);
-      const centerX = width / 2;
-      const centerY = height / 2;
-      const focalLength = width * 0.5;
+let raf = 0;
+const tick = () => {
+ctx.clearRect(0, 0, width, height);
+const centerX = width / 2;
+const centerY = height / 2;
+const focalLength = width * 0.5;
 for (let i = 0; i < stars.length; i++) {
 const s = stars[i];
 s.z -= 0.12;
@@ -81,39 +81,39 @@ continue;
 }
 const size = (1 - s.z / MAX_DEPTH) * 3.5;
 const opacity = 1 - Math.pow(s.z / MAX_DEPTH, 2);
-        if (s.px !== undefined && s.py !== undefined) {
-          ctx.beginPath();
-          ctx.moveTo(s.px, s.py);
-          ctx.lineTo(px, py);
-          ctx.lineWidth = size;
-          ctx.strokeStyle = STAR_COLOR;
-          ctx.globalAlpha = opacity;
-          ctx.stroke();
-        }
-        s.px = px;
-        s.py = py;
-      }
-      raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
+if (s.px !== undefined && s.py !== undefined) {
+ctx.beginPath();
+ctx.moveTo(s.px, s.py);
+ctx.lineTo(px, py);
+ctx.lineWidth = size;
+ctx.strokeStyle = STAR_COLOR;
+ctx.globalAlpha = opacity;
+ctx.stroke();
+}
+s.px = px;
+s.py = py;
+}
+raf = requestAnimationFrame(tick);
+};
+raf = requestAnimationFrame(tick);
 
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", resize);
-    };
-  }, [theme]);
+return () => {
+cancelAnimationFrame(raf);
+window.removeEventListener("resize", resize);
+};
+}, [theme]);
 
-  const [typed, setTyped] = useState("")
-  useEffect(() => {
-    const NAME = "Hi, I'm Nikhil"
-    let i = 0
-    const typeInterval = setInterval(() => {
-      setTyped(NAME.slice(0, i + 1))
-      i++
-      if (i >= NAME.length) clearInterval(typeInterval)
-    }, 120)
-    return () => clearInterval(typeInterval)
-  }, [])
+const [typed, setTyped] = useState("")
+useEffect(() => {
+const NAME = "Hi, I'm Nikhil"
+let i = 0
+const typeInterval = setInterval(() => {
+setTyped(NAME.slice(0, i + 1))
+i++
+if (i >= NAME.length) clearInterval(typeInterval)
+}, 120)
+return () => clearInterval(typeInterval)
+}, [])
 
   useEffect(() => {
     const specialtyInterval = setInterval(() => {

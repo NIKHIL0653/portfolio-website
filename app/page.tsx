@@ -1,3 +1,5 @@
+// app/page.tsx
+
 "use client"
 
 import { InteractiveHero } from "@/components/interactive-hero"
@@ -5,16 +7,33 @@ import { ActivityHeatmap } from "@/components/activity-heatmap"
 import { TechStackMarquee } from "@/components/tech-stack-marquee"
 import { LetsConnect } from "@/components/lets-connect"
 import { MultilingualGreeting } from "@/components/multilingual-greeting"
-import { Github, Wrench, FolderOpen, FileText, User } from "lucide-react"
+import { Github, Wrench, FolderOpen, FileText, User, Globe as GlobeIcon } from "lucide-react"
 import Link from "next/link"
 import { useRef, useEffect, useState } from 'react'
 import { useIsMobile } from "@/hooks/use-mobile"
-import Prism from "@/components/Prism"
 import { useTheme } from "next-themes"
+import dynamic from 'next/dynamic'
+
+// Dynamically import the World component with proper error handling
+const World = dynamic(
+  () => import('@/components/ui/globe').then((mod) => {
+    // Make sure we're getting the World export specifically
+    if (!mod.World) {
+      throw new Error('World component not found in globe module');
+    }
+    return { default: mod.World };
+  }),
+  {
+    ssr: false,
+    loading: () => <div className="absolute inset-0 flex items-center justify-center bg-transparent">
+      <div className="w-6 h-6 border-2 border-muted-foreground border-t-transparent rounded-full animate-spin"></div>
+    </div>
+  }
+);
 
 // LetterGlitch Component (Unchanged)
 const LetterGlitch = ({
-  glitchColors = ['#888888'], // Added a default to prevent errors
+  glitchColors = ['#888888'],
   glitchSpeed = 50,
   centerVignette = false,
   outerVignette = true,
@@ -57,13 +76,11 @@ const LetterGlitch = ({
   };
 
   const hexToRgb = (hex: string) => {
-    // Add a check for undefined or invalid hex strings
     if (!hex) return { r: 128, g: 128, b: 128 };
     const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
     hex = hex.replace(shorthandRegex, (_m, r, g, b) => {
       return r + r + g + g + b + b;
     });
-
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result
       ? {
@@ -87,41 +104,35 @@ const LetterGlitch = ({
     return `rgb(${result.r}, ${result.g}, ${result.b})`;
   };
 
-  const calculateGrid = (width: number, height: number) => {
-    const columns = Math.ceil(width / charWidth);
-    const rows = Math.ceil(height / charHeight);
-    return { columns, rows };
-  };
+  const calculateGrid = (width: number, height: number) => ({
+    columns: Math.ceil(width / charWidth),
+    rows: Math.ceil(height / charHeight),
+  });
 
   const initializeLetters = (columns: number, rows: number) => {
     grid.current = { columns, rows };
-    const totalLetters = columns * rows;
-    letters.current = Array.from({ length: totalLetters }, () => ({
+    letters.current = Array.from({ length: columns * rows }, () => ({
       char: getRandomChar(),
       color: getRandomColor(),
       targetColor: getRandomColor(),
-      colorProgress: 1
+      colorProgress: 1,
     }));
   };
 
   const resizeCanvas = () => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
-    const parent = canvas.parentElement;
-    if (!parent) return;
+    const parent = canvas?.parentElement;
+    if (!canvas || !parent) return;
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const rect = parent.getBoundingClientRect();
 
     canvas.width = rect.width * dpr;
     canvas.height = rect.height * dpr;
-
     canvas.style.width = `${rect.width}px`;
     canvas.style.height = `${rect.height}px`;
 
-    if (context.current) {
-      context.current.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
+    context.current?.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     const { columns, rows } = calculateGrid(rect.width, rect.height);
     initializeLetters(columns, rows);
@@ -145,7 +156,7 @@ const LetterGlitch = ({
   };
 
   const updateLetters = () => {
-    if (!letters.current || letters.current.length === 0) return;
+    if (letters.current.length === 0) return;
     const updateCount = Math.max(1, Math.floor(letters.current.length * 0.05));
     for (let i = 0; i < updateCount; i++) {
       const index = Math.floor(Math.random() * letters.current.length);
@@ -184,8 +195,7 @@ const LetterGlitch = ({
   };
 
   useEffect(() => {
-    if (!glitchColors || glitchColors.length === 0) return; // Don't run effect if colors aren't ready
-
+    if (!glitchColors || glitchColors.length === 0) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     context.current = canvas.getContext('2d');
@@ -210,16 +220,11 @@ const LetterGlitch = ({
   return (
     <div className="relative w-full h-full bg-transparent overflow-hidden">
       <canvas ref={canvasRef} className="block w-full h-full" />
-      {outerVignette && (
-        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle,_rgba(0,0,0,0)_60%,_rgba(0,0,0,1)_100%)]"></div>
-      )}
-      {centerVignette && (
-        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle,_rgba(0,0,0,0.8)_0%,_rgba(0,0,0,0)_60%)]"></div>
-      )}
+      {outerVignette && <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle,_rgba(0,0,0,0)_60%,_rgba(0,0,0,1)_100%)]" />}
+      {centerVignette && <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle,_rgba(0,0,0,0.8)_0%,_rgba(0,0,0,0)_60%)]" />}
     </div>
   );
 };
-
 
 // Enhanced Blog Card Component (Unchanged)
 function BlogCard() {
@@ -286,7 +291,7 @@ function BlogCard() {
   );
 }
 
-// Enhanced Projects Card Component (Corrected)
+// Enhanced Projects Card Component (Unchanged)
 function ProjectsCard() {
   const { theme } = useTheme();
   const [glitchColors, setGlitchColors] = useState<string[]>([]);
@@ -323,7 +328,6 @@ function ProjectsCard() {
         }}
       >
         <div className="w-full h-full blur-[0.5px]">
-          {/* Corrected: Only render when colors are available */}
           {mounted && glitchColors.length > 0 && (
             <LetterGlitch
               glitchColors={glitchColors}
@@ -357,109 +361,91 @@ function ProjectsCard() {
   );
 }
 
-// Enhanced About Card Component (Updated with tilted prism and dark gray gradient)
+// FIXED: About Card with Custom White Globe - Consistent positioning and animations
 function AboutCard() {
   const { theme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    const checkDarkMode = () => {
+      const isDark = theme === "dark" || 
+        (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      setIsDarkMode(isDark);
+    };
 
-  if (!mounted) {
-    return <div className="group relative bg-card rounded-lg border border-border overflow-hidden shadow-md min-h-[380px] block" />;
-  }
+    checkDarkMode();
+    
+    // Listen for system theme changes
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const handleChange = () => checkDarkMode();
+    mediaQuery.addListener(handleChange);
+    
+    return () => mediaQuery.removeListener(handleChange);
+  }, [theme]);
 
-  const effectiveTheme = theme === 'system'
-    ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-    : theme;
+  const globeConfig = {
+    pointSize: 4,
+    atmosphereColor: "#ffffff",
+    showAtmosphere: false,
+    atmosphereAltitude: 0,
+    polygonColor: "#222222", // Dark dots for countries
+    globeColor: "#FFFFFF", // Pure white globe
+    emissive: "#F5F5F5", // Very light gray emissive
+    emissiveIntensity: 0.25,
+    shininess: 15,
+    autoRotate: true,
+    autoRotateSpeed: 0.003 // Faster rotation
+  };
 
-  const isLightMode = effectiveTheme === 'light';
+  const locationData = [{
+    lat: 22.5726,
+    lng: 88.3639,
+    size: 0.005, // Much smaller marker size
+    color: '#FF4444' // Red color for visibility
+  }];
 
   return (
     <Link
       href="/about"
-      className="group relative bg-card rounded-lg border border-border overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 min-h-[380px] dark:shadow-[0_0_20px_rgba(139,69,193,0.1)] block"
+      className="group relative bg-card rounded-lg border border-border overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 min-h-[380px] block"
     >
-      {/* Dark gray gradient fade background around the prism */}
-      <div className="absolute inset-0">
+      {/* Globe Container - Responsive positioning for mobile vs desktop */}
+      <div className="absolute bottom-[-5%] right-[-15%] md:right-[-30%] h-[100%] w-[100%] z-0">
+        <World 
+          data={locationData} 
+          globeConfig={globeConfig} 
+          darkMode={isDarkMode}
+        />
+      </div>
+
+      {/* Solid background overlay for content area - proper fade implementation */}
+      <div className="absolute inset-0 pointer-events-none z-5">
         <div 
-          className="absolute inset-0 bg-gradient-radial from-transparent via-gray-600/30 to-gray-800/60 dark:from-transparent dark:via-gray-700/40 dark:to-gray-900/70"
+          className="absolute bottom-0 left-0 right-0 h-[80%] bg-card"
           style={{
-            maskImage: 'radial-gradient(ellipse 70% 60% at 65% 40%, black 20%, transparent 70%)',
-            WebkitMaskImage: 'radial-gradient(ellipse 70% 60% at 65% 40%, black 20%, transparent 70%)',
+            maskImage: 'linear-gradient(to top, black 0%, black 20%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.4) 70%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to top, black 0%, black 20%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.4) 70%, transparent 100%)'
           }}
         />
       </div>
 
-      {isLightMode && (
-        <div className="absolute inset-0 opacity-100">
-          <div
-            className="absolute inset-0 bg-gradient-radial from-gray-800/90 via-gray-600/70 to-transparent"
-            style={{
-              filter: 'blur(50px)',
-              transform: 'scale(2.5)',
-            }}
-          />
-          <div
-            className="absolute inset-0 bg-gradient-radial from-gray-900/80 via-gray-700/60 to-transparent"
-            style={{
-              filter: 'blur(80px)',
-              transform: 'scale(3.0)',
-            }}
-          />
-          <div
-            className="absolute inset-0 bg-gradient-radial from-black/70 via-gray-800/50 to-transparent"
-            style={{
-              filter: 'blur(120px)',
-              transform: 'scale(3.5)',
-            }}
-          />
-        </div>
-      )}
-
-      <div className={`absolute inset-0 transition-opacity duration-700 ease-out ${isLightMode ? 'opacity-90' : 'opacity-90'}`}>
-        <Prism
-          height={3.2}
-          baseWidth={4.5}
-          animationType="rotate"
-          glow={isLightMode ? 0.8 : 1.2}
-          offset={{ x: 15, y: -30 }}
-          noise={0.08}
-          transparent={true}
-          scale={2}
-          hueShift={0.5}
-          colorFrequency={0.8}
-          hoverStrength={1.8}
-          inertia={0.06}
-          bloom={isLightMode ? 1.0 : 1.8}
-          suspendWhenOffscreen={true}
-          timeScale={0.2}
-          theme={effectiveTheme as 'light' | 'dark'}
-        />
-      </div>
-
-      {/* Enhanced gradient overlay to work with the new background */}
-      <div className="absolute inset-0 bg-gradient-to-t from-card/98 via-card/85 to-card/40 dark:from-card/95 dark:via-card/75 dark:to-card/30 transition-all duration-700" />
-
+      {/* Content - Consistent with other cards */}
       <div className="absolute bottom-10 left-8 flex flex-col-reverse items-start z-10">
         <div className="overflow-hidden max-h-0 group-hover:max-h-40 group-hover:mt-4 transition-all duration-300 ease-in-out">
-          <span className="text-foreground font-medium flex items-center gap-1 drop-shadow-sm">
-            Learn more about me →
+          <span className="text-foreground font-medium flex items-center gap-1">
+            More about me →
           </span>
         </div>
         <div className="transition-all duration-300">
-          <User className="h-12 w-12 text-foreground mb-3 group-hover:h-10 group-hover:w-10 transition-all duration-300 drop-shadow-sm" />
-          <h3 className="text-2xl font-bold text-foreground group-hover:text-3xl transition-all duration-300 drop-shadow-sm">
+          <GlobeIcon className="h-12 w-12 text-foreground mb-3 group-hover:h-10 group-hover:w-10 transition-all duration-300" />
+          <h3 className="text-2xl font-bold text-foreground group-hover:text-3xl transition-all duration-300">
             About Me
           </h3>
-          <p className="text-muted-foreground text-base mt-1.5 drop-shadow-sm">
+          <p className="text-muted-foreground text-base mt-1.5">
             My story & my skills.
           </p>
         </div>
       </div>
-
-      <div className="absolute inset-0 rounded-lg border border-transparent group-hover:border-primary/15 transition-all duration-500" />
     </Link>
   );
 }

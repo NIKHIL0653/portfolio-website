@@ -65,7 +65,7 @@ function CardTile({ href, title, desc, icon }: Card) {
       target={href.startsWith("http") ? "_blank" : undefined}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      className="group relative rounded-xl border bg-card p-5 hover:border-primary/20 hover:-translate-y-1 hover:shadow-gray-300 dark:hover:shadow-white transition-all duration-300" style={{ transition: 'all 0.3s ease-out' }}
+      className="group relative rounded-xl border bg-card p-5 hover:border-primary/20 hover:-translate-y-1 hover:shadow-gray-300 dark:hover:shadow-white transition-all duration-300 min-h-[100px] sm:min-h-[80px]" style={{ transition: 'all 0.3s ease-out' }}
     >
       <div className="flex items-start gap-4">
         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-foreground transition-all duration-300 group-hover:scale-110 group-hover:shadow-sm dark:group-hover:bg-primary dark:group-hover:text-primary-foreground">

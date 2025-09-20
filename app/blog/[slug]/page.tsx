@@ -123,7 +123,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
                 <div className="image-wrapper bg-gray-50 dark:bg-[#1F1F1F] rounded-lg sm:rounded-xl px-1 py-1 border border-slate-200 dark:border-slate-600 max-w-md sm:max-w-2xl md:max-w-3xl mx-auto">
                   {/* Inner div (blog-image-frame-large) now has 'rounded-md' for slightly less round corners,
                       but still more rounded than the image itself (which is 'rounded-sm') */}
-                  <div className="blog-image-frame-large w-full mx-auto h-48 sm:h-56 md:h-64 lg:h-[22rem] relative rounded-md overflow-hidden border border-slate-100 dark:border-slate-600">
+                  <div className="blog-image-frame-large w-full mx-auto aspect-[16/9] sm:h-56 md:h-64 lg:h-[22rem] relative rounded-md overflow-hidden border border-slate-100 dark:border-slate-600">
                     <Image
                       src={post.image}
                       alt={post.imageAlt || post.title}

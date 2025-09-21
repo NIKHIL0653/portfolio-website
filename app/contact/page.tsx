@@ -143,7 +143,7 @@ export default function ContactPage() {
     <main className="min-h-screen bg-background py-8 px-4 sm:px-6 md:px-12 lg:px-24">
       <div className="max-w-3xl mx-auto">
         <Card className="bg-card border-border backdrop-blur-sm contact-card-glow rounded-lg shadow-2xl drop-shadow-lg">
-          <CardContent className="p-4 sm:p-6 md:p-8 pb-4">
+          <CardContent className="p-4 sm:p-6 md:p-8 md:pt-6 pb-4">
             {/* Header Section */}
             <div className="flex flex-col items-center justify-center pt-0 pb-10">
              <h1 className="text-xl sm:text-2xl font-bold text-foreground text-center">
@@ -270,11 +270,11 @@ export default function ContactPage() {
             <hr className="border-gray-300 dark:border-border -mx-4 sm:-mx-6 md:-mx-8 mb-5" />
 
             {/* Social Links Section */}
-            <div className="pt-0 relative pb-0">
+            <div className="pt-0 md:pt-6 relative pb-0">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6 relative min-h-[80px] md:min-h-[100px]">
                 {/* Vertical separators that touch horizontal line and extend to bottom */}
-                <div className="hidden md:block absolute left-1/3 -top-5 -bottom-10 w-px bg-gray-300 dark:bg-border transform -translate-x-px"></div>
-                <div className="hidden md:block absolute left-2/3 -top-5 -bottom-10 w-px bg-gray-300 dark:bg-border transform -translate-x-px"></div>
+                <div className="hidden md:block absolute left-1/3 -top-11 -bottom-14 w-px bg-gray-300 dark:bg-border transform -translate-x-px"></div>
+                <div className="hidden md:block absolute left-2/3 -top-11 -bottom-14 w-px bg-gray-300 dark:bg-border transform -translate-x-px"></div>
 
                 {/* X/Twitter Section - Left Aligned */}
                 <div className="flex flex-col items-start text-left relative z-10 px-2 sm:px-4">

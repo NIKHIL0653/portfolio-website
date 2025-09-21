@@ -153,7 +153,7 @@ export default function ContactPage() {
                </span>
              </h1>
             </div>
-            <hr className="border-gray-300 dark:border-gray-700 -mx-8 mb-10" />
+            <hr className="border-gray-300 dark:border-border -mx-4 sm:-mx-6 md:-mx-8 mb-10" />
 
             {/* Contact Form */}
             <form onSubmit={handleSubmit} className="space-y-4 mb-8">

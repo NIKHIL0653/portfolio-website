@@ -25,7 +25,38 @@ function Globe({ data, globeConfig }: WorldProps & { darkMode?: boolean }) {
   const lastMouseXRef = useRef(0);
   const autoRotateRef = useRef(true);
   const hasDraggedRef = useRef(false);
-  const { gl } = useThree();
+  const { gl, camera } = useThree();
+
+  // Store the original material settings
+  const materialSettingsRef = useRef<{
+    color: number;
+    emissive: number;
+    emissiveIntensity: number;
+  } | null>(null);
+
+  // Adjust camera position for mobile to compensate for larger canvas
+  useEffect(() => {
+    const handleResize = () => {
+      const isMobile = window.innerWidth < 768;
+      if (isMobile) {
+        // Mobile: Move camera closer to make globe appear larger
+        camera.position.set(0, 100, 360);
+      } else {
+        // Desktop: Original camera position (unchanged from initial version)
+        camera.position.set(0, 100, 280);
+      }
+    };
+
+    // Set initial position
+    handleResize();
+
+    // Listen for resize events
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [camera]);
 
   useEffect(() => {
     if (!globeRef.current) return;
@@ -35,17 +66,30 @@ function Globe({ data, globeConfig }: WorldProps & { darkMode?: boolean }) {
     // Adjust globe material based on theme
     const globeMaterial = globe.globeMaterial();
     
+    let materialSettings;
     if (globeConfig.darkMode) {
       // Dark mode: darker grayish globe with #767676 base color
-      globeMaterial.color.setHex(0x767676); // Base color #767676
-      globeMaterial.emissive.setHex(0x4A4A4A); // Darker emissive to complement the base
-      globeMaterial.emissiveIntensity = 0.3; // Lower intensity for darker appearance
+      materialSettings = {
+        color: 0x767676, // Base color #767676
+        emissive: 0x4A4A4A, // Darker emissive to complement the base
+        emissiveIntensity: 0.3 // Lower intensity for darker appearance
+      };
     } else {
       // Light mode: pure white globe
-      globeMaterial.color.setHex(0xFFFFFF);
-      globeMaterial.emissive.setHex(0xFFFFFF);
-      globeMaterial.emissiveIntensity = 1.0;
+      materialSettings = {
+        color: 0xFFFFFF,
+        emissive: 0xFFFFFF,
+        emissiveIntensity: 1.0
+      };
     }
+
+    // Store the settings for consistent application
+    materialSettingsRef.current = materialSettings;
+
+    // Apply the material settings
+    globeMaterial.color.setHex(materialSettings.color);
+    globeMaterial.emissive.setHex(materialSettings.emissive);
+    globeMaterial.emissiveIntensity = materialSettings.emissiveIntensity;
     
     globeMaterial.shininess = 0;
     globeMaterial.specular.setHex(0x000000);
@@ -104,6 +148,20 @@ function Globe({ data, globeConfig }: WorldProps & { darkMode?: boolean }) {
 
   }, [data, globeConfig]);
 
+  // Function to ensure material consistency
+  const ensureMaterialConsistency = () => {
+    if (!globeRef.current || !materialSettingsRef.current) return;
+    
+    const globe = globeRef.current;
+    const globeMaterial = globe.globeMaterial();
+    const settings = materialSettingsRef.current;
+    
+    globeMaterial.color.setHex(settings.color);
+    globeMaterial.emissive.setHex(settings.emissive);
+    globeMaterial.emissiveIntensity = settings.emissiveIntensity;
+    globeMaterial.needsUpdate = true;
+  };
+
   // Interactive mouse controls
   useEffect(() => {
     const globe = globeRef.current;
@@ -134,6 +192,9 @@ function Globe({ data, globeConfig }: WorldProps & { darkMode?: boolean }) {
       const rotationSpeed = deltaX * 0.005; // Reduced sensitivity
       globe.rotation.y += rotationSpeed;
       lastMouseXRef.current = event.clientX;
+
+      // Ensure material stays consistent during drag
+      ensureMaterialConsistency();
     };
 
     const handleMouseUp = () => {
@@ -160,6 +221,9 @@ function Globe({ data, globeConfig }: WorldProps & { darkMode?: boolean }) {
       if (gl.domElement && !isDraggingRef.current) {
         gl.domElement.style.cursor = 'grab';
       }
+      // DO NOT change material properties on hover - this was causing the color change
+      // Just ensure consistency without forcing changes
+      ensureMaterialConsistency();
     };
 
     const handleMouseLeave = () => {
@@ -195,6 +259,9 @@ function Globe({ data, globeConfig }: WorldProps & { darkMode?: boolean }) {
       const rotationSpeed = deltaX * 0.005; // Reduced sensitivity
       globe.rotation.y += rotationSpeed;
       lastMouseXRef.current = event.touches[0].clientX;
+
+      // Ensure material stays consistent during touch drag
+      ensureMaterialConsistency();
     };
 
     const handleTouchEnd = () => {
@@ -271,6 +338,7 @@ function Globe({ data, globeConfig }: WorldProps & { darkMode?: boolean }) {
     };
   }, [data]);
 
+  // Auto rotation with material consistency
   useEffect(() => {
     if (!globeRef.current) return;
 
@@ -283,6 +351,8 @@ function Globe({ data, globeConfig }: WorldProps & { darkMode?: boolean }) {
     const animate = () => {
       if (globeRef.current && autoRotateRef.current) {
         globeRef.current.rotation.y += rotationSpeed;
+        // Continuously ensure material consistency during auto-rotation
+        ensureMaterialConsistency();
       }
       animationId = requestAnimationFrame(animate);
     };
@@ -322,45 +392,50 @@ export function World(props: WorldProps & {
   // Separate shadow styles for light and dark modes
   const lightModeShadow = `
     inset 0px 0px 0px 1px transparent,
-    inset 0px 0px 40px 20px rgba(0, 0, 0, 0.08),
-    inset 0px 0px 60px 30px rgba(0, 0, 0, 0.06),
-    inset 0px 0px 80px 40px rgba(0, 0, 0, 0.04),
-    0px 0px 25px 6px rgba(255, 255, 255, 0.25),
-    0px 0px 15px 3px rgba(255, 255, 255, 0.35),
-    0px 0px 8px 1px rgba(255, 255, 255, 0.45)
+    inset 0px 0px 20px 8px rgba(0, 0, 0, 0.05),
+    inset 0px 0px 35px 12px rgba(0, 0, 0, 0.04),
+    inset 0px 0px 50px 18px rgba(0, 0, 0, 0.03),
+    inset 0px 0px 70px 24px rgba(0, 0, 0, 0.02),
+    0px 0px 5px 1px rgba(255, 255, 255, 0.25),
+    0px 0px 3px 1px rgba(255, 255, 255, 0.35),
+    0px 0px 2px 1px rgba(255, 255, 255, 0.45)
   `;
 
   const darkModeShadow = `
     inset 0px 0px 0px 1px transparent,
-    inset 0px 0px 60px 30px rgba(0, 0, 0, 0.95),
-    inset 0px 0px 90px 45px rgba(0, 0, 0, 0.90),
-    inset 0px 0px 120px 60px rgba(0, 0, 0, 0.85),
-    inset 0px 0px 150px 75px rgba(0, 0, 0, 0.80),
-    inset 0px 0px 180px 90px rgba(0, 0, 0, 0.75),
-    inset 0px 0px 210px 105px rgba(0, 0, 0, 0.70),
-    inset 0px 0px 240px 120px rgba(255, 255, 255, 0.65),
-    inset 0px 0px 270px 135px rgba(0, 0, 0, 0.55),
-    inset 0px 0px 300px 150px rgba(0, 0, 0, 0.45),
-    0px 0px 30px 8px rgba(255, 255, 255, 0.40),
-    0px 0px 20px 4px rgba(255, 255, 255, 0.50),
-    0px 0px 12px 2px rgba(255, 255, 255, 0.60)
+    inset 0px 0px 40px 20px rgba(0, 0, 0, 0.88),
+    inset 0px 0px 60px 28px rgba(0, 0, 0, 0.83),
+    inset 0px 0px 80px 35px rgba(0, 0, 0, 0.78),
+    inset 0px 0px 100px 42px rgba(0, 0, 0, 0.73),
+    inset 0px 0px 120px 48px rgba(0, 0, 0, 0.68),
+    inset 0px 0px 140px 55px rgba(0, 0, 0, 0.63),
+    inset 0px 0px 160px 60px rgba(255, 255, 255, 0.58),
+    inset 0px 0px 180px 68px rgba(0, 0, 0, 0.48),
+    inset 0px 0px 200px 75px rgba(0, 0, 0, 0.38),
+    0px 0px 20px 4px rgba(255, 255, 255, 0.30),
+    0px 0px 12px 2px rgba(255, 255, 255, 0.40),
+    0px 0px 6px 1px rgba(255, 255, 255, 0.50)
   `;
 
   return (
     <div className="relative w-full h-full">
-      {/* Larger Canvas container to prevent globe clipping */}
-      <div className="absolute inset-0" style={{
-        width: '150%',
-        height: '150%',
-        left: '-25%',
-        top: '-25%'
-      }}>
+      {/* Responsive Globe Container */}
+      <div 
+        className="absolute inset-0 globe-container"
+        style={{
+          // Desktop styles (default)
+          width: '150%',
+          height: '150%',
+          left: '-25%',
+          top: '-25%'
+        }}
+      >
         <Canvas
           camera={{
             fov: 45,
             near: 1,
             far: 1000,
-            position: [0, 100, 280] // Moved camera up and slightly closer for higher view
+            position: [0, 100, 280]
           }}
           style={{
             width: "100%",
@@ -374,23 +449,21 @@ export function World(props: WorldProps & {
           }}
         >
           <WebGLRendererConfig />
-          
-          {/* Pure ambient light - no directional lighting */}
           <ambientLight intensity={1.0} color={0xffffff} />
-          
           <Globe data={props.data} globeConfig={{...props.globeConfig, darkMode}} />
         </Canvas>
       </div>
       
-      {/* Shadow overlay with theme-specific styling */}
+      {/* Responsive Shadow Overlay */}
       <div 
-        className="absolute pointer-events-none"
+        className="absolute pointer-events-none globe-shadow"
         style={{
+          // Desktop styles (default)
           left: '50%',
           top: '50%',
           transform: `translate(calc(-50% + ${x}), calc(-50% + ${y}))`,
-          width: `${488 * scale}px`, // More accurate globe size
-          height: `${488 * scale}px`, // Perfect circle
+          width: `${488 * scale}px`,
+          height: `${488 * scale}px`,
         }}
       >
         <div
@@ -402,6 +475,44 @@ export function World(props: WorldProps & {
           }}
         />
       </div>
+
+      {/* CSS for responsive positioning */}
+      <style jsx>{`
+        @media (max-width: 767px) {
+          .globe-container {
+            width: 200% !important;
+            height: 200% !important;
+            left: -25% !important;
+            top: -25% !important;
+          }
+          
+          .globe-shadow {
+            left: 70% !important;
+            top: 54% !important;
+            transform: translate(-50%, -50%) !important;
+            width: ${587 * 0.8}px !important;
+            height: ${589 * 0.8}px !important;
+          }
+        }
+        
+        /* Desktop styles - reverting to original */
+        @media (min-width: 768px) {
+          .globe-container {
+            width: 150% !important;
+            height: 150% !important;
+            left: -25% !important;
+            top: -25% !important;
+          }
+          
+          .globe-shadow {
+            left: 50% !important;
+            top: 50% !important;
+            transform: translate(calc(-50% + ${x}), calc(-50% + ${y})) !important;
+            width: ${488 * scale}px !important;
+            height: ${488 * scale}px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

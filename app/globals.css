@@ -179,10 +179,10 @@
 /* Glowing border for cards and sections in dark mode */
 .dark .bg-card:not(li) {
   box-shadow:
-    inset 0 -10px 25px rgba(255, 255, 255, 0.04), /* bottom glow */
-    inset -10px 0 25px rgba(255, 255, 255, 0.04), /* left glow */
-    inset 10px 0 25px rgba(255, 255, 255, 0.04), /* right glow */
-    inset 0 4px 12px rgba(255, 255, 255, 0.01); /* top glow (much weaker) */
+    inset 0 -6px 12px rgba(245, 245, 245, 0.03), /* bottom glow */
+    inset -6px 0 12px rgba(245, 245, 245, 0.03), /* left glow */
+    inset 6px 0 12px rgba(245, 245, 245, 0.03), /* right glow */
+    inset 0 2px 6px rgba(245, 245, 245, 0.008); /* top glow (much weaker) */
 }
 
 /* Cursor-following glow effect for project cards */

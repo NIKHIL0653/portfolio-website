@@ -22,6 +22,7 @@ export type GlobeConfig = {
     };
     autoRotate?: boolean;
     autoRotateSpeed?: number;
+    darkMode?: boolean;
   };
   
   export type Position = {

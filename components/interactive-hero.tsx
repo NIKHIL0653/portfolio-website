@@ -39,7 +39,7 @@ const isMobile = window.innerWidth < 768; // Mobile breakpoint
 
 // Galaxy/Warp Speed Animation Logic (Kept from previous version)
 const STAR_COLOR = isDark ? "#ffffff" : "#111111";
-const STAR_COUNT = isMobile ? 400 : 1500; // Fewer stars on mobile to avoid clutter
+const STAR_COUNT = isMobile ? 300 : 1000; // Optimized count for better performance
 const MAX_DEPTH = 50;
 
 type Star = { x: number; y: number; z: number; px?: number; py?: number };
@@ -50,7 +50,8 @@ const stars: Star[] = Array.from({ length: STAR_COUNT }, () => ({ x: 0, y: 0, z:
 const resetStar = (s: Star) => {
 s.x = rand(-width / 2, width / 2);
 s.y = rand(-height / 2, height / 2);
-s.z = MAX_DEPTH;
+// Bias towards closer depths for immediate visibility
+s.z = Math.pow(Math.random(), 0.7) * MAX_DEPTH + 1;
 s.px = undefined;
 s.py = undefined;
 };
@@ -67,7 +68,7 @@ const centerY = height / 2;
 const focalLength = width * 0.5;
 for (let i = 0; i < stars.length; i++) {
 const s = stars[i];
-s.z -= 0.12;
+s.z -= 0.15; // Slower, more elegant star movement
 if (s.z <= 0) {
 resetStar(s);
 continue;

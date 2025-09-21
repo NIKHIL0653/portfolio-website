@@ -74,6 +74,16 @@ export function Header() {
           >
             About
           </Link>
+          <Link
+            href="/contact"
+            className={`text-sm transition-colors ${
+              pathname === '/contact'
+                ? 'text-slate-600 dark:text-slate-300 font-medium'
+                : 'text-foreground/80 hover:text-black dark:hover:text-white'
+            } hover:underline`}
+          >
+            Contact
+          </Link>
         </nav>
 
         {/* Mobile Menu Button */}
@@ -199,6 +209,17 @@ export function Header() {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 About
+              </Link>
+              <Link
+                href="/contact"
+                className={`text-sm transition-colors py-2 ${
+                  pathname === '/contact'
+                    ? 'text-slate-600 dark:text-slate-300 font-medium'
+                    : 'text-foreground/80 hover:text-black dark:hover:text-white'
+                } hover:underline`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Contact
               </Link>
             </nav>
           </div>

@@ -157,7 +157,7 @@ const LetterGlitch = ({
 
   const updateLetters = () => {
     if (letters.current.length === 0) return;
-    const updateCount = Math.max(1, Math.floor(letters.current.length * 0.05));
+    const updateCount = Math.max(1, Math.floor(letters.current.length * 0.03)); // Reduced from 0.05 to 0.03
     for (let i = 0; i < updateCount; i++) {
       const index = Math.floor(Math.random() * letters.current.length);
       if (!letters.current[index]) continue;
@@ -171,7 +171,7 @@ const LetterGlitch = ({
     let needsRedraw = false;
     letters.current.forEach(letter => {
       if (letter.colorProgress < 1) {
-        letter.colorProgress = Math.min(1, letter.colorProgress + 0.05);
+        letter.colorProgress = Math.min(1, letter.colorProgress + 0.03); // Reduced from 0.05 to 0.03
         const startRgb = hexToRgb(letter.color);
         const endRgb = hexToRgb(letter.targetColor);
         if (startRgb && endRgb) {
@@ -219,7 +219,7 @@ const LetterGlitch = ({
 
   return (
     <div className="relative w-full h-full bg-transparent overflow-hidden">
-      <canvas ref={canvasRef} className="block w-full h-full" />
+      <canvas ref={canvasRef} className="block w-full h-full" style={{ willChange: 'transform' }} />
       {outerVignette && <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle,_rgba(0,0,0,0)_60%,_rgba(0,0,0,1)_100%)]" />}
       {centerVignette && <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle,_rgba(0,0,0,0.8)_0%,_rgba(0,0,0,0)_60%)]" />}
     </div>
@@ -331,7 +331,7 @@ function ProjectsCard() {
           {mounted && glitchColors.length > 0 && (
             <LetterGlitch
               glitchColors={glitchColors}
-              glitchSpeed={120}
+              glitchSpeed={200}
               centerVignette={false}
               outerVignette={false}
               smooth={true}
@@ -398,10 +398,13 @@ function AboutCard() {
   };
 
   const locationData = [{
-    lat: 22.5726,
-    lng: 88.3639,
-    size: 0.005, // Much smaller marker size
-    color: '#FF4444' // Red color for visibility
+    order: 1,
+    startLat: 22.5726,
+    startLng: 88.3639,
+    endLat: 22.5726,
+    endLng: 88.3639,
+    arcAlt: 0.005,
+    color: '#FF4444'
   }];
 
   return (
@@ -485,15 +488,17 @@ export default function HomePage() {
             <AboutCard />
           </div>
 
-          <div className="bg-card rounded-lg border border-border overflow-hidden shadow-md p-6 sm:p-8">
-            <div className="text-center mb-6">
-              <h2 className="text-[28px] md:text-[50px] font-semibold">Let's connect</h2>
+          <div className="bg-card rounded-lg border border-border overflow-hidden shadow-md p-4 sm:p-6 min-h-[280px] flex flex-col">
+            <div className="text-center mb-6 pt-6 flex-1 flex flex-col justify-center">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold">Let's connect</h2>
               <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
-                Reach me via email, X, GitHub, or LinkedIn.
+                Let's build something amazing together!
               </p>
+              <div className="mt-6">
+                <LetsConnect />
+              </div>
             </div>
-            <LetsConnect />
-            <div className="mt-8 pt-6">
+            <div className="mt-auto pt-4">
               <MultilingualGreeting />
             </div>
           </div>

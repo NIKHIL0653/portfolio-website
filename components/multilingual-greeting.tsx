@@ -89,7 +89,7 @@ export function MultilingualGreeting() {
   }, [currentIndex, displayCount])
 
   return (
-    <section className="mx-auto max-w-5xl px-4 py-8 sm:py-10 border-t">
+    <section className="mx-auto max-w-5xl px-4 py-4 sm:py-6 border-t">
       <div className="text-center">
         <div className="h-[2rem] flex items-center justify-center">
           <span

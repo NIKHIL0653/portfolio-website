@@ -46,7 +46,7 @@
 }
 
 .dark {
-  --background: #171717; /* User's specified dark theme color for all pages */
+   --background: #121212; /* User's specified dark theme color for all pages */
   --foreground: #e4e4e7;  /* Darker shade of white for better contrast */
   --card: #0F0F0F;        /* Slightly lighter than background for cards - removes blue tone */
   --card-foreground: #e4e4e7;
@@ -248,4 +248,20 @@
 .dark .card-fade .card-content {
   position: relative;
   z-index: 2;
+}
+
+/* Force contact form input backgrounds to be #0F0F0F in dark mode */
+.dark .contact-card-glow input,
+.dark .contact-card-glow textarea {
+  background-color: #0F0F0F !important;
+  border-color: #374151 !important;
+}
+
+/* Contact card glow effect */
+.contact-card-glow {
+  box-shadow:
+    inset 0 -6px 12px rgba(245, 245, 245, 0.03), /* bottom glow */
+    inset -6px 0 12px rgba(245, 245, 245, 0.03), /* left glow */
+    inset 6px 0 12px rgba(245, 245, 245, 0.03), /* right glow */
+    inset 0 2px 6px rgba(245, 245, 245, 0.008); /* top glow (much weaker) */
 }

@@ -3,16 +3,17 @@ import { useEffect, useRef, useState } from "react"
 import { useTheme } from "./theme-provider"
 
 export function InteractiveHero() {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null)
-  const [mounted, setMounted] = useState(false)
-  const { theme } = useTheme()
-  const [currentSpecialty, setCurrentSpecialty] = useState(0)
-  const [scrollOpacity, setScrollOpacity] = useState(1)
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const [mounted, setMounted] = useState(false)
+  const { theme } = useTheme()
+  const [currentSpecialty, setCurrentSpecialty] = useState(0)
+  const [scrollOpacity, setScrollOpacity] = useState(1)
+  const [isAnimating, setIsAnimating] = useState(false)
 
-  const specialties = [
-    "Software Engineer",
-    "Data Enthusiast"
-  ]
+const specialties = [
+  "Software Engineer",
+  "AI/ML Engineer"
+]
 
 useEffect(() => {
 setMounted(true)
@@ -37,9 +38,9 @@ const isDark = theme === "dark" || (theme === "system" && window.matchMedia("(pr
 
 const isMobile = window.innerWidth < 768; // Mobile breakpoint
 
-// Galaxy/Warp Speed Animation Logic (Kept from previous version)
+// Galaxy/Warp Speed Animation Logic (Optimized for performance)
 const STAR_COLOR = isDark ? "#ffffff" : "#111111";
-const STAR_COUNT = isMobile ? 300 : 1000; // Optimized count for better performance
+const STAR_COUNT = isMobile ? 150 : 400; // Reduced count for better performance
 const MAX_DEPTH = 50;
 
 type Star = { x: number; y: number; z: number; px?: number; py?: number };
@@ -66,9 +67,11 @@ ctx.clearRect(0, 0, width, height);
 const centerX = width / 2;
 const centerY = height / 2;
 const focalLength = width * 0.5;
+
+// Batch operations for better performance
 for (let i = 0; i < stars.length; i++) {
 const s = stars[i];
-s.z -= 0.15; // Slower, more elegant star movement
+s.z -= 0.08; // Even slower movement for smoothness
 if (s.z <= 0) {
 resetStar(s);
 continue;
@@ -80,8 +83,8 @@ if (px < 0 || px > width || py < 0 || py > height) {
 resetStar(s);
 continue;
 }
-const size = (1 - s.z / MAX_DEPTH) * 3.5;
-const opacity = 1 - Math.pow(s.z / MAX_DEPTH, 2);
+const size = (1 - s.z / MAX_DEPTH) * 2.5; // Smaller max size
+const opacity = 1 - (s.z / MAX_DEPTH) * (s.z / MAX_DEPTH); // Optimized calculation
 if (s.px !== undefined && s.py !== undefined) {
 ctx.beginPath();
 ctx.moveTo(s.px, s.py);
@@ -116,32 +119,41 @@ if (i >= NAME.length) clearInterval(typeInterval)
 return () => clearInterval(typeInterval)
 }, [])
 
-  useEffect(() => {
-    const specialtyInterval = setInterval(() => {
-      setCurrentSpecialty((prev) => (prev + 1) % specialties.length)
-    }, 4000)
-    return () => clearInterval(specialtyInterval)
-  }, [specialties.length])
+useEffect(() => {
+  const specialtyInterval = setInterval(() => {
+    setIsAnimating(true)
+    setTimeout(() => {
+      setCurrentSpecialty((prev) => (prev + 1) % specialties.length)
+      setIsAnimating(false)
+    }, 300) // Half of transition duration
+  }, 4000)
+  return () => clearInterval(specialtyInterval)
+}, [specialties.length])
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop
-      const opacity = Math.max(0, 1 - (scrollTop / 150))
-      setScrollOpacity(opacity)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+      const opacity = Math.max(0, 1 - (scrollTop / 150))
+      setScrollOpacity(opacity)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
 return (
-  <section id="top" className="relative h-[85vh] sm:h-[95vh] overflow-hidden">
+  <section id="top" className="relative h-[85vh] sm:h-[85vh] overflow-hidden">
     {/* Background Animation - Ensure it's visible */}
     <div className="absolute inset-0 z-0">
-      <canvas ref={canvasRef} className="block h-full w-full" aria-hidden="true" />
+      <canvas
+        ref={canvasRef}
+        className="block h-full w-full"
+        aria-hidden="true"
+        style={{ willChange: 'transform' }}
+      />
     </div>
 
-    {/* Centered Content Layout */}
-    <div className="relative z-10 h-full flex items-center justify-center p-4 sm:p-8">
+    {/* Centered Content Layout - Moved down slightly */}
+    <div className="relative z-10 h-full flex items-center justify-center p-4 sm:p-8 pt-16 sm:pt-20">
       <div className="text-center max-w-4xl mx-auto">
         {/* Profile Image */}
         <img
@@ -160,7 +172,7 @@ return (
 
           {/* Specialty with fixed height container to prevent layout shift */}
           <div className="min-h-[80px] sm:min-h-[100px] flex items-center justify-center">
-            <h1 key={currentSpecialty} className="text-balance text-3xl sm:text-5xl md:text-6xl font-bold leading-tight specialty-text text-foreground">
+            <h1 className={`text-balance text-3xl sm:text-5xl md:text-6xl font-bold leading-tight text-foreground transition-all duration-600 ease-in-out ${isAnimating ? 'opacity-0 transform translate-y-4' : 'opacity-100 transform translate-y-0'}`} style={{ willChange: 'transform, opacity' }}>
               {specialties[currentSpecialty]}
             </h1>
           </div>
@@ -183,24 +195,13 @@ return (
       </div>
     </div>
 
-      <style>{`
-        .typewriter-text { white-space: nowrap; }
-        .caret { margin-left: 2px; display: inline-block; width: 2px; animation: blink 1s steps(1, end) infinite; }
-        @keyframes blink { 50% { opacity: 0; } }
-      
-      /* Seamless Fade Up Animation */
-        .specialty-text {
-          animation: seamlessFadeUp 1.0s ease-out;
-          opacity: 0;
-          animation-fill-mode: forwards;
-        }
-        @keyframes seamlessFadeUp {
-          0% { opacity: 0; transform: translateY(25px); }
-          100% { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
+<style>{`
+  .typewriter-text { white-space: nowrap; }
+  .caret { margin-left: 2px; display: inline-block; width: 2px; animation: blink 1s steps(1, end) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+`}</style>
 
-      {!mounted && <span className="sr-only">Interactive hero background</span>}
-    </section>
-  )
+      {!mounted && <span className="sr-only">Interactive hero background</span>}
+    </section>
+  )
 }

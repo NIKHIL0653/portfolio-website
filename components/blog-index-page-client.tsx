@@ -36,7 +36,7 @@ export default function BlogIndexPageClient() {
 
   return (
     <main className="blog-index-page min-h-screen bg-[#fafafa] dark:bg-[#121212] overflow-x-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 md:pt-28 pb-6 sm:pb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5 md:pt-20 pb-6 sm:pb-8">
 
         {/* Filters */}
         <div className="mt-0 md:mt-4 mb-4">
@@ -139,23 +139,23 @@ export default function BlogIndexPageClient() {
                 <div className="mb-4 pb-4">
                   <Link href={`/blog/${filteredPosts[0].slug}`} className="block group">
                     <article className="space-y-4">
-                      <div className="relative aspect-[16/9] w-full rounded-lg overflow-hidden">
-                        {filteredPosts[0].image && (
-                          <>
-                            <Image
-                              src={filteredPosts[0].image}
-                              alt={filteredPosts[0].imageAlt || filteredPosts[0].title}
-                              fill
-                              className="object-cover transition-opacity duration-500"
-                              sizes="(max-width: 768px) 100vw, 100vw"
-                              priority
-                            />
-                            {/* FIXED: Changed hover:opacity-0 to group-hover:opacity-0 */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent transition-opacity duration-500 group-hover:opacity-0"></div>
-                          </>
-                        )}
-                      </div>
-                      <div className="space-y-2 px-4 transition-colors duration-300">
+                      <div className="relative aspect-[23/9] w-full rounded-lg overflow-hidden">
+                          {filteredPosts[0].image && (
+                            <>
+                              <Image
+                                src={filteredPosts[0].image}
+                                alt={filteredPosts[0].imageAlt || filteredPosts[0].title}
+                                fill
+                                className="object-cover transition-opacity duration-500"
+                                sizes="(max-width: 768px) 100vw, 100vw"
+                                priority
+                              />
+                              {/* FIXED: Changed hover:opacity-0 to group-hover:opacity-0 */}
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent transition-opacity duration-500 group-hover:opacity-0"></div>
+                            </>
+                          )}
+                        </div>
+                      <div className="space-y-3 px-4 transition-colors duration-300">
                         <div className="flex items-center justify-between">
                           <span className="text-xs text-muted-foreground font-medium transition-colors duration-300 group-hover:text-foreground">
                             {filteredPosts[0].category}
@@ -163,7 +163,7 @@ export default function BlogIndexPageClient() {
                           <time className="text-xs text-muted-foreground transition-colors duration-300 group-hover:text-foreground">
                             {formatDate(filteredPosts[0].date)}
                           </time>
-                        </div>
+                          </div>
                         <h2 className="blog-post-title text-xl font-semibold leading-tight text-foreground transition-colors duration-300 group-hover:text-primary">
                           {filteredPosts[0].title}
                         </h2>
@@ -174,7 +174,7 @@ export default function BlogIndexPageClient() {
                     </article>
                   </Link>
                 </div>
-                <div className="border-b border-dashed border-border mb-4"></div>
+                <div className="border-b border-dashed border-border mb-4 -mx-3"></div>
               </>
             )}
 
@@ -219,7 +219,7 @@ export default function BlogIndexPageClient() {
                             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent transition-opacity duration-500 group-hover:opacity-0"></div>
                           </div>
                         )}
-                        <div className="space-y-2 px-4 transition-colors duration-300">
+                        <div className="space-y-3 px-4 transition-colors duration-300">
                           <div className="flex items-center justify-between">
                             <span className="text-xs text-muted-foreground font-medium transition-colors duration-300 group-hover:text-foreground">
                               {post.category}

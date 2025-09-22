@@ -4,7 +4,6 @@ import { ThemeToggle } from "./theme-toggle"
 import { Github, Linkedin, Mail, ChevronDown } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
-import * as Collapsible from "@radix-ui/react-collapsible"
 
 // ✅ MODIFIED: SVG pattern set to 4x4 with 0.35 stroke width
 function SeparatorPatternLight() {
@@ -50,13 +49,13 @@ function XLogo({ className }: { className?: string }) {
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.80l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
     </svg>
   )
 }
 
-// Collapsible Item Component using Radix UI
-function CollapsibleItem({
+// Geist-style Collapse Component
+function Collapse({
   title,
   children,
   isOpen,
@@ -68,35 +67,38 @@ function CollapsibleItem({
   onToggle: () => void
 }) {
   return (
-    <Collapsible.Root open={isOpen}>
-      <Collapsible.Trigger
+    <div className="border-b border-border last:border-b-0">
+      <button
         onClick={onToggle}
-        className="flex w-full items-center justify-between py-3 text-left text-sm font-medium text-foreground hover:text-muted-foreground transition-colors"
+        className="flex w-full items-center justify-between py-4 text-left text-sm font-medium text-foreground hover:opacity-70 transition-opacity"
+        aria-expanded={isOpen}
       >
-        {title}
+        <span>{title}</span>
         <ChevronDown
-          className={`h-4 w-4 transition-transform duration-200 ${
+          className={`h-4 w-4 transition-transform duration-200 ease-out ${
             isOpen ? 'rotate-180' : ''
           }`}
         />
-      </Collapsible.Trigger>
-      <Collapsible.Content className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down bg-transparent">
-        <div className="pb-3 bg-transparent">
-          <div className="grid grid-cols-2 gap-4">
-            {children}
-          </div>
+      </button>
+      <div
+        className={`overflow-hidden transition-all duration-200 ease-out ${
+          isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <div className="pb-4">
+          {children}
         </div>
-      </Collapsible.Content>
-    </Collapsible.Root>
+      </div>
+    </div>
   )
 }
 
 export function SiteFooter() {
   const currentYear = new Date().getFullYear();
-  const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+  const [openSection, setOpenSection] = useState<string | null>(null);
 
-  const toggleAccordion = (section: string) => {
-    setOpenAccordion(openAccordion === section ? null : section);
+  const toggleSection = (section: string) => {
+    setOpenSection(openSection === section ? null : section);
   };
 
   return (
@@ -110,11 +112,12 @@ export function SiteFooter() {
         </div>
       </div>
       
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 pt-2 pb-24 sm:pt-4 sm:pb-32">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 pt-2 pb-12 sm:pt-4 sm:pb-16">
         
-        {/* Mobile View with Accordion */}
+        {/* Mobile View with Collapse */}
         <div className="sm:hidden">
-          <div className="mb-6">
+          {/* Header Section */}
+          <div className="py-4 border-b border-border">
             <div className="flex items-center justify-between">
               <p className="text-sm font-semibold text-foreground">
                 Nikhil Choudhary
@@ -159,52 +162,47 @@ export function SiteFooter() {
             </div>
           </div>
           
-          {/* Collapsible Navigation */}
-          <CollapsibleItem
+          {/* Collapsible Sections */}
+          <Collapse
             title="Menu"
-            isOpen={openAccordion === 'menu'}
-            onToggle={() => toggleAccordion('menu')}
+            isOpen={openSection === 'menu'}
+            onToggle={() => toggleSection('menu')}
           >
-            <div className="space-y-1">
-              <Link href="/" className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-1.5">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+              <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                 Home
               </Link>
-              <Link href="/about" className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-1.5">
-                About
-              </Link>
-            </div>
-            <div className="space-y-1">
-              <Link href="/contact" className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-1.5">
+              <Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                 Contact
+              </Link>
+              <Link href="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                About
               </Link>
               <a
                 href="https://drive.google.com/file/d/1iAWePU4UtApS1Dx-2Vg7hK3bXRO8rUQy/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-1.5"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 Resume
               </a>
             </div>
-          </CollapsibleItem>
+          </Collapse>
 
-          <CollapsibleItem
+          <Collapse
             title="Creative"
-            isOpen={openAccordion === 'creative'}
-            onToggle={() => toggleAccordion('creative')}
+            isOpen={openSection === 'creative'}
+            onToggle={() => toggleSection('creative')}
           >
-            <div className="space-y-1">
-              <Link href="/blog" className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-1.5">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+              <Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                 Blog
               </Link>
-              <Link href="/projects" className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-1.5">
+              <Link href="/projects" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                 Projects
               </Link>
             </div>
-            <div className="space-y-1">
-              {/* Empty second column */}
-            </div>
-          </CollapsibleItem>
+          </Collapse>
         </div>
 
         {/* Desktop View - Unchanged */}

@@ -407,8 +407,8 @@ function AboutCard() {
     emissive: isDarkMode ? "#444444" : "#F5F5F5", // Much darker emissive in dark mode
     emissiveIntensity: isDarkMode ? 0.1 : 0.25, // Reduced intensity in dark mode
     shininess: isDarkMode ? 5 : 15, // Less shininess in dark mode
-    autoRotate: !isMobile, // Disable auto-rotation on mobile
-    autoRotateSpeed: isMobile ? 0 : 0.003 // No rotation on mobile
+    autoRotate: true, // Enable auto-rotation on all devices
+    autoRotateSpeed: 0.003 // Consistent rotation speed
   };
 
   const locationData = [{
@@ -425,9 +425,10 @@ function AboutCard() {
     <Link
       href="/about"
       className="group relative bg-card rounded-lg border border-border overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 min-h-[380px] block"
+      style={{ WebkitTapHighlightColor: 'transparent' }}
     >
       {/* Globe Container - Non-interactive on mobile */}
-      <div className="absolute bottom-[-5%] right-[-15%] md:right-[-30%] h-[100%] w-[100%] z-0 pointer-events-none touch-none">
+      <div className="absolute bottom-[-5%] right-[-15%] md:right-[-30%] h-[100%] w-[100%] z-0 pointer-events-none touch-pan-y">
         <div className="w-full h-full md:group-hover:scale-104 transition-transform duration-300 origin-center">
           {isMounted && (
             <World

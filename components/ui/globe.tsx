@@ -129,7 +129,7 @@ function Globe({ data, globeConfig }: WorldProps & { darkMode?: boolean }) {
     const kolkataMarker = [{
       lat: 22.5726,
       lng: 88.3639,
-      size: 1.2,
+      size: 0.8,
       color: '#90EE90', // Light green
       name: 'Kolkata, India'
     }];
@@ -446,9 +446,10 @@ export function World(props: WorldProps & {
           style={{
             width: "100%",
             height: "100%",
-            background: "transparent"
+            background: "transparent",
+            touchAction: "pan-y"
           }}
-          gl={{ 
+          gl={{
             antialias: true,
             alpha: true,
             preserveDrawingBuffer: true

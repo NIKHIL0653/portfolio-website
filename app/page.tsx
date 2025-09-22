@@ -210,10 +210,15 @@ const LetterGlitch = ({
         animate();
       }, 100);
     };
-    window.addEventListener('resize', handleResize);
+    // Only add resize listener on desktop to prevent mobile scroll issues
+    if (window.innerWidth >= 768) {
+      window.addEventListener('resize', handleResize);
+    }
     return () => {
       if (animationRef.current) cancelAnimationFrame(animationRef.current);
-      window.removeEventListener('resize', handleResize);
+      if (window.innerWidth >= 768) {
+        window.removeEventListener('resize', handleResize);
+      }
     };
   }, [glitchColors, glitchSpeed, smooth, characters]);
 
@@ -294,6 +299,7 @@ function BlogCard() {
 // Enhanced Projects Card Component (Unchanged)
 function ProjectsCard() {
   const { theme } = useTheme();
+  const isMobile = useIsMobile();
   const [glitchColors, setGlitchColors] = useState<string[]>([]);
   const [mounted, setMounted] = useState(false);
 
@@ -455,7 +461,7 @@ function AboutCard() {
 
 export default function HomePage() {
   return (
-    <main className="min-h-dvh flex flex-col bg-[#fafafa] dark:bg-[#121212]">
+    <main className="min-h-dvh flex flex-col bg-[#fafafa] dark:bg-[#121212] pb-8 sm:pb-16 md:pb-24 lg:pb-48">
       <div className="flex-1 px-4 py-6 sm:p-8 md:p-12 lg:p-12">
         <div className="w-full max-w-7xl mx-auto space-y-4">
 

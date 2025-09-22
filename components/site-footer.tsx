@@ -1,8 +1,10 @@
 "use client"
 
 import { ThemeToggle } from "./theme-toggle"
-import { Github, Linkedin, Mail } from "lucide-react"
+import { Github, Linkedin, Mail, ChevronDown } from "lucide-react"
 import Link from "next/link"
+import { useState } from "react"
+import * as Collapsible from "@radix-ui/react-collapsible"
 
 // ✅ MODIFIED: SVG pattern set to 4x4 with 0.35 stroke width
 function SeparatorPatternLight() {
@@ -39,7 +41,6 @@ function SeparatorPatternDark() {
   );
 }
 
-
 // Custom X (Twitter) Logo Component
 function XLogo({ className }: { className?: string }) {
   return (
@@ -54,8 +55,49 @@ function XLogo({ className }: { className?: string }) {
   )
 }
 
+// Collapsible Item Component using Radix UI
+function CollapsibleItem({
+  title,
+  children,
+  isOpen,
+  onToggle
+}: {
+  title: string
+  children: React.ReactNode
+  isOpen: boolean
+  onToggle: () => void
+}) {
+  return (
+    <Collapsible.Root open={isOpen}>
+      <Collapsible.Trigger
+        onClick={onToggle}
+        className="flex w-full items-center justify-between py-3 text-left text-sm font-medium text-foreground hover:text-muted-foreground transition-colors"
+      >
+        {title}
+        <ChevronDown
+          className={`h-4 w-4 transition-transform duration-200 ${
+            isOpen ? 'rotate-180' : ''
+          }`}
+        />
+      </Collapsible.Trigger>
+      <Collapsible.Content className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down bg-transparent">
+        <div className="pb-3 bg-transparent">
+          <div className="grid grid-cols-2 gap-4">
+            {children}
+          </div>
+        </div>
+      </Collapsible.Content>
+    </Collapsible.Root>
+  )
+}
+
 export function SiteFooter() {
   const currentYear = new Date().getFullYear();
+  const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+
+  const toggleAccordion = (section: string) => {
+    setOpenAccordion(openAccordion === section ? null : section);
+  };
 
   return (
     <footer id="contact" className="bg-background">
@@ -68,9 +110,9 @@ export function SiteFooter() {
         </div>
       </div>
       
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8 sm:py-12">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 pt-2 pb-24 sm:pt-4 sm:pb-32">
         
-        {/* Mobile View */}
+        {/* Mobile View with Accordion */}
         <div className="sm:hidden">
           <div className="mb-6">
             <div className="flex items-center justify-between">
@@ -117,41 +159,55 @@ export function SiteFooter() {
             </div>
           </div>
           
-          <div className="grid grid-cols-2 gap-8">
-            <div>
-              <h4 className="text-sm font-semibold text-muted-foreground">Menu</h4>
-              <nav className="mt-3 flex flex-col space-y-2">
-                <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Home
-                </Link>
-                <Link href="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  About
-                </Link>
-                <a
-                  href="https://drive.google.com/file/d/1iAWePU4UtApS1Dx-2Vg7hK3bXRO8rUQy/view?usp=sharing"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Resume
-                </a>
-              </nav>
+          {/* Collapsible Navigation */}
+          <CollapsibleItem
+            title="Menu"
+            isOpen={openAccordion === 'menu'}
+            onToggle={() => toggleAccordion('menu')}
+          >
+            <div className="space-y-1">
+              <Link href="/" className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-1.5">
+                Home
+              </Link>
+              <Link href="/about" className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-1.5">
+                About
+              </Link>
             </div>
-            <div>
-              <h4 className="text-sm font-semibold text-muted-foreground">Creative</h4>
-              <nav className="mt-3 flex flex-col space-y-2">
-                <Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Blog
-                </Link>
-                <Link href="/projects" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Projects
-                </Link>
-              </nav>
+            <div className="space-y-1">
+              <Link href="/contact" className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-1.5">
+                Contact
+              </Link>
+              <a
+                href="https://drive.google.com/file/d/1iAWePU4UtApS1Dx-2Vg7hK3bXRO8rUQy/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-1.5"
+              >
+                Resume
+              </a>
             </div>
-          </div>
+          </CollapsibleItem>
+
+          <CollapsibleItem
+            title="Creative"
+            isOpen={openAccordion === 'creative'}
+            onToggle={() => toggleAccordion('creative')}
+          >
+            <div className="space-y-1">
+              <Link href="/blog" className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-1.5">
+                Blog
+              </Link>
+              <Link href="/projects" className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-1.5">
+                Projects
+              </Link>
+            </div>
+            <div className="space-y-1">
+              {/* Empty second column */}
+            </div>
+          </CollapsibleItem>
         </div>
 
-        {/* Desktop View */}
+        {/* Desktop View - Unchanged */}
         <div className="hidden sm:grid gap-6 sm:gap-8 md:gap-12 grid-cols-2 md:grid-cols-4 place-items-start">
           {/* Branding & Socials */}
           <div className="space-y-4">
@@ -207,6 +263,9 @@ export function SiteFooter() {
               </Link>
               <Link href="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                 About
+              </Link>
+              <Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Contact
               </Link>
               <a
                 href="https://drive.google.com/file/d/1iAWePU4UtApS1Dx-2Vg7hK3bXRO8rUQy/view?usp=sharing"

@@ -142,8 +142,8 @@ export default function ContactPage() {
   return (
     <main className="min-h-screen bg-background py-8 px-4 sm:px-6 md:px-12 lg:px-24">
       <div className="max-w-3xl mx-auto">
-        <Card className="bg-card border-border backdrop-blur-sm contact-card-glow rounded-lg shadow-2xl drop-shadow-lg">
-          <CardContent className="p-4 sm:p-6 md:p-8 md:pt-6 pb-4">
+        <Card className="bg-card border-border backdrop-blur-sm contact-card-glow rounded-lg shadow-2xl drop-shadow-lg pb-0">
+          <CardContent className="p-4 sm:p-6 md:p-8 md:pt-6 pb-0">
             {/* Header Section */}
             <div className="flex flex-col items-center justify-center pt-0 pb-10">
              <h1 className="text-xl sm:text-2xl font-bold text-foreground text-center">
@@ -265,69 +265,82 @@ export default function ContactPage() {
               </div>
             </form>
 
-            {/* Horizontal lines with increased gap */}
+            {/* Horizontal lines with reduced gap */}
             <hr className="border-gray-300 dark:border-border -mx-4 sm:-mx-6 md:-mx-8 mb-4" />
             <hr className="border-gray-300 dark:border-border -mx-4 sm:-mx-6 md:-mx-8 mb-5" />
 
-            {/* Social Links Section */}
-            <div className="pt-0 md:pt-6 relative pb-0">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6 relative min-h-[80px] md:min-h-[100px]">
-                {/* Vertical separators that touch horizontal line and extend to bottom */}
-                <div className="hidden md:block absolute left-1/3 -top-11 -bottom-14 w-px bg-gray-300 dark:bg-border transform -translate-x-px"></div>
-                <div className="hidden md:block absolute left-2/3 -top-11 -bottom-14 w-px bg-gray-300 dark:bg-border transform -translate-x-px"></div>
-
-                {/* X/Twitter Section - Left Aligned */}
-                <div className="flex flex-col items-start text-left relative z-10 px-2 sm:px-4">
-                  <a href="https://x.com/your_username" target="_blank" rel="noopener noreferrer" className="block">
-                    <div className="bg-zinc-800 p-2.5 rounded-lg mb-3 hover:bg-zinc-700 transition-colors">
-                      <svg className="h-6 w-6 text-white" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                      </svg>
-                    </div>
-                  </a>
+            {/* Social Links Section - Restructured for full-section links */}
+            <div className="relative mb-[-1rem]">
+              {/* Container with 3 equal columns that touch card borders */}
+              <div className="flex flex-col md:flex-row -mx-4 sm:-mx-6 md:-mx-8 relative">
+                
+                {/* X/Twitter Section - Full Section Clickable */}
+                <a
+                  href="https://x.com/your_username"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex flex-col items-start justify-center px-4 sm:px-6 md:px-8 py-2 cursor-pointer hover:bg-muted/20 transition-colors relative"
+                >
+                  <div className="bg-zinc-800 p-2.5 rounded-lg mb-3 hover:bg-zinc-700 transition-colors">
+                    <svg className="h-6 w-6 text-white" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                  </div>
                   <div>
                    <h3 className="text-foreground font-medium text-base mb-1">Follow me on X.</h3>
                    <p className="text-muted-foreground text-base leading-relaxed">
                      Personal updates and creative work.
                    </p>
                   </div>
-                </div>
+                </a>
 
-                {/* Horizontal separator for mobile */}
-                <hr className="md:hidden border-gray-300 dark:border-border -mx-4 sm:-mx-6 mb-4 mt-4" />
+                {/* First Vertical Separator - Extends from top to bottom */}
+                <div className="hidden md:block w-px bg-gray-300 dark:bg-border absolute left-1/3 top-[-1.3rem] bottom-[-1rem]"></div>
 
-                {/* LinkedIn Section - Left Aligned */}
-                <div className="flex flex-col items-start text-left relative z-10 px-2 sm:px-4">
-                  <a href="https://linkedin.com/in/your_username" target="_blank" rel="noopener noreferrer" className="block">
-                    <div className="bg-zinc-800 p-2.5 rounded-lg mb-3 hover:bg-zinc-700 transition-colors">
-                      <Linkedin className="h-6 w-6 text-white" />
-                    </div>
-                  </a>
+                {/* Mobile Horizontal Separator */}
+                <hr className="md:hidden border-gray-300 dark:border-border mb-4 mt-4" />
+
+                {/* LinkedIn Section - Full Section Clickable */}
+                <a
+                  href="https://linkedin.com/in/your_username"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex flex-col items-start justify-center px-4 sm:px-6 md:px-8 py-2 cursor-pointer hover:bg-muted/20 transition-colors relative"
+                >
+                  <div className="bg-zinc-800 p-2.5 rounded-lg mb-3 hover:bg-zinc-700 transition-colors">
+                    <Linkedin className="h-6 w-6 text-white" />
+                  </div>
                   <div>
                    <h3 className="text-foreground font-medium text-base mb-1">Follow me on LinkedIn.</h3>
                    <p className="text-muted-foreground text-base leading-relaxed">
                      Professional updates and networking.
                    </p>
                   </div>
-                </div>
+                </a>
 
-                {/* Horizontal separator for mobile */}
-                <hr className="md:hidden border-gray-300 dark:border-border -mx-4 sm:-mx-6 mb-4 mt-4" />
+                {/* Second Vertical Separator - Extends from top to bottom */}
+                <div className="hidden md:block w-px bg-gray-300 dark:bg-border absolute left-2/3 top-[-1.3rem] bottom-[-1rem]"></div>
 
-                {/* GitHub Section - Left Aligned */}
-                <div className="flex flex-col items-start text-left relative z-10 px-2 sm:px-4">
-                  <a href="https://github.com/your_username" target="_blank" rel="noopener noreferrer" className="block">
-                    <div className="bg-zinc-800 p-2.5 rounded-lg mb-3 hover:bg-zinc-700 transition-colors">
-                      <Github className="h-6 w-6 text-white" />
-                    </div>
-                  </a>
+                {/* Mobile Horizontal Separator */}
+                <hr className="md:hidden border-gray-300 dark:border-border mb-4 mt-4" />
+
+                {/* GitHub Section - Full Section Clickable */}
+                <a
+                  href="https://github.com/your_username"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex flex-col items-start justify-center px-4 sm:px-6 md:px-8 py-2 mb-8 md:mb-0 cursor-pointer hover:bg-muted/20 transition-colors relative"
+                >
+                  <div className="bg-zinc-800 p-2.5 rounded-lg mb-3 hover:bg-zinc-700 transition-colors">
+                    <Github className="h-6 w-6 text-white" />
+                  </div>
                   <div>
                    <h3 className="text-foreground font-medium text-base mb-1">Follow me on Github.</h3>
                    <p className="text-muted-foreground text-base leading-relaxed">
                      Code projects and open source contributions.
                    </p>
                   </div>
-                </div>
+                </a>
               </div>
             </div>
           </CardContent>

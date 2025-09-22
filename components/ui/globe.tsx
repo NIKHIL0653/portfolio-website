@@ -146,6 +146,9 @@ function Globe({ data, globeConfig }: WorldProps & { darkMode?: boolean }) {
     globe.rotation.x = -Math.PI * 0.25; // Increased tilt downward from -0.15 to -0.25
     globe.rotation.z = Math.PI * 0.02;
 
+    // Ensure material is applied immediately after setup
+    ensureMaterialConsistency();
+
   }, [data, globeConfig]);
 
   // Function to ensure material consistency
@@ -166,6 +169,9 @@ function Globe({ data, globeConfig }: WorldProps & { darkMode?: boolean }) {
   useEffect(() => {
     const globe = globeRef.current;
     if (!globe) return;
+
+    // Skip interactivity on mobile devices
+    if (window.innerWidth < 768) return;
 
     const handleMouseDown = (event: MouseEvent) => {
       event.preventDefault();
@@ -365,7 +371,7 @@ function Globe({ data, globeConfig }: WorldProps & { darkMode?: boolean }) {
     };
   }, [globeConfig]);
 
-  return <threeGlobe ref={globeRef} style={{ cursor: 'grab' }} />;
+  return <threeGlobe ref={globeRef} style={{ cursor: window.innerWidth < 768 ? 'default' : 'grab' }} />;
 }
 
 export function WebGLRendererConfig() {

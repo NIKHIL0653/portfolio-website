@@ -67,10 +67,10 @@ function Collapse({
   onToggle: () => void
 }) {
   return (
-    <div className="border-b border-border last:border-b-0">
+    <div className="border-b border-border last:border-b-0 !bg-background">
       <button
         onClick={onToggle}
-        className="flex w-full items-center justify-between py-4 text-left text-sm font-medium text-foreground hover:opacity-70 transition-opacity"
+        className="flex w-full items-center justify-between py-4 text-left text-sm font-medium text-foreground hover:opacity-70 transition-opacity !bg-background"
         aria-expanded={isOpen}
       >
         <span>{title}</span>
@@ -81,11 +81,11 @@ function Collapse({
         />
       </button>
       <div
-        className={`overflow-hidden transition-all duration-200 ease-out ${
+        className={`overflow-hidden transition-all duration-200 ease-out !bg-background ${
           isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
-        <div className="pb-4">
+        <div className="pb-4 !bg-background">
           {children}
         </div>
       </div>
@@ -112,7 +112,7 @@ export function SiteFooter() {
         </div>
       </div>
       
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 pt-2 pb-12 sm:pt-4 sm:pb-16">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 pt-2 pb-20 sm:pt-4 sm:pb-16">
         
         {/* Mobile View with Collapse */}
         <div className="sm:hidden">
@@ -168,7 +168,7 @@ export function SiteFooter() {
             isOpen={openSection === 'menu'}
             onToggle={() => toggleSection('menu')}
           >
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2 !bg-background">
               <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                 Home
               </Link>

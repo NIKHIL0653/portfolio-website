@@ -276,7 +276,7 @@ export default function ContactPage() {
                 
                 {/* X/Twitter Section - Full Section Clickable */}
                 <a
-                  href="https://x.com/your_username"
+                  href="https://x.com/Nikhil0653"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 flex flex-col items-start justify-center px-4 sm:px-6 md:px-8 py-2 cursor-pointer hover:bg-muted/20 transition-colors relative"
@@ -302,7 +302,7 @@ export default function ContactPage() {
 
                 {/* LinkedIn Section - Full Section Clickable */}
                 <a
-                  href="https://linkedin.com/in/your_username"
+                  href="https://linkedin.com/in/nikhil-choudhary-0653"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 flex flex-col items-start justify-center px-4 sm:px-6 md:px-8 py-2 cursor-pointer hover:bg-muted/20 transition-colors relative"
@@ -326,7 +326,7 @@ export default function ContactPage() {
 
                 {/* GitHub Section - Full Section Clickable */}
                 <a
-                  href="https://github.com/your_username"
+                  href="https://github.com/NIKHIL0653"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 flex flex-col items-start justify-center px-4 sm:px-6 md:px-8 py-2 mb-8 md:mb-0 cursor-pointer hover:bg-muted/20 transition-colors relative"

@@ -428,13 +428,15 @@ function AboutCard() {
     >
       {/* Globe Container - Non-interactive on mobile */}
       <div className="absolute bottom-[-5%] right-[-15%] md:right-[-30%] h-[100%] w-[100%] z-0 pointer-events-none touch-none">
-        {isMounted && (
-          <World 
-            data={locationData} 
-            globeConfig={globeConfig} 
-            darkMode={isDarkMode}
-          />
-        )}
+        <div className="w-full h-full md:group-hover:scale-104 transition-transform duration-300 origin-center">
+          {isMounted && (
+            <World
+              data={locationData}
+              globeConfig={globeConfig}
+              darkMode={isDarkMode}
+            />
+          )}
+        </div>
       </div>
 
       {/* Background overlay - restored original complex masking for proper fade */}

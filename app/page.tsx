@@ -144,7 +144,7 @@ const LetterGlitch = ({
     const ctx = context.current;
     const { width, height } = canvasRef.current.getBoundingClientRect();
     ctx.clearRect(0, 0, width, height);
-    ctx.font = `${fontSize}px monospace`;
+    ctx.font = `${fontSize}px var(--font-mono)`;
     ctx.textBaseline = 'top';
 
     letters.current.forEach((letter, index) => {
@@ -367,12 +367,20 @@ function ProjectsCard() {
   );
 }
 
-// FIXED: About Card with Custom White Globe - Consistent positioning and animations
+// FIXED: About Card with proper mobile handling and correct styling
 function AboutCard() {
   const { theme } = useTheme();
+  const isMobile = useIsMobile();
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+    
     const checkDarkMode = () => {
       const isDark = theme === "dark" || 
         (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
@@ -387,20 +395,20 @@ function AboutCard() {
     mediaQuery.addListener(handleChange);
     
     return () => mediaQuery.removeListener(handleChange);
-  }, [theme]);
+  }, [theme, isMounted]);
 
   const globeConfig = {
     pointSize: 4,
     atmosphereColor: "#ffffff",
     showAtmosphere: false,
     atmosphereAltitude: 0,
-    polygonColor: "#222222", // Dark dots for countries
-    globeColor: "#FFFFFF", // Pure white globe
-    emissive: "#F5F5F5", // Very light gray emissive
-    emissiveIntensity: 0.25,
-    shininess: 15,
-    autoRotate: true,
-    autoRotateSpeed: 0.003 // Faster rotation
+    polygonColor: isDarkMode ? "#333333" : "#222222", // Darker dots in dark mode
+    globeColor: isDarkMode ? "#666666" : "#FFFFFF", // Darker globe in dark mode
+    emissive: isDarkMode ? "#444444" : "#F5F5F5", // Much darker emissive in dark mode
+    emissiveIntensity: isDarkMode ? 0.1 : 0.25, // Reduced intensity in dark mode
+    shininess: isDarkMode ? 5 : 15, // Less shininess in dark mode
+    autoRotate: true, // Enable auto-rotation on all devices
+    autoRotateSpeed: 0.003 // Consistent rotation speed
   };
 
   const locationData = [{
@@ -418,16 +426,20 @@ function AboutCard() {
       href="/about"
       className="group relative bg-card rounded-lg border border-border overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 min-h-[380px] block"
     >
-      {/* Globe Container - Responsive positioning for mobile vs desktop */}
+      {/* Globe Container - Auto-rotating on mobile, interactive on desktop */}
       <div className="absolute bottom-[-5%] right-[-15%] md:right-[-30%] h-[100%] w-[100%] z-0">
-        <World 
-          data={locationData} 
-          globeConfig={globeConfig} 
-          darkMode={isDarkMode}
-        />
+        <div className="w-full h-full md:group-hover:scale-105 transition-transform duration-300 origin-center">
+          {isMounted && (
+            <World
+              data={locationData}
+              globeConfig={globeConfig}
+              darkMode={isDarkMode}
+            />
+          )}
+        </div>
       </div>
 
-      {/* Solid background overlay for content area - proper fade implementation */}
+      {/* Background overlay - restored original complex masking for proper fade */}
       <div className="absolute inset-0 pointer-events-none z-5">
         <div 
           className="absolute bottom-0 left-0 right-0 h-[80%] bg-card"
@@ -438,7 +450,7 @@ function AboutCard() {
         />
       </div>
 
-      {/* Content - Consistent with other cards */}
+      {/* Content - Exact same structure as original with proper animations */}
       <div className="absolute bottom-10 left-8 flex flex-col-reverse items-start z-10">
         <div className="overflow-hidden max-h-0 group-hover:max-h-40 group-hover:mt-4 transition-all duration-300 ease-in-out">
           <span className="text-foreground font-medium flex items-center gap-1">
@@ -461,7 +473,7 @@ function AboutCard() {
 
 export default function HomePage() {
   return (
-    <main className="min-h-dvh flex flex-col bg-[#fafafa] dark:bg-[#121212] pb-8 sm:pb-16 md:pb-20 lg:pb-6">
+    <main className="min-h-dvh flex flex-col bg-[#fafafa] dark:bg-[#121212]">
       <div className="flex-1 px-4 py-6 sm:p-8 md:p-12 lg:p-12">
         <div className="w-full max-w-7xl mx-auto space-y-4">
 

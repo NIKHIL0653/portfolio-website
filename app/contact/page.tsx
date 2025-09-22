@@ -169,7 +169,7 @@ export default function ContactPage() {
                     required
                     value={formData.firstName}
                     onChange={handleInputChange}
-                    placeholder="John"
+                    placeholder="Full Name"
                     className="dark:bg-[#0F0F0F] bg-[#FAFAFA] border-border text-foreground placeholder:text-muted-foreground h-10 text-base focus:border-ring rounded-sm"
                   />
                 </div>
@@ -184,7 +184,7 @@ export default function ContactPage() {
                     required
                     value={formData.email}
                     onChange={handleInputChange}
-                    placeholder="john.doe@example.com"
+                    placeholder="Email Address"
                     className="dark:bg-[#0F0F0F] bg-[#FAFAFA] border-border text-foreground placeholder:text-muted-foreground h-10 text-base focus:border-ring rounded-sm"
                   />
                 </div>
@@ -239,7 +239,7 @@ export default function ContactPage() {
                   required
                   value={formData.message}
                   onChange={handleInputChange}
-                  placeholder="Tell me about your project or just say hello..."
+                  placeholder="Type your Message Here..."
                   rows={6}
                   className="dark:bg-[#0F0F0F] bg-[#FAFAFA] border-border text-foreground placeholder:text-muted-foreground text-base resize-none focus:border-ring rounded-sm"
                 />

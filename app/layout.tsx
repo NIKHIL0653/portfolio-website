@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
-import localFont from "next/font/local"
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
 import "./globals.css"
 import "../styles/blog-article.css"
 import { SiteHeader } from "@/components/site-header"
@@ -17,17 +18,9 @@ export const metadata: Metadata = {
   },
 }
 
-const geistSans = localFont({
-  src: "../node_modules/geist/dist/fonts/geist-sans/Geist-Variable.woff2",
-  variable: "--font-geist-sans",
-  display: "swap",
-})
+const geistSans = GeistSans
 
-const geistMono = localFont({
-  src: "../node_modules/geist/dist/fonts/geist-mono/GeistMono-Variable.woff2",
-  variable: "--font-geist-mono",
-  display: "swap",
-})
+const geistMono = GeistMono
 
 export default function RootLayout({
   children,

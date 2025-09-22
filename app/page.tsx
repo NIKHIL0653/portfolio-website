@@ -144,7 +144,7 @@ const LetterGlitch = ({
     const ctx = context.current;
     const { width, height } = canvasRef.current.getBoundingClientRect();
     ctx.clearRect(0, 0, width, height);
-    ctx.font = `${fontSize}px var(--font-mono)`;
+    ctx.font = `${fontSize}px monospace`;
     ctx.textBaseline = 'top';
 
     letters.current.forEach((letter, index) => {
@@ -407,8 +407,8 @@ function AboutCard() {
     emissive: isDarkMode ? "#444444" : "#F5F5F5", // Much darker emissive in dark mode
     emissiveIntensity: isDarkMode ? 0.1 : 0.25, // Reduced intensity in dark mode
     shininess: isDarkMode ? 5 : 15, // Less shininess in dark mode
-    autoRotate: true, // Enable auto-rotation on all devices
-    autoRotateSpeed: 0.003 // Consistent rotation speed
+    autoRotate: !isMobile, // Disable auto-rotation on mobile
+    autoRotateSpeed: isMobile ? 0 : 0.003 // No rotation on mobile
   };
 
   const locationData = [{
@@ -426,17 +426,15 @@ function AboutCard() {
       href="/about"
       className="group relative bg-card rounded-lg border border-border overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 min-h-[380px] block"
     >
-      {/* Globe Container - Auto-rotating on mobile, interactive on desktop */}
-      <div className="absolute bottom-[-5%] right-[-15%] md:right-[-30%] h-[100%] w-[100%] z-0">
-        <div className="w-full h-full md:group-hover:scale-105 transition-transform duration-300 origin-center">
-          {isMounted && (
-            <World
-              data={locationData}
-              globeConfig={globeConfig}
-              darkMode={isDarkMode}
-            />
-          )}
-        </div>
+      {/* Globe Container - Non-interactive on mobile */}
+      <div className="absolute bottom-[-5%] right-[-15%] md:right-[-30%] h-[100%] w-[100%] z-0 pointer-events-none touch-none">
+        {isMounted && (
+          <World 
+            data={locationData} 
+            globeConfig={globeConfig} 
+            darkMode={isDarkMode}
+          />
+        )}
       </div>
 
       {/* Background overlay - restored original complex masking for proper fade */}
@@ -473,7 +471,7 @@ function AboutCard() {
 
 export default function HomePage() {
   return (
-    <main className="min-h-dvh flex flex-col bg-[#fafafa] dark:bg-[#121212]">
+    <main className="min-h-dvh flex flex-col bg-[#fafafa] dark:bg-[#121212] pb-8 sm:pb-16 md:pb-20 lg:pb-6">
       <div className="flex-1 px-4 py-6 sm:p-8 md:p-12 lg:p-12">
         <div className="w-full max-w-7xl mx-auto space-y-4">
 

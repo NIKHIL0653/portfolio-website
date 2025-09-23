@@ -77,7 +77,7 @@ export const posts: BlogPostMeta[] = [
     slug: "git-dummies-2",
     title: "Git & GitHub for Dummies: Part 2",
     excerpt: "Dive deeper into Git with branches, merging, pull requests, and the essential tools for professional collaboration like rebase, stash, and .gitignore.",
-    date: "2025-09-20",
+    date: "2025-09-15",
     author: "Nikhil Choudhary",
     tags: ["Git", "GitHub", "Collaboration", "Open Source", "Professional Development"],
     readTime: "8 min read",
@@ -89,12 +89,24 @@ export const posts: BlogPostMeta[] = [
     slug: "cart-pole-agent-blog",
     title: "Training a Self-Learning CartPole AI with Python and Pygame",
     excerpt: "A step-by-step guide to building a Deep Q-Learning agent to master the classic CartPole game. Learn to implement a DQN in Python, integrate with OpenAI Gym, and create a modern, interactive visualization with Pygame.",
-    date: "2025-09-23",
+    date: "2025-09-19",
     author: "Nikhil Choudhary",
     tags: ["Reinforcement Learning", "Deep Q-Learning", "Python", "Pygame", "AI"],
     readTime: "10 min read",
     image: "/images/blog/cartpole-dqn-1.jpg",
     imageAlt: "Screenshot of the Pygame UI showing the CartPole agent in action with score and performance graph.",
+    category: "AI/ML"
+  },
+  {
+    slug: "f1-azerbaijan",
+    title: "From Data to Finish Line: Predicting F1 Race Winners with Machine Learning",
+    excerpt: "Dive into my machine learning project to predict the 2025 Azerbaijan GP winner. I'll walk you through the entire process, from finding and cleaning historical F1 data to training a Gradient Boosting Regressor model.",
+    date: "2025-09-22",
+    author: "Nikhil Choudhary",
+    tags: ["Machine Learning", "F1", "Formula 1", "Data Science", "Python", "fastf1"],
+    readTime: "4 min read",
+    image: "/images/blog/azerbaijan-hero.jpg",
+    imageAlt: "F1 Image",
     category: "AI/ML"
   }
 ]

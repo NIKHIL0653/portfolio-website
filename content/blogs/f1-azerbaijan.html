@@ -1,0 +1,92 @@
+<p>
+    Have you ever wondered what it takes to win a Formula 1 race? It's not just about the fastest car or the most skilled driver. The truth is, behind every victory lies a mountain of data. As a huge fan of both F1 and a Machine Learning Project, I embarked on a personal project to see if I could use machine learning to predict the winner of a Grand Prix. The journey was filled with challenges, but the insights I gained were absolutely fascinating. Let's dive into how I built this model, from the very first line of code to the final prediction.
+</p>
+<p>
+    The immense amount of data collected from a single F1 car is mind-boggling!
+</p>
+
+<h2>Phase 1: The Hunt for Data</h2>
+<p>
+    Every machine learning project starts with data. For this project, I needed to find a reliable source of historical F1 data. This is where the amazing `fastf1` API came in. It's an open-source Python library that provides access to a treasure trove of data from official Formula 1 sources. My first step was to write a script, `fetch_data.py`, to grab what I needed.
+</p>
+<p>
+    I focused on the Azerbaijan Grand Prix, pulling data for every year from 2016 to 2023. I specifically fetched two key types of data:
+</p>
+<ul>
+    <li>
+        <strong>Race Lap Data:</strong> This includes the all-important `LapTime`, but also granular details like `Sector1Time`, `Sector2Time`, and `Sector3Time`. By getting data for every single lap, I had a rich dataset to work with.
+    </li>
+    <li>
+        <strong>Qualifying Results:</strong> The starting grid position is a massive factor in F1. The `fastf1` API also provides detailed qualifying results, which I knew would be a crucial feature for my model.
+    </li>
+</ul>
+<p>
+    The simplicity and speed of `fastf1` made it the perfect tool for this step. It handles all the complex data wrangling behind the scenes, allowing me to focus on the fun part: preparing the data for the model.
+</p>
+
+<h2>Phase 2: The Art of Preprocessing</h2>
+<p>
+    Raw data is never perfect. It's messy, full of missing values, and not in the right format for a machine learning model. This is where my `preprocess_data.py` script became the hero of the day. This phase is arguably the most critical because the quality of your data directly impacts the accuracy of your predictions.
+</p>
+<p>
+    I performed several key transformations:
+</p>
+<ul>
+    <li>
+        <strong>Cleaning and Averaging:</strong> The raw data had missing values, so I dropped any records without a valid lap time. Then, I grouped the data by `Driver` and `Year` to calculate the average lap time and average sector times for each driver. This gives a more stable, representative performance metric.
+    </li>
+    <li>
+        <strong>Feature Engineering:</strong> This is where I got creative! I wanted to go beyond basic lap times. I added a `QualifyingTime (s)` feature by merging my processed lap data with the qualifying data. I also created a `TeamPerformanceScore` to capture the overall strength of a driver's team. I even added a placeholder for `RainProbability` and `Temperature` to show how external factors could be integrated. These engineered features provide the model with a richer, more contextual understanding of the race environment.
+    </li>
+    <li>
+        <strong>Encoding Categorical Data:</strong> My model can't understand text labels like "VER" or "HAM." I used `LabelEncoder` from scikit-learn to convert the `Driver` names into numerical values. This is a vital step to prepare the data for the model's algorithms.
+    </li>
+</ul>
+<p>
+    Why are these steps so important? Without them, the model would be trying to learn from incomplete and uninformative data. By creating meaningful features, I was giving my model the best possible chance to find a predictive pattern.
+</p>
+
+<h2>Phase 3: Building the Prediction Engine</h2>
+<p>
+    With my clean, well-structured dataset (`X_features.csv` and `y_target.csv`), it was time to train the model. For this, I chose `GradientBoostingRegressor`, which you can see in my `train_model.py` script.
+</p>
+<p>
+    Why `GradientBoostingRegressor`? It's a type of ensemble learning model that's fantastic for this kind of problem. It builds a series of weak prediction models (decision trees) sequentially, and each new model corrects the errors of the previous ones. This process makes it incredibly powerful at handling complex, non-linear relationships between variables—perfect for the chaotic and nuanced world of F1 racing.
+</p>
+<p>
+    I also used a few key techniques to ensure the model's reliability:
+</p>
+<ul>
+    <li>
+        <strong>Imputation:</strong> Before training, I used `SimpleImputer` to fill any remaining missing values with the mean of the column.
+    </li>
+    <li>
+        <strong>Train-Test Split:</strong> I split my data into training and testing sets to evaluate the model on unseen data.
+    </li>
+    <li>
+        <strong>Cross-Validation:</strong> To get a more robust estimate of my model's performance, I used 5-fold cross-validation. This technique trains and validates the model on different subsets of the data, giving me a much better sense of how it will perform in the real world. I used Mean Absolute Error (MAE) as my metric, which tells me the average difference between my predicted and actual lap times.
+    </li>
+</ul>
+<p>
+    The result was a trained model (`f1_winner_model.pkl`) and an imputer (`imputer.pkl`) that I could use for future predictions.
+</p>
+
+<h2>Phase 4: Making a Prediction</h2>
+<p>
+    Finally, the moment of truth! The `predict_winner.py` script takes the trained model and uses it to make a prediction on new, unseen data. I created some sample data for a hypothetical race to demonstrate the process. The script takes the same features I used for training (like `QualifyingTime`, `Sector` times, and the engineered `TeamPerformanceScore`), processes them, and then predicts the race lap time for each driver.
+</p>
+<p>
+    The driver with the lowest predicted average lap time is our predicted winner! This final step shows how all the pieces of the puzzle—data fetching, cleaning, feature engineering, and model training—come together to provide a powerful and actionable result.
+</p>
+<figure>
+    <img src="/images/blog/Prediction_Ajerbaijan 2025.png" alt="Predicted Winner">
+    <figcaption>The predicted winner for the Azerbaijan Grand Prix.</figcaption>
+</figure>
+<figure>
+    <img src="/images/blog/Baku-winner.png" alt="Baku Winner">
+    <figcaption>The actual winner for the Azerbaijan Grand Prix.</figcaption>
+</figure>
+
+<h2>
+    VERSTAPPEN FOR THE WIN!!
+</h2>

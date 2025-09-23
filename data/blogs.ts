@@ -8,7 +8,7 @@ export type BlogPostMeta = {
   readTime?: string
   image?: string
   imageAlt?: string
-  category: 'Development' | 'AI/ML' | 'Data' | 'Blogging'
+  category: 'Development' | 'AI/ML' | 'Blogging'
 }
 
 // Blog posts metadata - content loaded from HTML files

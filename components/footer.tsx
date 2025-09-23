@@ -1,12 +1,8 @@
 import Link from "next/link";
-import { Mail, Github, Linkedin, X, ChevronDown } from "lucide-react";
-import * as Collapsible from '@radix-ui/react-collapsible';
-import { useState } from 'react';
+import { Mail, Github, Linkedin, X } from "lucide-react";
+import { Collapse } from '@geist-ui/core';
 
 export function Footer() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [creativeOpen, setCreativeOpen] = useState(false);
-
   const menuItems = [
     { href: "#home", label: "Home" },
     { href: "#projects", label: "Projects" },
@@ -32,49 +28,37 @@ export function Footer() {
             stack when needed and care deeply about performance and accessibility.
           </p>
 
-          {/* Mobile Collapsible Sections */}
-          <div className="md:hidden mt-6 space-y-2">
-            {/* Menu Collapsible */}
-            <Collapsible.Root open={menuOpen} onOpenChange={setMenuOpen}>
-              <Collapsible.Trigger className="flex items-center justify-between w-full text-left font-medium py-2 hover:text-foreground transition-colors">
-                <span>Menu</span>
-                <ChevronDown className={`h-4 w-4 transition-transform ${menuOpen ? 'rotate-180' : ''}`} />
-              </Collapsible.Trigger>
-              <Collapsible.Content className="bg-background">
-                <div className="space-y-2 py-2 pl-4 border-l-2 border-muted">
+          {/* Mobile Collapsible Sections with Geist UI */}
+          <div className="md:hidden mt-6 space-y-3">
+            <Collapse.Group>
+              <Collapse title="Menu">
+                <div className="space-y-2 py-2">
                   {menuItems.map((item) => (
                     <Link 
                       key={item.href} 
                       href={item.href}
-                      className="block text-sm text-muted-foreground hover:text-foreground py-1 transition-colors"
+                      className="block text-sm text-muted-foreground hover:text-foreground py-1 pl-2 border-l-2 border-transparent hover:border-primary transition-colors"
                     >
                       {item.label}
                     </Link>
                   ))}
                 </div>
-              </Collapsible.Content>
-            </Collapsible.Root>
-            
-            {/* Creative Collapsible */}
-            <Collapsible.Root open={creativeOpen} onOpenChange={setCreativeOpen}>
-              <Collapsible.Trigger className="flex items-center justify-between w-full text-left font-medium py-2 hover:text-foreground transition-colors">
-                <span>Creative</span>
-                <ChevronDown className={`h-4 w-4 transition-transform ${creativeOpen ? 'rotate-180' : ''}`} />
-              </Collapsible.Trigger>
-              <Collapsible.Content className="bg-background">
-                <div className="space-y-2 py-2 pl-4 border-l-2 border-muted">
+              </Collapse>
+              
+              <Collapse title="Creative">
+                <div className="space-y-2 py-2">
                   {creativeItems.map((item) => (
                     <Link 
                       key={item.href} 
                       href={item.href}
-                      className="block text-sm text-muted-foreground hover:text-foreground py-1 transition-colors"
+                      className="block text-sm text-muted-foreground hover:text-foreground py-1 pl-2 border-l-2 border-transparent hover:border-primary transition-colors"
                     >
                       {item.label}
                     </Link>
                   ))}
                 </div>
-              </Collapsible.Content>
-            </Collapsible.Root>
+              </Collapse>
+            </Collapse.Group>
           </div>
 
           {/* Desktop Links (visible on md and up) */}
@@ -86,7 +70,7 @@ export function Footer() {
                   <Link 
                     key={item.href} 
                     href={item.href}
-                    className="block text-sm text-muted-foreground hover:text-foreground"
+                    className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -101,7 +85,7 @@ export function Footer() {
                   <Link 
                     key={item.href} 
                     href={item.href}
-                    className="block text-sm text-muted-foreground hover:text-foreground"
+                    className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -112,16 +96,16 @@ export function Footer() {
 
           <div className="flex items-center space-x-4 mt-4">
             <Link href="mailto:your-email@example.com" target="_blank" rel="noopener noreferrer">
-              <Mail className="h-5 w-5 text-muted-foreground hover:text-foreground" />
+              <Mail className="h-5 w-5 text-muted-foreground hover:text-foreground transition-colors" />
             </Link>
             <Link href="https://github.com/your-github" target="_blank" rel="noopener noreferrer">
-              <Github className="h-5 w-5 text-muted-foreground hover:text-foreground" />
+              <Github className="h-5 w-5 text-muted-foreground hover:text-foreground transition-colors" />
             </Link>
             <Link href="https://linkedin.com/in/your-linkedin" target="_blank" rel="noopener noreferrer">
-              <Linkedin className="h-5 w-5 text-muted-foreground hover:text-foreground" />
+              <Linkedin className="h-5 w-5 text-muted-foreground hover:text-foreground transition-colors" />
             </Link>
             <Link href="https://twitter.com/your-twitter" target="_blank" rel="noopener noreferrer">
-              <X className="h-5 w-5 text-muted-foreground hover:text-foreground" />
+              <X className="h-5 w-5 text-muted-foreground hover:text-foreground transition-colors" />
             </Link>
           </div>
           <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} Nikhil Choudhary</p>

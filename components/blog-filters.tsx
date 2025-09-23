@@ -2,14 +2,14 @@
 
 import { useState } from "react"
 
-type Category = 'All Posts' | 'Development' | 'AI/ML' | 'Data' | 'Blogging'
+type Category = 'All Posts' | 'Development' | 'AI/ML' | 'Blogging'
 
 interface BlogFiltersProps {
   onFilterChange: (category: Category) => void
   activeCategory: Category
 }
 
-const categories: Category[] = ['All Posts', 'Development', 'AI/ML', 'Data', 'Blogging']
+const categories: Category[] = ['All Posts', 'Development', 'AI/ML', 'Blogging']
 
 export function BlogFilters({ onFilterChange, activeCategory }: BlogFiltersProps) {
   return (

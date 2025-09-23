@@ -26,7 +26,7 @@ const BlogIndexPageClient = dynamic(() => import("../../components/blog-index-pa
             </div>
           </div>
         </div>
-      </div>
+      </div>o
     </main>
   )
 })

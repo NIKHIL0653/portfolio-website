@@ -6,13 +6,13 @@ import { useState, useMemo } from "react"
 import { posts } from "@/data/blogs"
 import { BlogFilters } from "@/components/blog-filters"
 
-type Category = 'All Posts' | 'Development' | 'AI/ML' | 'Data' | 'Blogging'
+type Category = 'All Posts' | 'Development' | 'AI/ML' | 'Blogging'
 
 export default function BlogIndexPageClient() {
   const [activeCategory, setActiveCategory] = useState<Category>('All Posts')
   const [showMobileCategoryModal, setShowMobileCategoryModal] = useState(false)
 
-  const categories: Category[] = ['All Posts', 'Development', 'AI/ML', 'Data', 'Blogging']
+  const categories: Category[] = ['All Posts', 'Development', 'AI/ML', 'Blogging']
 
   const filteredPosts = useMemo(() => {
     if (activeCategory === 'All Posts') return posts

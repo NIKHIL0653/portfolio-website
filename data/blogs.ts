@@ -78,7 +78,7 @@ export const posts: BlogPostMeta[] = [
     title: "Git & GitHub for Dummies: Part 2",
     excerpt: "Dive deeper into Git with branches, merging, pull requests, and the essential tools for professional collaboration like rebase, stash, and .gitignore.",
     date: "2025-09-20",
-    author: "Your Name Here",
+    author: "Nikhil Choudhary",
     tags: ["Git", "GitHub", "Collaboration", "Open Source", "Professional Development"],
     readTime: "8 min read",
     image: "/images/blog/git-hero-2.jpg",

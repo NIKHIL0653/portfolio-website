@@ -138,7 +138,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
             )}
 
             {/* Horizontal dashed line behind image middle - Desktop only */}
-            <div className="hidden sm:block absolute left-0 right-0 border-t border-dashed border-border z-[-1] sm:top-105 md:top-120 lg:top-117"></div>
+            <div className="hidden sm:block absolute left-0 right-0 border-t border-dashed border-border z-[-1] sm:top-107 md:top-107 lg:top-107"></div>
 
             {/* Horizontal Separator Line - Mobile Only */}
             <div className="py-1 sm:hidden">

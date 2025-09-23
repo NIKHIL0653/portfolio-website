@@ -808,6 +808,13 @@ footer * {
   }
 }
 
+/* Increase blog article hero image height on desktop */
+@media (min-width: 1024px) {
+  .blog-image-frame-large {
+    height: 26rem !important; /* Increased from 22rem (352px) to 26rem (416px) */
+  }
+}
+
 /* ENHANCED Section Dividers */
 .blog-content hr {
   display: none !important;
@@ -1304,29 +1311,11 @@ footer * {
     inset 0 2px 8px rgba(255, 255, 255, 0.005) !important; /* top glow - minimal */
 }
 
-/* Blog post image borders and dimming overlay on client page */
+/* Blog post image borders on client page - dimming overlay removed */
 .dark .relative.aspect-\[21\/9\],
 .dark .relative.aspect-\[16\/9\] {
   border: 1px solid #272727 !important;
   position: relative;
-}
-
-.dark .relative.aspect-\[21\/9\]::after,
-.dark .relative.aspect-\[16\/9\]::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%);
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-
-.dark .relative.aspect-\[21\/9\]:hover::after,
-.dark .relative.aspect-\[16\/9\]:hover::after {
-  opacity: 0;
 }
 
 /* Blog post content hover effects - light up text to match title color */

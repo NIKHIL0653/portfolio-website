@@ -617,24 +617,21 @@ footer * {
   box-shadow: var(--shadow-card) !important;
   margin: 2rem auto !important;
   display: block !important;
-  max-width: 100% !important;
+  max-width: 100% !important; /* Default full width */
   height: auto !important;
   transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
 
-.blog-content img:hover {
-  box-shadow: var(--shadow-card-hover) !important;
-  transform: translateY(-2px);
+/* Smaller images on desktop only */
+@media (min-width: 768px) {
+  .blog-content img {
+    max-width: 75% !important; /* Smaller images on desktop */
+  }
 }
 
 .dark .blog-content img {
   border-color: #1F1F1F !important;
   box-shadow: var(--shadow-card) !important;
-}
-
-.dark .blog-content img:hover {
-  box-shadow: var(--shadow-card-hover) !important;
-  transform: translateY(-2px);
 }
 
 /* ENHANCED Table Styling with better dark mode */
@@ -869,7 +866,7 @@ footer * {
   .blog-content .blog-image-frame-large,
   .blog-content img {
     width: 100%;
-    max-width: 100%;
+    max-width: 100%; /* Keep full width on mobile */
     margin: 2rem 0.5rem !important; /* Center images with reduced horizontal margins */
     border-radius: 12px !important;
     border: 2px solid var(--border) !important;
@@ -1041,9 +1038,14 @@ footer * {
 
 @media (max-width: 480px) {
   .blog-content {
-    font-size: 13px;
+    font-size: 16px; /* Increased from 13px to 16px for better readability */
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+  }
+
+  /* Bullet points match the text content size */
+  .blog-content li::marker {
+    font-size: 16px;
   }
 
   .blog-content h1,

@@ -1,0 +1,161 @@
+<p>If you've made it this far, you've mastered the basic Git workflow: you've cloned a repository, made a change,
+    committed it, and pushed it back to GitHub. That’s the foundation of everything you'll do in the world of version
+    control. But what happens when you're not working alone? Or when you want to experiment with a new feature without
+    messing up the main project?</p>
+<p>This is where things get really interesting. In this second part, I'll introduce you to the core concepts that enable
+    collaboration and more advanced project management: <strong>branches</strong>, <strong>merging</strong>, and
+    <strong>pull requests</strong>.</p>
+
+<hr>
+
+<h2>Branching: Your Creative Sandbox</h2>
+<p>Think of a Git repository as a tree. The <code>main</code> (or <code>master</code>) branch is the trunk—the stable,
+    core version of your project. As a developer, you rarely want to work directly on the trunk. Why? Because if you
+    introduce a bug, you could break the entire project for everyone.</p>
+<p>A <strong>branch</strong> is a separate line of development that splits off from the main trunk. It’s essentially a
+    temporary, isolated copy of your code where you can add new features, fix bugs, or try out new ideas without
+    affecting the stable version.</p>
+<p>The command to create a new branch is:</p>
+<pre><code>git checkout -b new-feature</code></pre>
+<p>This command does two things:</p>
+<ol>
+    <li><code>git checkout</code>: It moves your current working directory to a different branch.</li>
+    <li><code>-b new-feature</code>: It creates a new branch called <code>new-feature</code> and then switches you to
+        it.</li>
+</ol>
+<p>Once you’re on your new branch, you can work as usual: add files, make changes, and commit them. All your work is
+    saved only on this new branch, leaving the <code>main</code> branch completely untouched.</p>
+
+<hr>
+
+<h2>Merging: Bringing It All Together</h2>
+<p>When you're happy with your new feature and it’s ready to be part of the main project, you need to
+    <strong>merge</strong> your branch back into the <code>main</code> branch. This is the process of integrating your
+    changes from your sandbox into the core codebase.</p>
+<p>The process looks like this:</p>
+<ol>
+    <li><strong>Switch back to the <code>main</code> branch:</strong>
+        <pre><code>git checkout main</code></pre>
+    </li>
+    <li><strong>Merge your new-feature branch into <code>main</code>:</strong>
+        <pre><code>git merge new-feature</code></pre>
+    </li>
+</ol>
+<p>This command takes all the commits from your <code>new-feature</code> branch and combines them into the
+    <code>main</code> branch. Git is smart enough to handle most merges automatically, but sometimes, if two people have
+    changed the same part of the same file, you’ll run into a <strong>merge conflict</strong>. When this happens, Git
+    will tell you which files have conflicts. You have to manually open each file, decide which changes you want to
+    keep, and then commit the changes once the conflicts are resolved. It sounds scary, but it's a routine part of a
+    developer's job.</p>
+
+<hr>
+
+<h2>Pull Requests: The Gateway to Collaboration</h2>
+<p>While you can technically merge branches on your local machine and then push, the real power of GitHub comes from
+    <strong>Pull Requests (PRs)</strong>. A PR is a formal request to merge your changes into another branch, usually
+    <code>main</code>.</p>
+<p>A PR isn't just about code; it's a conversation. It's a structured way to propose changes and get feedback from your
+    team. A typical PR includes:</p>
+<ul>
+    <li>A title and description of your changes.</li>
+    <li>A list of commits included in your branch.</li>
+    <li>A space for code review comments from other developers.</li>
+</ul>
+<p>When you're ready to create a PR, you first need to push your branch to GitHub:</p>
+<pre><code>git push --set-upstream origin new-feature</code></pre>
+<p>Then, you can go to your GitHub repository in your browser, and you'll see a prompt to create a new pull request.
+    Click it, fill out the details, and submit. Your teammates can then review your code, suggest changes, or approve
+    the merge.</p>
+<p>Once the PR is approved, you can click the <strong>Merge pull request</strong> button, which automates the merge
+    process for you. This is the standard workflow in almost every professional development environment.</p>
+
+<hr>
+
+<h2>Contributing to Open Source</h2>
+<p>Now that you understand the core workflow, you're ready for the final frontier: open source. Open-source projects are
+    built by a community of developers, and your new skills are the keys to entry. Contributing to open-source is a
+    fantastic way to build your portfolio and demonstrate your skills to potential employers, especially when you're a
+    CSE major looking for experience.</p>
+<ol>
+    <li><strong>Find the Right Project:</strong> Look for projects that have a good community and are beginner-friendly.
+        Many repositories have a <code>good first issue</code> or <code>help wanted</code> tag to identify tasks perfect
+        for new contributors.</li>
+    <li><strong>Read the Contribution Guidelines:</strong> Every open-source project has rules. Before you do anything,
+        read the <code>CONTRIBUTING.md</code> file in the repository. It will tell you how to set up the project, what
+        code style to follow, and how to submit a PR.</li>
+    <li><strong>Fork the Repository:</strong> You can't just push to someone else's repository. You need to create your
+        own copy first. On the original project's GitHub page, click the <strong>Fork</strong> button. This creates a
+        personal copy of the entire project under your account. Think of forking as creating your own copy to work on,
+        like getting a copy of a document to edit without changing the original.</li>
+    <li><strong>Clone Your Fork:</strong> Now, you'll clone your forked repository to your local machine, not the
+        original one.</li>
+    <li><strong>Create Your Branch:</strong> Just like a professional developer, you'll create a new branch for the
+        feature or bug fix you're working on.</li>
+    <li><strong>Make Your Changes:</strong> Work on your code, make sure it's clean and well-commented, and then commit
+        your changes.</li>
+    <li><strong>Push and Create a Pull Request:</strong> Push your branch to <strong>your forked repository</strong> on
+        GitHub, then navigate to the original project's page. You'll see a button to create a PR from your fork. Submit
+        it, and a maintainer will review your work.</li>
+</ol>
+<p>Your first contribution can be as small as fixing a typo in the documentation. The goal is to get comfortable with
+    the process. With these skills, you're no longer just learning to code; you're becoming a part of the global
+    developer community.</p>
+
+<hr>
+
+<h2>Essential Tools for Team Collaboration</h2>
+<p>As you move beyond solo projects and start collaborating in a large team, you'll need a few more tools in your Git
+    toolkit to keep things clean and efficient. These are concepts that professional developers use every day.</p>
+
+<h3>Git Rebase: The Cleaner Merge</h3>
+<p>While <code>git merge</code> works by combining changes with a new "merge commit," <strong>Git Rebase</strong>
+    re-applies your commits on top of the latest version of the main branch. This creates a linear, cleaner project
+    history that's much easier to read and debug.</p>
+<p>Imagine you're working on a feature and a teammate pushes a change to the <code>main</code> branch. Before you merge,
+    your branch is behind. Instead of running <code>git pull</code> (which does a merge), you can run:</p>
+<pre><code>git rebase main</code></pre>
+<p>This takes your commits, sets them aside temporarily, pulls the latest changes from <code>main</code>, and then
+    re-applies your commits. The result is a clean, straight line of commits, as if you had started your work on the
+    most recent version of the code.</p>
+<p><strong>Important warning:</strong> Never rebase a branch that has already been pushed to a shared remote repository.
+    Rebase changes commit history, and this can cause major conflicts for other team members.</p>
+
+<h3>Git Stash: The Temporary Holding Spot</h3>
+<p>What if you're working on a feature and get an urgent request to fix a bug, but you're not ready to commit your
+    current changes? This is a common scenario. You could make a temporary "WIP" (Work In Progress) commit, but that
+    clutters your commit history.</p>
+<p>The solution is <strong>Git Stash</strong>. It's like a temporary clipboard for your changes. It takes your
+    uncommitted changes and saves them in a special location, leaving your working directory clean.</p>
+<ul>
+    <li>To save your changes: <code>git stash</code></li>
+    <li>To see a list of your stashed changes: <code>git stash list</code></li>
+    <li>To re-apply your changes: <code>git stash pop</code></li>
+</ul>
+<p><code>git stash pop</code> takes the most recent stash and applies it to your working directory, removing it from the
+    stash list. This allows you to quickly switch contexts, fix the bug, and then return to your original work without
+    losing anything.</p>
+
+<h3>The <code>.gitignore</code> file: Ignoring What Doesn't Matter</h3>
+<p>As you work on projects, you'll accumulate files you don't need to track in your Git repository. These include build
+    files (like <code>dist/</code> or <code>build/</code>), dependency folders (like <code>node_modules/</code>), and
+    sensitive configuration files (like API keys). Committing these files is a bad practice; it bloats the repository
+    and can expose private information.</p>
+<p>The <strong><code>.gitignore</code> file</strong> is a simple text file that tells Git to ignore specified files and
+    folders. You create it in the root of your project, and each line is a pattern for a file or directory to ignore.
+</p>
+<p>Example <code>.gitignore</code>:</p>
+<pre><code># Dependency directories
+node_modules/
+
+# Production build folder
+/build/
+/dist/
+
+# Logs
+npm-debug.log*
+
+# OS-specific files
+.DS_Store
+Thumbs.db</code></pre>
+<p>Adding this file and committing it ensures that all team members share the same rules for what should and shouldn't
+    be tracked, keeping the repository clean and efficient for everyone.</p>

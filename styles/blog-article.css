@@ -301,7 +301,7 @@ footer * {
   border-bottom-color: #3a3a3a !important; /* Consistent with card borders */
 }
 
-/* Responsive h1 sizes - consistent 20px across all breakpoints */
+/* Responsive heading sizes - 24px on desktop, 20px on mobile */
 @media (min-width: 640px) {
   .blog-content h1 {
     font-size: 20px !important;
@@ -309,14 +309,26 @@ footer * {
 }
 
 @media (min-width: 768px) {
-  .blog-content h1 {
-    font-size: 20px !important;
+  .blog-content h1,
+  .blog-content h2,
+  .blog-content h3,
+  .blog-content h4,
+  .blog-content h5,
+  .blog-content h6 {
+    font-size: 24px !important;
+    line-height: 32px !important;
   }
 }
 
 @media (min-width: 1024px) {
-  .blog-content h1 {
-    font-size: 20px !important;
+  .blog-content h1,
+  .blog-content h2,
+  .blog-content h3,
+  .blog-content h4,
+  .blog-content h5,
+  .blog-content h6 {
+    font-size: 24px !important;
+    line-height: 32px !important;
   }
 }
 

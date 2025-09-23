@@ -27,9 +27,9 @@ export const posts: BlogPostMeta[] = [
   },
   {
     slug: "getting-started-with-nextjs",
-    title: "Getting Started with Next.js, is it better than React.js?",
+    title: "Getting Started with Next.js! Is it better than React.js?",
     excerpt: "Learn how to build modern web applications with Next.js and React.",
-    date: "2025-01-15",
+    date: "2025-07-15",
     author: "Nikhil Choudhary",
     tags: ["Next.js", "React", "Web Development"],
     readTime: "5 min read",
@@ -38,16 +38,16 @@ export const posts: BlogPostMeta[] = [
     category: "Development"
   },
   {
-    slug: "clarity-over-complexity",
-    title: "Clarity Over Complexity",
-    excerpt: "Why straightforward architectures tend to outlast clever ones in fast-moving teams.",
-    date: "2025-01-10",
-    author: "Nikhil Choudhary",
-    tags: ["Architecture", "Best Practices", "Development"],
-    readTime: "8 min read",
-    image: "/images/blog/architecture-hero.jpg",
-    imageAlt: "Clean architecture diagram with simple, clear components",
-    category: "Development"
+    "slug": "git-dummies-1",
+    "title": "Git & GitHub for Dummies: Part 1",
+    "excerpt": "A beginner's guide to getting started with Git and GitHub, covering the basic workflow, authentication, and common errors.",
+    "date": "2025-08-23",
+    "author": "Nikhil Choudhary",
+    "tags": ["Git", "GitHub", "Development", "Beginner"],
+    "readTime": "6 min read",
+    "image": "/images/blog/git-hero.jpg",
+    "imageAlt": "A visual representation of Git and GitHub, showing a local machine connected to a cloud repository.",
+    "category": "Development"
   },
   {
     slug: "demystifying-rag-ai-secret-sauce",
@@ -65,7 +65,7 @@ export const posts: BlogPostMeta[] = [
     slug: "llm-finetuning-playbook-2025",
     title: "Fine-Tune, RAG, or Prompt?",
     excerpt: "A practical guide to modern LLM fine-tuning. Learn when to use SFT, LoRA, QLoRA, and DPO to balance quality, cost, and latency for your AI applications.",
-    date: "2025-09-08",
+    date: "2025-09-12",
     author: "Nikhil Choudhary",
     tags: ["LLM", "Fine-Tuning", "LoRA", "DPO", "AI Strategy"],
     readTime: "12 min read",
@@ -74,28 +74,29 @@ export const posts: BlogPostMeta[] = [
     category: "AI/ML"
   },
   {
+    slug: "git-dummies-2",
+    title: "Git & GitHub for Dummies: Part 2",
+    excerpt: "Dive deeper into Git with branches, merging, pull requests, and the essential tools for professional collaboration like rebase, stash, and .gitignore.",
+    date: "2025-09-20",
+    author: "Your Name Here",
+    tags: ["Git", "GitHub", "Collaboration", "Open Source", "Professional Development"],
+    readTime: "8 min read",
+    image: "/images/blog/git-hero-2.jpg",
+    imageAlt: "A visual representation of multiple developers collaborating on code via a central GitHub repository, using branches and pull requests.",
+    category : "Development"
+  },
+  {
     slug: "cart-pole-agent-blog",
     title: "Training a Self-Learning CartPole AI with Python and Pygame",
     excerpt: "A step-by-step guide to building a Deep Q-Learning agent to master the classic CartPole game. Learn to implement a DQN in Python, integrate with OpenAI Gym, and create a modern, interactive visualization with Pygame.",
-    date: "2025-09-08",
+    date: "2025-09-23",
     author: "Nikhil Choudhary",
     tags: ["Reinforcement Learning", "Deep Q-Learning", "Python", "Pygame", "AI"],
     readTime: "10 min read",
     image: "/images/blog/cartpole-dqn-1.jpg",
     imageAlt: "Screenshot of the Pygame UI showing the CartPole agent in action with score and performance graph.",
     category: "AI/ML"
-  },
-  // {
-  //   slug: "design-systems-that-scale",
-  //   title: "Design Systems That Scale: From Component Library to Product Ecosystem",
-  //   excerpt: "Building design systems that grow with your product. Learn how to create maintainable, scalable design systems that support multiple teams and products while maintaining consistency and developer experience.",
-  //   date: "2025-09-09",
-  //   author: "Nikhil Choudhary",
-  //   tags: ["Design Systems", "UI/UX", "Component Libraries", "Scalability", "Frontend"],
-  //   readTime: "7 min read",
-  //   image: "/images/blog/design-systems-hero.jpg",
-  //   imageAlt: "Modular design system components arranged in a scalable architecture"
-  // }
+  }
 ]
 
 

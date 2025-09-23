@@ -13,8 +13,13 @@ export const metadata: Metadata = {
   title: "Nikhil Choudhary - Portfolio",
   description: "Full-stack developer portfolio showcasing skills in React, Next.js, and cutting-edge web technologies",
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/favicon.ico", sizes: "16x16", type: "image/x-icon" },
+      { url: "/favicon.ico", sizes: "32x32", type: "image/x-icon" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
     shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
   },
 }
 
@@ -29,6 +34,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}>
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon.ico" sizes="16x16" type="image/x-icon" />
+        <link rel="icon" href="/favicon.ico" sizes="32x32" type="image/x-icon" />
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon" href="/favicon.ico" />
+      </head>
       <body className="bg-background text-foreground font-sans">
         <ThemeProvider defaultTheme="dark" storageKey="portfolio-theme">
           <SiteHeader />

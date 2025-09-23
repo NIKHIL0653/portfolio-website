@@ -9,6 +9,14 @@
   text-align: left;
 }
 
+/* Reduce padding on desktop only */
+@media (min-width: 768px) {
+  .blog-content {
+    padding-left: 2.1rem;
+    padding-right: 2.1rem;
+  }
+}
+
 /* Image wrapper border color override - dark mode only */
 .dark .image-wrapper {
   border-color: #333333 !important;
@@ -1041,6 +1049,11 @@ footer * {
     font-size: 16px; /* Increased from 13px to 16px for better readability */
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+  }
+
+  /* Reduce spacing between header and dashed line in mobile */
+  .blog-article-card header {
+    padding-bottom: 0.75rem !important; /* Reduced from pb-4 (1rem) to 0.75rem */
   }
 
   /* Bullet points match the text content size */

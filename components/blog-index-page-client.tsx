@@ -200,7 +200,7 @@ export default function BlogIndexPageClient() {
               </div>
 
               <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 pt-4 pb-4 ${
-                activeCategory === 'All Posts' ? 'gap-y-12' : 'gap-y-10'
+                activeCategory === 'All Posts' ? 'gap-y-10' : 'gap-y-8'
               }`}>
                 {displayPosts.map((post) => (
                   <div key={post.slug} className="relative z-10">

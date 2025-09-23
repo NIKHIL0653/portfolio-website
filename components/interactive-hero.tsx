@@ -9,6 +9,8 @@ export function InteractiveHero() {
   const [currentSpecialty, setCurrentSpecialty] = useState(0)
   const [scrollOpacity, setScrollOpacity] = useState(1)
   const [isAnimating, setIsAnimating] = useState(false)
+  const [isImageActive, setIsImageActive] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
 const specialties = [
   "Software Engineer",
@@ -17,6 +19,8 @@ const specialties = [
 
 useEffect(() => {
 setMounted(true)
+setIsMobile(window.innerWidth < 768)
+
 const canvas = canvasRef.current
 if (!canvas) return
 const ctx = canvas.getContext("2d")
@@ -32,15 +36,16 @@ height = canvas.clientHeight
 canvas.width = Math.floor(width * DPR)
 canvas.height = Math.floor(height * DPR)
 ctx.setTransform(DPR, 0, 0, DPR, 0, 0)
+setIsMobile(window.innerWidth < 768)
 }
 
 const isDark = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches)
 
-const isMobile = window.innerWidth < 768; // Mobile breakpoint
+const isMobileLocal = window.innerWidth < 768; // Mobile breakpoint
 
 // Galaxy/Warp Speed Animation Logic (Optimized for performance)
 const STAR_COLOR = isDark ? "#ffffff" : "#111111";
-const STAR_COUNT = isMobile ? 150 : 400; // Reduced count for better performance
+const STAR_COUNT = isMobileLocal ? 150 : 400; // Reduced count for better performance
 const MAX_DEPTH = 50;
 
 type Star = { x: number; y: number; z: number; px?: number; py?: number };
@@ -157,9 +162,14 @@ return (
       <div className="text-center max-w-4xl mx-auto">
         {/* Profile Image */}
         <img
-          src="/images/blog/avatar_img.png"
+          src="/images/blog/profile.jpg"
           alt="Nikhil's profile"
-          className="w-24 h-24 sm:w-28 sm:h-28 mx-auto rounded-full object-cover border-2 border-white/20 shadow-xl mb-6"
+          className={`w-28 h-28 sm:w-32 sm:h-32 mx-auto rounded-full object-cover border-2 border-white/20 shadow-xl mb-6 transition-all duration-300 ${
+            isMobile
+              ? (isImageActive ? 'grayscale-0 scale-110' : 'grayscale-[0.5]')
+              : 'grayscale-[0.5] hover:grayscale-0 hover:scale-120'
+          }`}
+          onClick={isMobile ? () => setIsImageActive(!isImageActive) : undefined}
         />
 
         {/* Text Content */}

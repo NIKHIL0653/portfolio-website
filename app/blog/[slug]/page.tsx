@@ -73,7 +73,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
 
       <div className="relative mx-auto max-w-4xl md:max-w-[56rem]">
         {/* Main Article Card */}
-        <article className="blog-article-card bg-card rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-500">
+        <article className="blog-article-card bg-card rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-500 relative">
           {/* Back Link - Inside the card at top */}
           <div className="text-center pt-8 sm:pt-6 md:pt-8 lg:pt-12 pb-0">
             <Link href="/blog" className="inline-flex items-center text-sm text-primary relative z-20">
@@ -137,9 +137,12 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
               </div>
             )}
 
+            {/* Horizontal dashed line behind image middle - Desktop only */}
+            <div className="hidden sm:block absolute left-0 right-0 border-t border-dashed border-border z-[-1] sm:top-105 md:top-120 lg:top-117"></div>
+
             {/* Horizontal Separator Line - Mobile Only */}
             <div className="py-1 sm:hidden">
-              <div className="border-t border-dashed border-[#29292B]"></div>
+              <div className="border-t border-dashed border-border"></div>
             </div>
 
             {/* Article Content - HTML Structure */}

@@ -90,13 +90,14 @@ function Globe({ data, globeConfig }: WorldProps & { darkMode?: boolean }) {
     globeMaterial.color.setHex(materialSettings.color);
     globeMaterial.emissive.setHex(materialSettings.emissive);
     globeMaterial.emissiveIntensity = materialSettings.emissiveIntensity;
-    
+
     globeMaterial.shininess = 0;
     globeMaterial.specular.setHex(0x000000);
     globeMaterial.transparent = false;
     globeMaterial.opacity = 1.0;
     globeMaterial.flatShading = true;
     globeMaterial.fog = false;
+    globeMaterial.map = null; // Ensure no texture interferes with solid color
     globeMaterial.lightMap = null;
     globeMaterial.aoMap = null;
     globeMaterial.normalMap = null;
@@ -154,14 +155,15 @@ function Globe({ data, globeConfig }: WorldProps & { darkMode?: boolean }) {
   // Function to ensure material consistency
   const ensureMaterialConsistency = () => {
     if (!globeRef.current || !materialSettingsRef.current) return;
-    
+
     const globe = globeRef.current;
     const globeMaterial = globe.globeMaterial();
     const settings = materialSettingsRef.current;
-    
+
     globeMaterial.color.setHex(settings.color);
     globeMaterial.emissive.setHex(settings.emissive);
     globeMaterial.emissiveIntensity = settings.emissiveIntensity;
+    globeMaterial.map = null; // Ensure no texture interferes with solid color
     globeMaterial.needsUpdate = true;
   };
 

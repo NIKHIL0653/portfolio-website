@@ -1,83 +1,75 @@
-<p>
-    Have you ever wondered what it takes to win a Formula 1 race? It's not just about the fastest car or the most skilled driver. The truth is, behind every victory lies a mountain of data. As a huge fan of both F1 and a Machine Learning Project, I embarked on a personal project to see if I could use machine learning to predict the winner of a Grand Prix. The journey was filled with challenges, but the insights I gained were absolutely fascinating. Let's dive into how I built this model, from the very first line of code to the final prediction.
-</p>
-<p>
-    The immense amount of data collected from a single F1 car is mind-boggling!
-</p>
+<h2>Predicting the Unpredictable: How I Used Machine Learning to Forecast the Azerbaijan GP Winner</h2>
+<p>Every Formula 1 fan knows that some tracks are just… different. Monaco has the glamour, Spa has Eau Rouge, but for
+    sheer, unadulterated chaos, nothing comes close to the Baku City Circuit. With its long straights, tight castle
+    section, and unforgiving walls, the Azerbaijan Grand Prix has a reputation for turning predictions on their head.
+    "Welcome to Baku!" has become a meme for a reason.</p>
+<p>As a Computer Science and Engineering major and a lifelong F1 fanatic, the Baku street circuit presented a challenge
+    I couldn't resist. Could I combine my passion for racing with my love for coding to build a machine learning model
+    that could predict the winner of this notoriously unpredictable race?</p>
+<p>Here's how I did it.</p>
 
-<h2>Phase 1: The Hunt for Data</h2>
-<p>
-    Every machine learning project starts with data. For this project, I needed to find a reliable source of historical F1 data. This is where the amazing `fastf1` API came in. It's an open-source Python library that provides access to a treasure trove of data from official Formula 1 sources. My first step was to write a script, `fetch_data.py`, to grab what I needed.
-</p>
-<p>
-    I focused on the Azerbaijan Grand Prix, pulling data for every year from 2016 to 2023. I specifically fetched two key types of data:
-</p>
+<h2>The Fuel for my Model: The Data</h2>
+<p>Every machine learning project starts with data, and for an F1 project, there's no better place to get it than the
+    <code>fastf1</code> library. It's a treasure trove of information, with detailed data on every session of a Grand
+    Prix weekend.</p>
+<p>For this project, I collected data from every Azerbaijan Grand Prix from 2016 to 2023. This included:</p>
 <ul>
-    <li>
-        <strong>Race Lap Data:</strong> This includes the all-important `LapTime`, but also granular details like `Sector1Time`, `Sector2Time`, and `Sector3Time`. By getting data for every single lap, I had a rich dataset to work with.
+    <li><b>Lap Times:</b> The most basic measure of a driver's pace.</li>
+    <li><b>Sector Times:</b> Breaking down the lap into three sectors helps to understand where a driver is gaining or
+        losing time. Is it in the long straights of Sector 1 and 3, or the tight and twisty castle section of Sector 2?
     </li>
-    <li>
-        <strong>Qualifying Results:</strong> The starting grid position is a massive factor in F1. The `fastf1` API also provides detailed qualifying results, which I knew would be a crucial feature for my model.
-    </li>
+    <li><b>Qualifying Results:</b> A driver's starting position is a huge factor in any race, but especially on a narrow
+        street circuit like Baku.</li>
 </ul>
-<p>
-    The simplicity and speed of `fastf1` made it the perfect tool for this step. It handles all the complex data wrangling behind the scenes, allowing me to focus on the fun part: preparing the data for the model.
-</p>
+<p>As an F1 fan, I know that these numbers tell a story. A driver might be quick in qualifying but struggle with tire
+    degradation during the race, leading to slower lap times. Another driver might be a master of the tricky castle
+    section, gaining valuable tenths of a second on their rivals with each lap. This is the kind of information that I
+    wanted my model to learn.</p>
 
-<h2>Phase 2: The Art of Preprocessing</h2>
-<p>
-    Raw data is never perfect. It's messy, full of missing values, and not in the right format for a machine learning model. This is where my `preprocess_data.py` script became the hero of the day. This phase is arguably the most critical because the quality of your data directly impacts the accuracy of your predictions.
-</p>
-<p>
-    I performed several key transformations:
-</p>
+<h2>From Raw Data to Race-Ready Features: Preprocessing and Feature Engineering</h2>
+<p>With the raw data in hand, it was time for the "lights out and away we go" moment of the project: data preprocessing
+    and feature engineering. This is where I took the raw data and transformed it into a format that a machine learning
+    model could understand.</p>
+<p>First, I had to clean the data. This involved handling missing values, which can occur for a number of reasons in F1,
+    from a driver pitting for new tires to a yellow flag slowing down the cars.</p>
+<p>Next came the fun part: feature engineering. This is where I created new features from the existing data to give my
+    model more information to work with. Here are some of the key features I created:</p>
 <ul>
-    <li>
-        <strong>Cleaning and Averaging:</strong> The raw data had missing values, so I dropped any records without a valid lap time. Then, I grouped the data by `Driver` and `Year` to calculate the average lap time and average sector times for each driver. This gives a more stable, representative performance metric.
-    </li>
-    <li>
-        <strong>Feature Engineering:</strong> This is where I got creative! I wanted to go beyond basic lap times. I added a `QualifyingTime (s)` feature by merging my processed lap data with the qualifying data. I also created a `TeamPerformanceScore` to capture the overall strength of a driver's team. I even added a placeholder for `RainProbability` and `Temperature` to show how external factors could be integrated. These engineered features provide the model with a richer, more contextual understanding of the race environment.
-    </li>
-    <li>
-        <strong>Encoding Categorical Data:</strong> My model can't understand text labels like "VER" or "HAM." I used `LabelEncoder` from scikit-learn to convert the `Driver` names into numerical values. This is a vital step to prepare the data for the model's algorithms.
-    </li>
+    <li><b>Average Lap Time:</b> Instead of looking at every single lap time, I calculated the average lap time for each
+        driver in each race. This gives a good indication of their overall race pace.</li>
+    <li><b>Average Sector Times:</b> Just like with lap times, I calculated the average time for each driver in each of
+        the three sectors. This helps the model to understand a driver's strengths and weaknesses on different parts of
+        the track.</li>
+    <li><b>Qualifying Time:</b> I took the driver's fastest qualifying time (from Q3) as a feature, since starting
+        position is so important in Baku.</li>
+    <li><b>Driver and Team Information:</b> Not all drivers and teams are created equal. To capture this, I converted
+        each driver's name into a numerical format and also created a <code>TeamPerformanceScore</code> based on my F1
+        knowledge and recent team performance.</li>
+    <li><b>The Wildcards:</b> We all know that F1 is not just about the drivers and the cars. External factors can play
+        a huge role. I added placeholders for <code>RainProbability</code> and <code>Temperature</code> to my dataset.
+        While I used dummy values for now, these features can be updated with real-time data to make the model even more
+        accurate.</li>
 </ul>
-<p>
-    Why are these steps so important? Without them, the model would be trying to learn from incomplete and uninformative data. By creating meaningful features, I was giving my model the best possible chance to find a predictive pattern.
-</p>
 
-<h2>Phase 3: Building the Prediction Engine</h2>
-<p>
-    With my clean, well-structured dataset (`X_features.csv` and `y_target.csv`), it was time to train the model. For this, I chose `GradientBoostingRegressor`, which you can see in my `train_model.py` script.
-</p>
-<p>
-    Why `GradientBoostingRegressor`? It's a type of ensemble learning model that's fantastic for this kind of problem. It builds a series of weak prediction models (decision trees) sequentially, and each new model corrects the errors of the previous ones. This process makes it incredibly powerful at handling complex, non-linear relationships between variables—perfect for the chaotic and nuanced world of F1 racing.
-</p>
-<p>
-    I also used a few key techniques to ensure the model's reliability:
-</p>
-<ul>
-    <li>
-        <strong>Imputation:</strong> Before training, I used `SimpleImputer` to fill any remaining missing values with the mean of the column.
-    </li>
-    <li>
-        <strong>Train-Test Split:</strong> I split my data into training and testing sets to evaluate the model on unseen data.
-    </li>
-    <li>
-        <strong>Cross-Validation:</strong> To get a more robust estimate of my model's performance, I used 5-fold cross-validation. This technique trains and validates the model on different subsets of the data, giving me a much better sense of how it will perform in the real world. I used Mean Absolute Error (MAE) as my metric, which tells me the average difference between my predicted and actual lap times.
-    </li>
-</ul>
-<p>
-    The result was a trained model (`f1_winner_model.pkl`) and an imputer (`imputer.pkl`) that I could use for future predictions.
-</p>
+<h2>Building the Engine: The Machine Learning Model</h2>
+<p>With my data prepped and ready, it was time to build the engine of my prediction model. I chose a
+    <code>GradientBoostingRegressor</code> model. In simple terms, a Gradient Boosting model is like a team of engineers
+    working together to improve a car's setup. Each engineer makes a small tweak, and over time, all of these small
+    improvements add up to a much faster car.</p>
+<p>To train the model, I split my data into a training set and a testing set. This is like a team testing a new part on
+    the track before a race. The training set is used to "teach" the model, and the testing set is used to see how well
+    it performs on new, unseen data.</p>
+<p>I also used a technique called cross-validation to fine-tune the model. This helps to ensure that the model is not
+    just memorizing the training data, but is actually learning the underlying patterns in the data. This is crucial for
+    making accurate predictions on future races.</p>
 
-<h2>Phase 4: Making a Prediction</h2>
-<p>
-    Finally, the moment of truth! The `predict_winner.py` script takes the trained model and uses it to make a prediction on new, unseen data. I created some sample data for a hypothetical race to demonstrate the process. The script takes the same features I used for training (like `QualifyingTime`, `Sector` times, and the engineered `TeamPerformanceScore`), processes them, and then predicts the race lap time for each driver.
-</p>
-<p>
-    The driver with the lowest predicted average lap time is our predicted winner! This final step shows how all the pieces of the puzzle—data fetching, cleaning, feature engineering, and model training—come together to provide a powerful and actionable result.
-</p>
+<h2>And the Winner is...: Making Predictions</h2>
+<p>After training and tuning my model, it was finally time to put it to the test. I created a script that takes in
+    sample data for a group of drivers and predicts their finishing order.</p>
+<p>The results were exciting! The model was able to make reasonable predictions based on the data it was given. While
+    it's not a crystal ball, it's a powerful tool that can provide some data-driven insights into how a race might
+    unfold.</p>
+
 <figure>
     <img src="/images/blog/Prediction_Ajerbaijan 2025.png" alt="Predicted Winner">
     <figcaption>The predicted winner for the Azerbaijan Grand Prix.</figcaption>
@@ -87,6 +79,36 @@
     <figcaption>The actual winner for the Azerbaijan Grand Prix.</figcaption>
 </figure>
 
-<h2>
-    VERSTAPPEN FOR THE WIN!!
-</h2>
+<h2>VERSTAPPEN FOR THE WIN!!</h2>
+
+<h2>An F1 Fan's Deep Dive: How Each Parameter Shapes the Prediction</h2>
+<p>As an F1 fan, what I find most fascinating is how each parameter can influence the model's predictions.</p>
+<ul>
+    <li><b>Qualifying vs. Race Pace:</b> The model takes both qualifying time and average lap time into account. This is
+        important because a driver might be a "one-lap wonder" in qualifying but struggle to maintain that pace over a
+        full race distance. In Baku, with its long straights and opportunities for overtaking, race pace is often more
+        important than qualifying position.</li>
+    <li><b>Sector Times:</b> The sector times tell a story. A car that is fast in the straights of Sectors 1 and 3 might
+        have an advantage in a race, but a driver who can master the tight and twisty castle section of Sector 2 can
+        also make up a lot of time. My model can learn these nuances and factor them into its predictions.</li>
+    <li><b>The Team Factor:</b> Let's be honest, in F1, the car you're driving matters. A lot. My
+        <code>TeamPerformanceScore</code> helps the model to understand the relative strengths of the different teams on
+        the grid.</li>
+    <li><b>The Baku Chaos Factor:</b> We can't talk about the Azerbaijan GP without talking about the chaos! Safety
+        cars, red flags, and unexpected incidents are all part of the fun. While my model doesn't explicitly account for
+        these things (yet!), it's a good reminder that in F1, anything can happen.</li>
+</ul>
+
+<h2>The Checkered Flag: Conclusion and Future Laps</h2>
+<p>This project has been an incredible journey, I've gained a new appreciation for the incredible amount of data that
+    goes into a Formula 1 race.</p>
+<p>Of course, this is just the beginning. There are many ways I can improve my model in the future:</p>
+<ul>
+    <li><b>More Data:</b> The more data, the better. I plan to add more data from previous races, as well as new
+        features like tire strategy, pit stop times, and real-time weather data.</li>
+    <li><b>Different Models:</b> I'm also planning to experiment with different machine learning models to see if I can
+        improve the accuracy of my predictions.</li>
+</ul>
+<p>So, the next time you're watching the Formula 1 Grand Prix, remember that behind all the glitz and glamour, there's a
+    world of data waiting to be explored. </p>
+</body>

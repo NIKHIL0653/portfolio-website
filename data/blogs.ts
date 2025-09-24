@@ -17,7 +17,7 @@ export const posts: BlogPostMeta[] = [
     slug: "next-project",
     title: "Why Your Next Project Should Be a Blog",
     excerpt: "Discover how your personal blog can become a creative playground, a learning accelerator, and the ultimate tool for building your unique brand in the tech world.",
-    date: "2025-09-15",
+    date: "2025-08-10",
     author: "Nikhil Choudhary",
     tags: ["Personal Branding", "Blogging", "Web Development", "Career Growth"],
     readTime: "5 min read",
@@ -89,7 +89,7 @@ export const posts: BlogPostMeta[] = [
     slug: "cart-pole-agent-blog",
     title: "Training a Self-Learning CartPole AI with Python and Pygame",
     excerpt: "A step-by-step guide to building a Deep Q-Learning agent to master the classic CartPole game. Learn to implement a DQN in Python, integrate with OpenAI Gym, and create a modern, interactive visualization with Pygame.",
-    date: "2025-09-19",
+    date: "2025-09-17",
     author: "Nikhil Choudhary",
     tags: ["Reinforcement Learning", "Deep Q-Learning", "Python", "Pygame", "AI"],
     readTime: "10 min read",
@@ -99,16 +99,28 @@ export const posts: BlogPostMeta[] = [
   },
   {
     slug: "f1-azerbaijan",
-    title: "From Data to Finish Line: Predicting F1 Race Winners with Machine Learning",
+    title: "From Data to Finish Line: Predicting the winner of 2025 Azerbaijan GP",
     excerpt: "Dive into my machine learning project to predict the 2025 Azerbaijan GP winner. I'll walk you through the entire process, from finding and cleaning historical F1 data to training a Gradient Boosting Regressor model.",
-    date: "2025-09-22",
+    date: "2025-09-20",
     author: "Nikhil Choudhary",
     tags: ["Machine Learning", "F1", "Formula 1", "Data Science", "Python", "fastf1"],
     readTime: "4 min read",
     image: "/images/blog/azerbaijan-hero.jpg",
     imageAlt: "F1 Image",
     category: "AI/ML"
-  }
+  },
+  // {
+  //   slug: "f1-singapore",
+  //   title: "From Baku to Singapore: Leveling Up My F1 Prediction Model",
+  //   excerpt: "Explore the evolution of my F1 prediction model, moving from Baku to the challenging Singapore GP. This post details the upgrade to an XGBoost model, the integration of detailed weather data, and advanced feature engineering for more accurate race predictions.",
+  //   date: "2025-09-22",
+  //   author: "Nikhil Choudhary",
+  //   tags: ["Machine Learning", "F1", "Formula 1", "Data Science", "Python", "XGBoost", "fastf1"],
+  //   readTime: "4 min read",
+  //   image: "/images/blog/singapore-hero.jpg",
+  //   imageAlt: "An F1 car racing at the Singapore Grand Prix",
+  //   category: "AI/ML"
+  // }
 ]
 
 

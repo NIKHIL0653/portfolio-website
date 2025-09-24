@@ -1,0 +1,67 @@
+<p>After the thrilling chaos of my Azerbaijan Grand Prix prediction model, I was eager to take on an even bigger
+    challenge: the Singapore Grand Prix. The Marina Bay Street Circuit is a different beast altogether – a physically
+    demanding, high-downforce track that pushes drivers and cars to their absolute limits. It was the perfect place to
+    level up my prediction model and see if I could build something even more accurate.</p>
+<p>Here's how I took my F1 prediction model to the next level.</p>
+
+<hr>
+
+<h2>More Fuel for the Fire: Expanding the Dataset</h2>
+<p>My Azerbaijan model was a good start, but I knew that to make more accurate predictions, I needed more data. So, for
+    the Singapore GP model, I went back to the FastF1 library and gathered even more information for every race from
+    2016 to 2024. This time, in addition to lap times, sector times, and qualifying results, I also collected detailed
+    <strong>weather data</strong> for each session.</p>
+<p>As any F1 fan knows, weather can be a huge factor in a race. Rain can turn a procession into a lottery, and even
+    small changes in temperature can affect a car's performance. By adding weather data to my model, I was giving it a
+    much more complete picture of the race conditions.</p>
+
+<hr>
+
+<h2>A More Sophisticated Engine: Introducing XGBoost</h2>
+<p>For my Azerbaijan model, I used a Gradient Boosting Regressor. It's a solid model, but I knew I could do better. So,
+    for the Singapore GP, I upgraded to an <strong>XGBoost Regressor</strong>.</p>
+<p>Think of XGBoost as a high-performance engine for machine learning. It's known for its speed and accuracy, and it's a
+    popular choice for winning machine learning competitions. By switching to XGBoost, I was giving my model the power
+    it needed to handle a more complex dataset and make even more accurate predictions.</p>
+
+<hr>
+
+<h2>Fine-Tuning the Setup: Advanced Feature Engineering</h2>
+<p>With a more powerful model and a richer dataset, I could also get more creative with my feature engineering. Here are
+    some of the key improvements I made:</p>
+<ul>
+    <li><strong>Detailed Weather Features:</strong> Instead of just using placeholders for rain and temperature, I now
+        had real data for <code>AirTemp</code>, <code>Humidity</code>, <code>Pressure</code>, <code>Rainfall</code>,
+        <code>TrackTemp</code>, <code>WindDirection</code>, and <code>WindSpeed</code>. This allows the model to learn
+        how different weather conditions affect lap times at the Marina Bay circuit.</li>
+    <li><strong>Circuit-Specific Features:</strong> The Singapore GP is a unique track, and I wanted my model to
+        understand that. So, I added features for <code>CircuitLength</code> and <code>NumberOfCorners</code>, as well
+        as a <code>CircuitType</code> feature to distinguish it from other tracks.</li>
+    <li><strong>Team Performance Score:</strong> I refined my <code>TeamPerformanceScore</code> to better reflect the
+        current hierarchy in F1. This helps the model to understand the relative strengths of the different teams on the
+        grid.</li>
+</ul>
+
+<hr>
+
+<h2>The Moment of Truth: Predicting the Singapore GP</h2>
+<p>After all the hard work, it was time to put my new model to the test. I created a script to predict the top 10
+    finishers for a hypothetical 2025 Singapore Grand Prix, and the results were very promising.</p>
+<p>The model was able to make nuanced predictions, taking into account all of the new features I had added. It's still
+    not a crystal ball, but it's a big step forward from my Azerbaijan model.</p>
+
+<img src="placeholder_predicted_winners.jpg" alt="A table showing the predicted top 10 winners for the Singapore GP"
+    width="600">
+
+<img src="placeholder_actual_winners.jpg"
+    alt="A photo of the actual top 3 winners on the podium after the Singapore GP race" width="600">
+
+<hr>
+
+<h2>The Road Ahead: The Future of F1 Prediction</h2>
+<p>This project has been an incredible learning experience. I've not only improved my machine learning skills, but I've
+    also deepened my understanding of the complex factors that go into a Formula 1 race.</p>
+<p>The next step is to continue to refine my model and add even more data. I'm also planning to build a web application
+    that will allow other F1 fans to make their own predictions for upcoming races.</p>
+<p>So, as we look ahead to the next Singapore Grand Prix, I'll be watching with even more interest, knowing that I have
+    a model that can help me to understand the beautiful complexity of this incredible sport.</p>

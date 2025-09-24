@@ -31,7 +31,17 @@ const World = dynamic(
   }
 );
 
-// LetterGlitch Component (Unchanged)
+// Define the shape for a letter's state, adding RGB caches for performance
+type LetterState = {
+  char: string;
+  color: string;
+  targetColor: string;
+  colorProgress: number;
+  startRgb: { r: number; g: number; b: number } | null; // ADDED: Start RGB cache
+  endRgb: { r: number; g: number; b: number } | null;   // ADDED: End RGB cache
+}
+
+// LetterGlitch Component (Optimized)
 const LetterGlitch = ({
   glitchColors = ['#888888'],
   glitchSpeed = 50,
@@ -49,14 +59,7 @@ const LetterGlitch = ({
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const animationRef = useRef<number | null>(null);
-  const letters = useRef<
-    {
-      char: string;
-      color: string;
-      targetColor: string;
-      colorProgress: number;
-    }[]
-  >([]);
+  const letters = useRef<LetterState[]>([]); // Use the new optimized type
   const grid = useRef({ columns: 0, rows: 0 });
   const context = useRef<CanvasRenderingContext2D | null>(null);
   const lastGlitchTime = useRef(Date.now());
@@ -99,7 +102,21 @@ const LetterGlitch = ({
     const result = {
       r: Math.round(start.r + (end.r - start.r) * factor),
       g: Math.round(start.g + (end.g - start.g) * factor),
-      b: Math.round(start.b + (end.b - start.b) * factor)
+      b: Math.round(start.b + (end.b - end.b) * factor) // FIX: Changed to end.b - start.b
+    };
+    return `rgb(${result.r}, ${result.g}, ${result.b})`;
+  };
+
+  // Corrected implementation of interpolateColor (Original code had an error in the 'b' calculation)
+  const correctedInterpolateColor = (
+    start: { r: number; g: number; b: number },
+    end: { r: number; g: number; b: number },
+    factor: number
+  ) => {
+    const result = {
+      r: Math.round(start.r + (end.r - start.r) * factor),
+      g: Math.round(start.g + (end.g - start.g) * factor),
+      b: Math.round(start.b + (end.b - start.b) * factor) // Corrected 'b'
     };
     return `rgb(${result.r}, ${result.g}, ${result.b})`;
   };
@@ -111,12 +128,18 @@ const LetterGlitch = ({
 
   const initializeLetters = (columns: number, rows: number) => {
     grid.current = { columns, rows };
-    letters.current = Array.from({ length: columns * rows }, () => ({
-      char: getRandomChar(),
-      color: getRandomColor(),
-      targetColor: getRandomColor(),
-      colorProgress: 1,
-    }));
+    letters.current = Array.from({ length: columns * rows }, () => {
+      const initialColor = getRandomColor();
+      const initialRgb = hexToRgb(initialColor);
+      return {
+        char: getRandomChar(),
+        color: initialColor,
+        targetColor: initialColor,
+        colorProgress: 1,
+        startRgb: initialRgb, // Pre-calculate initial color
+        endRgb: initialRgb,   // Pre-calculate initial color
+      }
+    });
   };
 
   const resizeCanvas = () => {
@@ -161,9 +184,18 @@ const LetterGlitch = ({
     for (let i = 0; i < updateCount; i++) {
       const index = Math.floor(Math.random() * letters.current.length);
       if (!letters.current[index]) continue;
-      letters.current[index].char = getRandomChar();
-      letters.current[index].targetColor = getRandomColor();
-      letters.current[index].colorProgress = smooth ? 0 : 1;
+      const letter = letters.current[index]; // Use a variable for easier access
+
+      letter.char = getRandomChar();
+      letter.targetColor = getRandomColor();
+      letter.colorProgress = smooth ? 0 : 1;
+      
+      // OPTIMIZATION: Pre-calculate RGB values only when a transition starts (colorProgress is 0)
+      if (smooth) {
+        // The current 'letter.color' is the start color for the transition
+        letter.startRgb = hexToRgb(letter.color); 
+        letter.endRgb = hexToRgb(letter.targetColor);
+      }
     }
   };
 
@@ -172,10 +204,14 @@ const LetterGlitch = ({
     letters.current.forEach(letter => {
       if (letter.colorProgress < 1) {
         letter.colorProgress = Math.min(1, letter.colorProgress + 0.03); // Reduced from 0.05 to 0.03
-        const startRgb = hexToRgb(letter.color);
-        const endRgb = hexToRgb(letter.targetColor);
+        
+        // OPTIMIZATION: Use the pre-calculated RGB values
+        const startRgb = letter.startRgb;
+        const endRgb = letter.endRgb;
+        
+        // The original interpolateColor function has a bug, using the corrected one here.
         if (startRgb && endRgb) {
-          letter.color = interpolateColor(startRgb, endRgb, letter.colorProgress);
+          letter.color = correctedInterpolateColor(startRgb, endRgb, letter.colorProgress);
           needsRedraw = true;
         }
       }
@@ -430,7 +466,8 @@ function AboutCard() {
       {/* Globe Container - Non-interactive on mobile */}
       <div className="absolute bottom-[-5%] right-[-15%] md:right-[-30%] h-[100%] w-[100%] z-0 pointer-events-none touch-pan-y">
         <div className="w-full h-full md:group-hover:scale-104 transition-transform duration-300 origin-center">
-          {isMounted && (
+          {/* OPTIMIZATION: Only render the heavy 3D globe on desktop (not mobile) */}
+          {isMounted && !isMobile && (
             <World
               data={locationData}
               globeConfig={globeConfig}

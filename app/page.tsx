@@ -6,6 +6,7 @@ import { TechStackMarquee } from "@/components/tech-stack-marquee"
 import { LetsConnect } from "@/components/lets-connect"
 import { MultilingualGreeting } from "@/components/multilingual-greeting"
 import { Github, Wrench, FolderOpen, FileText, User, Globe as GlobeIcon } from "lucide-react"
+import Prism from "@/components/Prism"
 import Link from "next/link"
 import { useRef, useEffect, useState } from 'react'
 import { useIsMobile } from "@/hooks/use-mobile"
@@ -251,9 +252,9 @@ const LetterGlitch = ({
 function BlogCard() {
   const isMobile = useIsMobile();
   const blogPosts = [
-    { title: "Empathy in Open Source", excerpt: "Empathy and kindness is a choice." },
-    { title: "Web Development for Beginners: 7 Essential Steps To Get Started Today!", excerpt: "Discover how to unleash the power of words and advance your career." },
-    { title: "Why Every Developer Should Build Their Own Blog", excerpt: "Discover the importance of building a blog as a developer, along with tips on how to set up, design, create, and share your content." }
+    { title: "Fine-Tune, RAG, or Prompt?", excerpt: "A practical guide to modern LLM fine-tuning. Learn when to use SFT, LoRA, QLoRA, and DPO" },
+    { title: "Git & GitHub for Dummies: Part 1", excerpt: "A beginner's guide to getting started with Git and GitHub, covering the basic workflow, authentication, and common errors." },
+    { title: "Why Your Next Project Should Be a Blog", excerpt: "Discover how your personal blog can become a creative playground, a learning accelerator, and the ultimate tool for building your unique brand in the tech world" }
   ];
   const displayedPosts = isMobile ? blogPosts.slice(0, 2) : blogPosts;
 
@@ -296,7 +297,7 @@ function BlogCard() {
           ))}
         </div>
       </div>
-      <div className="absolute bottom-10 left-8 flex flex-col-reverse items-start">
+      <div className="absolute bottom-6 left-8 flex flex-col-reverse items-start">
         <div className="overflow-hidden max-h-0 group-hover:max-h-40 group-hover:mt-4 transition-all duration-300 ease-in-out">
           <span className="text-foreground font-medium flex items-center gap-1">
             Visit the Blog →
@@ -363,7 +364,7 @@ function ProjectsCard() {
         </div>
       </div>
 
-      <div className="absolute bottom-10 left-8 flex flex-col-reverse items-start z-10">
+      <div className="absolute bottom-6 left-8 flex flex-col-reverse items-start z-10">
         <div className="overflow-hidden max-h-0 group-hover:max-h-40 group-hover:mt-4 transition-all duration-300 ease-in-out">
           <span className="text-foreground font-medium flex items-center gap-1">
             View all projects →
@@ -386,6 +387,12 @@ function ProjectsCard() {
 // FIXED: About Card with proper mobile handling and correct styling
 function AboutCard() {
   const isMobile = useIsMobile();
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <Link
@@ -393,6 +400,24 @@ function AboutCard() {
       className="group relative bg-card rounded-lg border border-border overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 min-h-[380px] block"
       style={{ WebkitTapHighlightColor: 'transparent' }}
     >
+      {/* Prism Background */}
+      <div className="absolute inset-0 z-0">
+        {mounted && (
+          <Prism
+            height={3.5}
+            baseWidth={4.5}
+            animationType="rotate"
+            glow={1}
+            noise={0.2}
+            scale={2.0}
+            hueShift={0.3}
+            colorFrequency={1}
+            timeScale={0.5}
+            theme={theme === 'dark' ? 'dark' : 'light'}
+          />
+        )}
+      </div>
+
       {/* Background overlay - restored original complex masking for proper fade */}
       <div className="absolute inset-0 pointer-events-none z-5">
         <div
@@ -405,14 +430,14 @@ function AboutCard() {
       </div>
 
       {/* Content - Exact same structure as original with proper animations */}
-      <div className="absolute bottom-10 left-8 flex flex-col-reverse items-start z-10">
+      <div className="absolute bottom-6 left-8 flex flex-col-reverse items-start z-10">
         <div className="overflow-hidden max-h-0 group-hover:max-h-40 group-hover:mt-4 transition-all duration-300 ease-in-out">
           <span className="text-foreground font-medium flex items-center gap-1">
             More about me →
           </span>
         </div>
         <div className="transition-all duration-300">
-          <GlobeIcon className="h-12 w-12 text-foreground mb-3 group-hover:h-10 group-hover:w-10 transition-all duration-300" />
+          <User className="h-12 w-12 text-foreground mb-3 group-hover:h-10 group-hover:w-10 transition-all duration-300" />
           <h3 className="text-2xl font-bold text-foreground group-hover:text-3xl transition-all duration-300">
             About Me
           </h3>

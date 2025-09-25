@@ -23,17 +23,17 @@ type PrismProps = {
 const Prism: React.FC<PrismProps> = ({
   height = 3.5,
   baseWidth = 5.5,
-  animationType = 'rotate',
-  glow = 0.6,
+  animationType = '3drotate',
+  glow = 1,
   offset = { x: 0, y: 0 },
   noise = 0.5,
   transparent = true,
   scale = 3.6,
   hueShift = 0,
-  colorFrequency = 2,
-  hoverStrength = 1,
+  colorFrequency = 1,
+  hoverStrength = 2,
   inertia = 0.05,
-  bloom = 3,
+  bloom = 1,
   suspendWhenOffscreen = false,
   timeScale = 0.5,
   theme = 'light'
@@ -186,7 +186,7 @@ const Prism: React.FC<PrismProps> = ({
           q.y += centerShift;
           d = 0.1 + 0.2 * abs(sdPyramidUpInv(q));
           z -= d;
-          o += (sin((p.y + z) * cf + vec4(0.0, 1.0, 2.0, 3.0) + iTime * 0.5) + 1.0) / d;
+          o += (sin((p.y + z) * cf + vec4(0.0, 1.0, 2.0, 3.0)) + 1.0) / d;
         }
 
         o = tanh4(o * o * (uGlow * uBloom) / 1e5);
@@ -195,7 +195,6 @@ const Prism: React.FC<PrismProps> = ({
         float n = rand(gl_FragCoord.xy + vec2(iTime));
         col += (n - 0.5) * uNoise;
         col = clamp(col, 0.0, 1.0);
-
 
         float L = dot(col, vec3(0.2126, 0.7152, 0.0722));
         col = clamp(mix(vec3(L), col, uSaturation), 0.0, 1.0);
@@ -382,10 +381,16 @@ const Prism: React.FC<PrismProps> = ({
         program.uniforms.uRot.value = setMat3FromEuler(yaw, pitch, roll, rotBuf);
         if (TS < 1e-6) continueRAF = false;
       } else {
-        const tiltPitch = -0.3; // Tilt toward user (negative pitch)
-        const tiltRoll = 0.2; // Tilt to the left
-        const revolveYaw = time * 0.5; // Revolving speed
-        program.uniforms.uRot.value = setMat3FromEuler(revolveYaw, tiltPitch, tiltRoll, rotBuf);
+        rotBuf[0] = 1;
+        rotBuf[1] = 0;
+        rotBuf[2] = 0;
+        rotBuf[3] = 0;
+        rotBuf[4] = 1;
+        rotBuf[5] = 0;
+        rotBuf[6] = 0;
+        rotBuf[7] = 0;
+        rotBuf[8] = 1;
+        program.uniforms.uRot.value = rotBuf;
         if (TS < 1e-6) continueRAF = false;
       }
 
@@ -445,11 +450,10 @@ const Prism: React.FC<PrismProps> = ({
     hoverStrength,
     inertia,
     bloom,
-    suspendWhenOffscreen,
-    theme
+    suspendWhenOffscreen
   ]);
 
-  return <div className={`w-full h-full relative ${theme === 'light' ? 'shadow-[0_0_15px_rgba(0,0,0,0.3)]' : ''}`} ref={containerRef} />;
+  return <div className={`w-full h-full relative ${theme === 'light' ? 'bg-[radial-gradient(circle,rgba(128,128,128,0.2)_0%,transparent_70%)]' : ''}`} ref={containerRef} />;
 };
 
 export default Prism;

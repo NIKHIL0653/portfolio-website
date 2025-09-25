@@ -109,18 +109,18 @@ export const posts: BlogPostMeta[] = [
     imageAlt: "F1 Image",
     category: "AI/ML"
   },
-  // {
-  //   slug: "f1-singapore",
-  //   title: "From Baku to Singapore: Leveling Up My F1 Prediction Model",
-  //   excerpt: "Explore the evolution of my F1 prediction model, moving from Baku to the challenging Singapore GP. This post details the upgrade to an XGBoost model, the integration of detailed weather data, and advanced feature engineering for more accurate race predictions.",
-  //   date: "2025-09-22",
-  //   author: "Nikhil Choudhary",
-  //   tags: ["Machine Learning", "F1", "Formula 1", "Data Science", "Python", "XGBoost", "fastf1"],
-  //   readTime: "4 min read",
-  //   image: "/images/blog/singapore-hero.jpg",
-  //   imageAlt: "An F1 car racing at the Singapore Grand Prix",
-  //   category: "AI/ML"
-  // }
+  {
+    slug: "f1-singapore",
+    title: "From Baku to Singapore: Leveling Up My F1 Prediction Model",
+    excerpt: "Explore the evolution of my F1 prediction model, moving from Baku to the challenging Singapore GP. This post details the upgrade to an XGBoost model, the integration of detailed weather data, and advanced feature engineering for more accurate race predictions.",
+    date: "2025-09-25",
+    author: "Nikhil Choudhary",
+    tags: ["Machine Learning", "F1", "Formula 1", "Data Science", "Python", "XGBoost", "fastf1"],
+    readTime: "4 min read",
+    image: "/images/blog/singapore-hero.jpg",
+    imageAlt: "An F1 car racing at the Singapore Grand Prix",
+    category: "AI/ML"
+  }
 ]
 
 

@@ -98,7 +98,7 @@ export default function AboutPage() {
                 </div>
 
                 {/* Globe Card - Made wider and adjusted gradient */}
-                <div className="mt-8 w-full max-w-4xl bg-card rounded-lg border border-border overflow-hidden shadow-md min-h-[300px] relative">
+                <div className="mt-8 w-full max-w-4xl bg-card rounded-lg border border-border md:border-l-0 overflow-hidden shadow-md min-h-[300px] relative">
                   <div className="absolute top-0 right-[10%] h-[100%] w-[80%] md:top-[-15%] md:left-[29%] md:right-auto md:h-[140%] md:w-[90%]">
                     {isMounted && (
                       <World

@@ -40,77 +40,97 @@ setIsMobile(window.innerWidth < 768)
 }
 
 const isDark = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches)
+const isMobileLocal = window.innerWidth < 768
 
-const isMobileLocal = window.innerWidth < 768; // Mobile breakpoint
+// Twinkling Dots Animation (replacing the warp speed)
+const STAR_COLOR = isDark ? "#ffffff" : "#111111"
+const STAR_MIN = 1.0
+const STAR_MAX = 1.8
+const SPEED = 0.25
+const TURN = 0.005
 
-// Galaxy/Warp Speed Animation Logic (Optimized for performance)
-const STAR_COLOR = isDark ? "#ffffff" : "#111111";
-const STAR_COUNT = isMobileLocal ? 150 : 400; // Reduced count for better performance
-const MAX_DEPTH = 50;
+// More dots than original
+const count = Math.min(400, Math.floor((width * height) / 3200))
 
-type Star = { x: number; y: number; z: number; px?: number; py?: number };
-const rand = (min: number, max: number) => Math.random() * (max - min) + min;
+type Star = { 
+  x: number
+  y: number
+  r: number
+  a: number
+  v: number
+  twinkleOffset: number
+  twinkleSpeed: number
+}
 
-const stars: Star[] = Array.from({ length: STAR_COUNT }, () => ({ x: 0, y: 0, z: 0 }));
+const rand = (min: number, max: number) => Math.random() * (max - min) + min
 
-const resetStar = (s: Star) => {
-s.x = rand(-width / 2, width / 2);
-s.y = rand(-height / 2, height / 2);
-// Bias towards closer depths for immediate visibility
-s.z = Math.pow(Math.random(), 0.7) * MAX_DEPTH + 1;
-s.px = undefined;
-s.py = undefined;
-};
+const stars: Star[] = Array.from({ length: count }, (_, i) => ({
+  x: Math.random() * width,
+  y: Math.random() * height,
+  r: rand(STAR_MIN, STAR_MAX),
+  a: Math.random() * Math.PI * 2,
+  v: rand(0.7, 1.5) * SPEED,
+  twinkleOffset: Math.random() * Math.PI * 4, // Random phase offset for each star
+  twinkleSpeed: rand(0.8, 1.2) // Slight variation in twinkle speed
+}))
 
-stars.forEach(resetStar);
-resize();
-window.addEventListener("resize", resize);
+resize()
+window.addEventListener("resize", resize)
 
-let raf = 0;
+let raf = 0
+const startTime = performance.now()
+
 const tick = () => {
-ctx.clearRect(0, 0, width, height);
-const centerX = width / 2;
-const centerY = height / 2;
-const focalLength = width * 0.5;
+  const currentTime = performance.now()
+  const elapsedTime = (currentTime - startTime) / 1000
+  
+  ctx.clearRect(0, 0, width, height)
+  ctx.fillStyle = STAR_COLOR
+  
+  for (let i = 0; i < stars.length; i++) {
+    const s = stars[i]
+    
+    // Original movement logic
+    s.a += (Math.random() - 0.5) * TURN
+    s.x += Math.cos(s.a) * s.v
+    s.y += Math.sin(s.a) * s.v
 
-// Batch operations for better performance
-for (let i = 0; i < stars.length; i++) {
-const s = stars[i];
-s.z -= 0.08; // Even slower movement for smoothness
-if (s.z <= 0) {
-resetStar(s);
-continue;
+    if (s.x < -5) s.x = width + 5
+    if (s.x > width + 5) s.x = -5
+    if (s.y < -5) s.y = height + 5
+    if (s.y > height + 5) s.y = -5
+
+    // Enhanced 2.5-second gradual twinkling cycle
+    const twinkleTime = elapsedTime * s.twinkleSpeed + s.twinkleOffset
+    const twinkleCycle = (twinkleTime * 2 * Math.PI) / 2.5 // 2.5-second full cycle
+    
+    // Create smooth sine wave for gradual fade (0 to 1 and back to 0)
+    const sineWave = Math.sin(twinkleCycle)
+    const opacity = Math.max(0, Math.min(1, (sineWave + 1) / 2)) // Map sine wave to 0-1
+    
+    // Use original dot size without modification
+    const r = s.r
+
+    // Only draw if opacity is meaningful (avoid drawing invisible dots)
+    if (opacity > 0.05) {
+      ctx.globalAlpha = opacity
+      ctx.beginPath()
+      ctx.arc(s.x, s.y, r, 0, Math.PI * 2)
+      ctx.fill()
+    }
+  }
+  
+  ctx.globalAlpha = 1
+  raf = requestAnimationFrame(tick)
 }
-const k = focalLength / s.z;
-const px = s.x * k + centerX;
-const py = s.y * k + centerY;
-if (px < 0 || px > width || py < 0 || py > height) {
-resetStar(s);
-continue;
-}
-const size = (1 - s.z / MAX_DEPTH) * 2.5; // Smaller max size
-const opacity = 1 - (s.z / MAX_DEPTH) * (s.z / MAX_DEPTH); // Optimized calculation
-if (s.px !== undefined && s.py !== undefined) {
-ctx.beginPath();
-ctx.moveTo(s.px, s.py);
-ctx.lineTo(px, py);
-ctx.lineWidth = size;
-ctx.strokeStyle = STAR_COLOR;
-ctx.globalAlpha = opacity;
-ctx.stroke();
-}
-s.px = px;
-s.py = py;
-}
-raf = requestAnimationFrame(tick);
-};
-raf = requestAnimationFrame(tick);
+
+raf = requestAnimationFrame(tick)
 
 return () => {
-cancelAnimationFrame(raf);
-window.removeEventListener("resize", resize);
-};
-}, [theme]);
+cancelAnimationFrame(raf)
+window.removeEventListener("resize", resize)
+}
+}, [theme])
 
 const [typed, setTyped] = useState("")
 useEffect(() => {

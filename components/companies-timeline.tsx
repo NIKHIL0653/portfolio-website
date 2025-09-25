@@ -27,7 +27,7 @@ const companies: Company[] = [
 export default function CompaniesTimeline() {
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-semibold text-center">Companies I've Worked With</h2>
+      <h2 className="text-2xl font-semibold text-center">Work Experience</h2>
 
       {/* Timeline */}
       <div className="relative">

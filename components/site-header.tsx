@@ -130,7 +130,7 @@ export function SiteHeader() {
                   }`}
                 />
                 
-                <ul className="flex items-center gap-8 px-4 py-0.5 relative z-10">
+                <ul className="flex items-center gap-8 px-4 py-1.5 relative z-10">
                   {nav.map((item) => {
                     const active = pathname === item.href
                     return (
@@ -140,7 +140,7 @@ export function SiteHeader() {
                           aria-current={active ? "page" : undefined}
                           className={
                             active
-                              ? "text-sm font-semibold text-foreground"
+                              ? "text-sm font-semibold text-gray-700 dark:text-gray-300"
                               : "text-sm text-foreground/80 hover:text-foreground transition-colors"
                           }
                         >

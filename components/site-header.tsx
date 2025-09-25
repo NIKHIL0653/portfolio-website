@@ -218,26 +218,25 @@ export function SiteHeader() {
           <div className="flex-1 overflow-y-auto">
             <div className="mt-16 pb-4 px-2">
               {/* Mobile Resume Button */}
-              {hasResume && (
-                <div className="px-2 mt-4">
-                  <Button
-                    asChild
-                    variant="default"
-                    // ✅ MODIFIED 3: Changed rounded-md to rounded
-                    className="w-full rounded mb-4 py-3 h-10 backdrop-blur-sm border border-border"
-                    title="View Resume"
+              <div className="px-2 mt-4">
+                <Button
+                  asChild
+                  variant="default"
+                  disabled={!hasResume}
+                  // ✅ MODIFIED 3: Changed rounded-md to rounded
+                  className="w-full rounded mb-4 py-3 h-10 backdrop-blur-sm border border-border"
+                  title="View Resume"
+                >
+                  <a
+                    href={hasResume ? RESUME_URL : "#"}
+                    target={hasResume ? "_blank" : "_self"}
+                    rel="noopener noreferrer"
+                    onClick={closeMobileMenu}
                   >
-                    <a
-                      href={RESUME_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={closeMobileMenu}
-                    >
-                      Resume
-                    </a>
-                  </Button>
-                </div>
-              )}
+                    Resume
+                  </a>
+                </Button>
+              </div>
 
               <nav aria-label="Mobile navigation">
                 <ul className="flex flex-col gap-1">

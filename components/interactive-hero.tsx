@@ -52,7 +52,7 @@ const TURN = 0.005
 // More dots than original
 const count = Math.min(400, Math.floor((width * height) / 3200))
 
-type Star = { 
+type Star = {
   x: number
   y: number
   r: number
@@ -77,19 +77,19 @@ const stars: Star[] = Array.from({ length: count }, (_, i) => ({
 resize()
 window.addEventListener("resize", resize)
 
-let raf = 0
 const startTime = performance.now()
+let intervalId: NodeJS.Timeout
 
 const tick = () => {
   const currentTime = performance.now()
   const elapsedTime = (currentTime - startTime) / 1000
-  
+
   ctx.clearRect(0, 0, width, height)
   ctx.fillStyle = STAR_COLOR
-  
+
   for (let i = 0; i < stars.length; i++) {
     const s = stars[i]
-    
+
     // Original movement logic
     s.a += (Math.random() - 0.5) * TURN
     s.x += Math.cos(s.a) * s.v
@@ -103,11 +103,11 @@ const tick = () => {
     // Enhanced 2.5-second gradual twinkling cycle
     const twinkleTime = elapsedTime * s.twinkleSpeed + s.twinkleOffset
     const twinkleCycle = (twinkleTime * 2 * Math.PI) / 2.5 // 2.5-second full cycle
-    
+
     // Create smooth sine wave for gradual fade (0 to 1 and back to 0)
     const sineWave = Math.sin(twinkleCycle)
     const opacity = Math.max(0, Math.min(1, (sineWave + 1) / 2)) // Map sine wave to 0-1
-    
+
     // Use original dot size without modification
     const r = s.r
 
@@ -119,16 +119,15 @@ const tick = () => {
       ctx.fill()
     }
   }
-  
+
   ctx.globalAlpha = 1
-  raf = requestAnimationFrame(tick)
 }
 
-raf = requestAnimationFrame(tick)
+intervalId = setInterval(tick, 1000 / 30)
 
 return () => {
-cancelAnimationFrame(raf)
-window.removeEventListener("resize", resize)
+  clearInterval(intervalId)
+  window.removeEventListener("resize", resize)
 }
 }, [theme])
 

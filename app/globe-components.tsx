@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Color, Scene, Fog, PerspectiveCamera, Vector3 } from "three";
 import * as THREE from "three";
 import ThreeGlobe from "three-globe";
-import { useThree, Canvas, extend } from "@react-three/fiber";
+import { useThree, Canvas, extend, useFrame } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { useTheme } from "next-themes";
 import countries from "@/data/world-countries.json";
@@ -59,6 +59,7 @@ function Globe({ globeConfig }: WorldProps) {
   const [isInitialized, setIsInitialized] = useState(false);
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [opacity, setOpacity] = useState(0);
 
   const defaultProps = {
     pointSize: 1,
@@ -80,6 +81,15 @@ function Globe({ globeConfig }: WorldProps) {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useFrame(() => {
+    if (globeRef.current && isInitialized) {
+      const material = globeRef.current.globeMaterial() as THREE.MeshPhongMaterial;
+      if (material.opacity < 1) {
+        material.opacity = Math.min(1, material.opacity + 0.001);
+      }
+    }
+  });
 
   // Initialize globe only once
   useEffect(() => {
@@ -108,15 +118,15 @@ function Globe({ globeConfig }: WorldProps) {
       globeMaterial.emissive = new Color("#000000");
       globeMaterial.emissiveIntensity = 0.02;
       globeMaterial.shininess = 30;
-      globeMaterial.transparent = false;
-      globeMaterial.opacity = 1.0;
+      globeMaterial.transparent = true;
+      globeMaterial.opacity = 0;
     } else {
       globeMaterial.color = new Color("#e8e8e8");
       globeMaterial.emissive = new Color("#f0f0f0");
       globeMaterial.emissiveIntensity = 0.05;
       globeMaterial.shininess = 30;
-      globeMaterial.transparent = false;
-      globeMaterial.opacity = 1.0;
+      globeMaterial.transparent = true;
+      globeMaterial.opacity = 0;
     }
     
     globeMaterial.needsUpdate = true;
@@ -148,7 +158,7 @@ function Globe({ globeConfig }: WorldProps) {
 
     // Set initial rotation
     if (globeRef.current) {
-      globeRef.current.rotation.y = Math.PI;
+      globeRef.current.rotation.y = 0;
     }
   }, [isInitialized, theme, mounted]);
 

@@ -104,15 +104,17 @@ function Globe({ data, globeConfig }: WorldProps & { darkMode?: boolean }) {
     globeMaterial.lights = false; // Disable lighting completely
     globeMaterial.needsUpdate = true;
 
-    // Enable prominent white atmosphere glow for light mode to mask sharp horizon
+    // Enable atmosphere glow for both modes but with different settings
     if (!globeConfig.darkMode) {
+      // Light mode: prominent white atmosphere glow
       globe.showAtmosphere(true);
       globe.atmosphereColor(new Color(0xFFFFFF));
       globe.atmosphereAltitude(0.25);
     } else {
-      globe.showAtmosphere(false);
-      globe.atmosphereColor(new Color(0x000000));
-      globe.atmosphereAltitude(0);
+      // Dark mode: subtle atmosphere glow to avoid white borders
+      globe.showAtmosphere(true);
+      globe.atmosphereColor(new Color(0x333333));
+      globe.atmosphereAltitude(0.12);
     }
 
     // Add countries with very light gray circular dots - even smaller size
@@ -154,11 +156,11 @@ function Globe({ data, globeConfig }: WorldProps & { darkMode?: boolean }) {
   // Function to ensure material consistency
   const ensureMaterialConsistency = () => {
     if (!globeRef.current || !materialSettingsRef.current) return;
-    
+
     const globe = globeRef.current;
     const globeMaterial = globe.globeMaterial();
     const settings = materialSettingsRef.current;
-    
+
     globeMaterial.color.setHex(settings.color);
     globeMaterial.emissive.setHex(settings.emissive);
     globeMaterial.emissiveIntensity = settings.emissiveIntensity;
@@ -170,17 +172,18 @@ function Globe({ data, globeConfig }: WorldProps & { darkMode?: boolean }) {
     const globe = globeRef.current;
     if (!globe) return;
 
-    // Skip interactivity on mobile devices
+    // Skip all interactivity on mobile devices
     if (window.innerWidth < 768) return;
 
     const handleMouseDown = (event: MouseEvent) => {
       event.preventDefault();
       isDraggingRef.current = true;
-      hasDraggedRef.current = false; // Reset drag flag
+      hasDraggedRef.current = false;
       lastMouseXRef.current = event.clientX;
       autoRotateRef.current = false;
       if (gl.domElement) {
         gl.domElement.style.cursor = 'grabbing';
+        document.body.style.cursor = 'grabbing';
       }
     };
 
@@ -208,8 +211,8 @@ function Globe({ data, globeConfig }: WorldProps & { darkMode?: boolean }) {
         isDraggingRef.current = false;
         if (gl.domElement) {
           gl.domElement.style.cursor = 'grab';
+          document.body.style.cursor = 'grab';
         }
-        // Resume auto-rotation immediately
         autoRotateRef.current = true;
       }
     };
@@ -226,9 +229,8 @@ function Globe({ data, globeConfig }: WorldProps & { darkMode?: boolean }) {
     const handleMouseEnter = () => {
       if (gl.domElement && !isDraggingRef.current) {
         gl.domElement.style.cursor = 'grab';
+        document.body.style.cursor = 'grab';
       }
-      // DO NOT change material properties on hover - this was causing the color change
-      // Just ensure consistency without forcing changes
       ensureMaterialConsistency();
     };
 
@@ -237,6 +239,7 @@ function Globe({ data, globeConfig }: WorldProps & { darkMode?: boolean }) {
         handleMouseUp();
       } else if (gl.domElement) {
         gl.domElement.style.cursor = 'default';
+        document.body.style.cursor = 'default';
       }
     };
 
@@ -371,7 +374,7 @@ function Globe({ data, globeConfig }: WorldProps & { darkMode?: boolean }) {
     };
   }, [globeConfig]);
 
-  return <threeGlobe ref={globeRef} style={{ cursor: window.innerWidth < 768 ? 'default' : 'grab' }} />;
+  return <threeGlobe ref={globeRef} key={globeConfig.darkMode ? 'dark' : 'light'} />;
 }
 
 export function WebGLRendererConfig() {
@@ -388,23 +391,16 @@ export function WebGLRendererConfig() {
   return null;
 }
 
-export function World(props: WorldProps & { 
-  shadowPosition?: { x?: string; y?: string; scale?: number };
+export function World(props: WorldProps & {
   darkMode?: boolean;
 }) {
-  const { shadowPosition = {}, darkMode = false } = props;
-  const { x = '0%', y = '0%', scale = 1 } = shadowPosition;
+  const { darkMode = false } = props;
 
-  // Separate shadow styles for light and dark modes
+  // Shadow styles for light and dark modes
   const lightModeShadow = `
-    inset 0px 0px 0px 1px transparent,
-    inset 0px 0px 20px 8px rgba(0, 0, 0, 0.05),
-    inset 0px 0px 35px 12px rgba(0, 0, 0, 0.04),
-    inset 0px 0px 50px 18px rgba(0, 0, 0, 0.03),
-    inset 0px 0px 70px 24px rgba(0, 0, 0, 0.02),
-    0px 0px 5px 1px rgba(255, 255, 255, 0.25),
-    0px 0px 3px 1px rgba(255, 255, 255, 0.35),
-    0px 0px 2px 1px rgba(255, 255, 255, 0.45)
+    inset 0px 0px 40px 15px rgba(0, 0, 0, 0.1),
+    inset 0px 0px 60px 20px rgba(0, 0, 0, 0.05),
+    0px 0px 30px 10px rgba(0, 0, 0, 0.08)
   `;
 
   const darkModeShadow = `
@@ -425,15 +421,15 @@ export function World(props: WorldProps & {
 
   return (
     <div className="relative w-full h-full">
-      {/* Responsive Globe Container */}
-      <div 
-        className="absolute inset-0 globe-container"
+      {/* Globe Container - enlarged to show glow effect properly */}
+      <div
+        className="absolute globe-container"
         style={{
-          // Desktop styles (default)
+          // Default desktop styles
           width: '150%',
           height: '150%',
           left: '-25%',
-          top: '-25%'
+          top: '-25%',
         }}
       >
         <Canvas
@@ -447,7 +443,8 @@ export function World(props: WorldProps & {
             width: "100%",
             height: "100%",
             background: "transparent",
-            touchAction: "pan-y"
+            touchAction: "pan-y",
+            cursor: window.innerWidth >= 768 ? "grab" : "default"
           }}
           gl={{
             antialias: true,
@@ -460,17 +457,17 @@ export function World(props: WorldProps & {
           <Globe data={props.data} globeConfig={{...props.globeConfig, darkMode}} />
         </Canvas>
       </div>
-      
-      {/* Responsive Shadow Overlay */}
-      <div 
+
+      {/* Shadow Overlay */}
+      <div
         className="absolute pointer-events-none globe-shadow"
         style={{
           // Desktop styles (default)
           left: '50%',
           top: '50%',
-          transform: `translate(calc(-50% + ${x}), calc(-50% + ${y}))`,
-          width: `${488 * scale}px`,
-          height: `${488 * scale}px`,
+          transform: 'translate(-50%, -50%)',
+          width: '545px',
+          height: '545px',
         }}
       >
         <div
@@ -487,22 +484,21 @@ export function World(props: WorldProps & {
       <style jsx>{`
         @media (max-width: 767px) {
           .globe-container {
-            width: 200% !important;
-            height: 200% !important;
-            left: -25% !important;
-            top: -25% !important;
+            width: 190% !important;
+            height: 190% !important;
+            left: -3% !important;
+            top: -15% !important;
           }
-          
+
           .globe-shadow {
-            left: 70% !important;
-            top: 54% !important;
+            left: 92% !important;
+            top: 60% !important;
             transform: translate(-50%, -50%) !important;
-            width: ${587 * 0.8}px !important;
-            height: ${589 * 0.8}px !important;
+            width: 373px !important;
+            height: 373px !important;
           }
         }
-        
-        /* Desktop styles - reverting to original */
+
         @media (min-width: 768px) {
           .globe-container {
             width: 150% !important;
@@ -510,13 +506,13 @@ export function World(props: WorldProps & {
             left: -25% !important;
             top: -25% !important;
           }
-          
+
           .globe-shadow {
             left: 50% !important;
             top: 50% !important;
-            transform: translate(calc(-50% + ${x}), calc(-50% + ${y})) !important;
-            width: ${488 * scale}px !important;
-            height: ${488 * scale}px !important;
+            transform: translate(-50%, -50%) !important;
+            width: 538px !important;
+            height: 538px !important;
           }
         }
       `}</style>

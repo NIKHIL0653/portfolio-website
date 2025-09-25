@@ -1,5 +1,3 @@
-// app/page.tsx
-
 "use client"
 
 import { InteractiveHero } from "@/components/interactive-hero"
@@ -12,24 +10,6 @@ import Link from "next/link"
 import { useRef, useEffect, useState } from 'react'
 import { useIsMobile } from "@/hooks/use-mobile"
 import { useTheme } from "next-themes"
-import dynamic from 'next/dynamic'
-
-// Dynamically import the World component with proper error handling
-const World = dynamic(
-  () => import('@/components/ui/globe').then((mod) => {
-    // Make sure we're getting the World export specifically
-    if (!mod.World) {
-      throw new Error('World component not found in globe module');
-    }
-    return { default: mod.World };
-  }),
-  {
-    ssr: false,
-    loading: () => <div className="absolute inset-0 flex items-center justify-center bg-transparent">
-      <div className="w-6 h-6 border-2 border-muted-foreground border-t-transparent rounded-full animate-spin"></div>
-    </div>
-  }
-);
 
 // Define the shape for a letter's state, adding RGB caches for performance
 type LetterState = {
@@ -101,7 +81,7 @@ const LetterGlitch = ({
   ) => {
     const result = {
       r: Math.round(start.r + (end.r - start.r) * factor),
-      g: Math.round(start.g + (end.g - start.g) * factor),
+      g: Math.round(start.g + (end.g - end.g) * factor),
       b: Math.round(start.b + (end.b - end.b) * factor) // FIX: Changed to end.b - start.b
     };
     return `rgb(${result.r}, ${result.g}, ${result.b})`;
@@ -189,11 +169,11 @@ const LetterGlitch = ({
       letter.char = getRandomChar();
       letter.targetColor = getRandomColor();
       letter.colorProgress = smooth ? 0 : 1;
-      
+
       // OPTIMIZATION: Pre-calculate RGB values only when a transition starts (colorProgress is 0)
       if (smooth) {
         // The current 'letter.color' is the start color for the transition
-        letter.startRgb = hexToRgb(letter.color); 
+        letter.startRgb = hexToRgb(letter.color);
         letter.endRgb = hexToRgb(letter.targetColor);
       }
     }
@@ -204,11 +184,11 @@ const LetterGlitch = ({
     letters.current.forEach(letter => {
       if (letter.colorProgress < 1) {
         letter.colorProgress = Math.min(1, letter.colorProgress + 0.03); // Reduced from 0.05 to 0.03
-        
+
         // OPTIMIZATION: Use the pre-calculated RGB values
         const startRgb = letter.startRgb;
         const endRgb = letter.endRgb;
-        
+
         // The original interpolateColor function has a bug, using the corrected one here.
         if (startRgb && endRgb) {
           letter.color = correctedInterpolateColor(startRgb, endRgb, letter.colorProgress);
@@ -405,57 +385,7 @@ function ProjectsCard() {
 
 // FIXED: About Card with proper mobile handling and correct styling
 function AboutCard() {
-  const { theme } = useTheme();
   const isMobile = useIsMobile();
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!isMounted) return;
-    
-    const checkDarkMode = () => {
-      const isDark = theme === "dark" || 
-        (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
-      setIsDarkMode(isDark);
-    };
-
-    checkDarkMode();
-    
-    // Listen for system theme changes
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const handleChange = () => checkDarkMode();
-    mediaQuery.addListener(handleChange);
-    
-    return () => mediaQuery.removeListener(handleChange);
-  }, [theme, isMounted]);
-
-  const globeConfig = {
-    pointSize: 4,
-    atmosphereColor: "#ffffff",
-    showAtmosphere: false,
-    atmosphereAltitude: 0,
-    polygonColor: isDarkMode ? "#333333" : "#222222", // Darker dots in dark mode
-    globeColor: isDarkMode ? "#666666" : "#FFFFFF", // Darker globe in dark mode
-    emissive: isDarkMode ? "#444444" : "#F5F5F5", // Much darker emissive in dark mode
-    emissiveIntensity: isDarkMode ? 0.1 : 0.25, // Reduced intensity in dark mode
-    shininess: isDarkMode ? 5 : 15, // Less shininess in dark mode
-    autoRotate: true, // Enable auto-rotation on all devices
-    autoRotateSpeed: 0.003 // Consistent rotation speed
-  };
-
-  const locationData = [{
-    order: 1,
-    startLat: 22.5726,
-    startLng: 88.3639,
-    endLat: 22.5726,
-    endLng: 88.3639,
-    arcAlt: 0.005,
-    color: '#FF4444'
-  }];
 
   return (
     <Link
@@ -463,23 +393,9 @@ function AboutCard() {
       className="group relative bg-card rounded-lg border border-border overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 min-h-[380px] block"
       style={{ WebkitTapHighlightColor: 'transparent' }}
     >
-      {/* Globe Container - Non-interactive on mobile */}
-      <div className="absolute bottom-[-5%] right-[-15%] md:right-[-30%] h-[100%] w-[100%] z-0 pointer-events-none touch-pan-y">
-        <div className="w-full h-full md:group-hover:scale-104 transition-transform duration-300 origin-center">
-          {/* OPTIMIZATION: Only render the heavy 3D globe on desktop (not mobile) */}
-          {isMounted && !isMobile && (
-            <World
-              data={locationData}
-              globeConfig={globeConfig}
-              darkMode={isDarkMode}
-            />
-          )}
-        </div>
-      </div>
-
       {/* Background overlay - restored original complex masking for proper fade */}
       <div className="absolute inset-0 pointer-events-none z-5">
-        <div 
+        <div
           className="absolute bottom-0 left-0 right-0 h-[80%] bg-card"
           style={{
             maskImage: 'linear-gradient(to top, black 0%, black 20%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.4) 70%, transparent 100%)',

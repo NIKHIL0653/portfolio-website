@@ -129,7 +129,7 @@ export function ActivityHeatmap() {
       <div className="max-w-screen-xl mx-auto">
         {/* Header Stats */}
         {!isLoading && !error && (
-          <div className="flex flex-col sm:flex-row items-center justify-between mb-6 px-4 gap-4 sm:gap-0">
+          <div className="flex flex-col sm:flex-row items-center justify-between mb-6 px-2 sm:px-4 gap-4 sm:gap-0">
             <div className="text-xs sm:text-sm text-muted-foreground text-center sm:text-left">
               {hoveredDay
                 ? `${hoveredDay.contributions} contribution${hoveredDay.contributions !== 1 ? 's' : ''} on ${new Date(hoveredDay.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`
@@ -144,7 +144,7 @@ export function ActivityHeatmap() {
           </div>
         )}
 
-        <div className="w-full px-4 pb-4">
+        <div className="w-full px-2 sm:px-4 pb-4">
           <div className="overflow-x-auto sm:overflow-visible overflow-y-visible">
             <div className="relative min-w-[600px] sm:min-w-full px-2 py-2">
               <div className="flex mb-2 ml-6 sm:ml-10">
@@ -217,7 +217,7 @@ export function ActivityHeatmap() {
         </div>
         
         {/* Legend */}
-        <div className="mt-4 sm:mt-6 flex items-center justify-center sm:justify-between px-4">
+        <div className="mt-4 sm:mt-6 flex items-center justify-center sm:justify-between px-2 sm:px-4">
           <div className="flex items-center gap-2 sm:gap-3">
             <span className="text-[10px] sm:text-xs text-muted-foreground">Less</span>
             <div className={cn("flex", gapSize)}>

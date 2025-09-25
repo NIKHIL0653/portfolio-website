@@ -44,13 +44,13 @@ const isMobileLocal = window.innerWidth < 768
 
 // Twinkling Dots Animation (replacing the warp speed)
 const STAR_COLOR = isDark ? "#ffffff" : "#111111"
-const STAR_MIN = 1.0
-const STAR_MAX = 1.8
-const SPEED = 0.25
-const TURN = 0.005
+const STAR_MIN = 0.7
+const STAR_MAX = 1.3
+const SPEED = 0.3
+const TURN = 0.01
 
 // More dots than original
-const count = Math.min(400, Math.floor((width * height) / 3200))
+const count = Math.min(900, Math.floor((width * height) / 3200))
 
 type Star = {
   x: number
@@ -60,6 +60,9 @@ type Star = {
   v: number
   twinkleOffset: number
   twinkleSpeed: number
+  visible: boolean
+  visibilityTimer: number
+  visibilityDuration: number
 }
 
 const rand = (min: number, max: number) => Math.random() * (max - min) + min
@@ -71,14 +74,17 @@ const stars: Star[] = Array.from({ length: count }, (_, i) => ({
   a: Math.random() * Math.PI * 2,
   v: rand(0.7, 1.5) * SPEED,
   twinkleOffset: Math.random() * Math.PI * 4, // Random phase offset for each star
-  twinkleSpeed: rand(0.8, 1.2) // Slight variation in twinkle speed
+  twinkleSpeed: rand(0.8, 1.2), // Slight variation in twinkle speed
+  visible: Math.random() > 0.3, // 70% chance to start visible
+  visibilityTimer: rand(2, 8), // Random initial timer 2-8 seconds
+  visibilityDuration: rand(3, 10) // Duration when visible/invisible 3-10 seconds
 }))
 
 resize()
 window.addEventListener("resize", resize)
 
 const startTime = performance.now()
-let intervalId: NodeJS.Timeout
+let animationId: number
 
 const tick = () => {
   const currentTime = performance.now()
@@ -102,7 +108,7 @@ const tick = () => {
 
     // Enhanced 2.5-second gradual twinkling cycle
     const twinkleTime = elapsedTime * s.twinkleSpeed + s.twinkleOffset
-    const twinkleCycle = (twinkleTime * 2 * Math.PI) / 2.5 // 2.5-second full cycle
+    const twinkleCycle = (twinkleTime * 2 * Math.PI) / 1.8 // 2.5-second full cycle
 
     // Create smooth sine wave for gradual fade (0 to 1 and back to 0)
     const sineWave = Math.sin(twinkleCycle)
@@ -121,12 +127,13 @@ const tick = () => {
   }
 
   ctx.globalAlpha = 1
+  animationId = requestAnimationFrame(tick)
 }
 
-intervalId = setInterval(tick, 1000 / 30)
+animationId = requestAnimationFrame(tick)
 
 return () => {
-  clearInterval(intervalId)
+  cancelAnimationFrame(animationId)
   window.removeEventListener("resize", resize)
 }
 }, [theme])

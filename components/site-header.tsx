@@ -175,7 +175,7 @@ export function SiteHeader() {
                 isMobileMenuOpen ? 'opacity-0' : 'opacity-100'
               }`}
             >
-              Nikhil Choudhary
+              NIKHIL CHOUDHARY
             </Link>
 
             {/* ✅ MODIFIED 2: Changed -mr-2 to mr-2 to move icon to the left */}

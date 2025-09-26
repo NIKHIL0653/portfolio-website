@@ -32,7 +32,8 @@ export default function BlogIndexPageClient() {
     return `${day} ${month} ${year}`
   }
 
-  const displayPosts = activeCategory === 'All Posts' ? filteredPosts.slice(1) : filteredPosts
+  const isAllPostsView = activeCategory === 'All Posts'
+  const displayPosts = isAllPostsView ? filteredPosts.slice(1) : filteredPosts
 
   return (
     <main className="blog-index-page min-h-screen bg-[#fafafa] dark:bg-[#121212] overflow-x-hidden">
@@ -131,118 +132,178 @@ export default function BlogIndexPageClient() {
         `}</style>
 
         {filteredPosts.length > 0 ? (
-          <div className="bg-card border border-[#E2E8F0] rounded-xl shadow-xl p-3 relative">
-
-            {/* Featured Post */}
-            {activeCategory === 'All Posts' && filteredPosts.length > 0 && (
-              <>
-                <div className="mb-4 pb-4">
-                  <Link href={`/blog/${filteredPosts[0].slug}`} className="block group">
-                    <article className="space-y-4">
-                      <div className="relative aspect-[16/9] md:aspect-[23/9] w-full rounded-lg overflow-hidden">
-                          {filteredPosts[0].image && (
-                            <>
-                              <Image
-                                src={filteredPosts[0].image}
-                                alt={filteredPosts[0].imageAlt || filteredPosts[0].title}
-                                fill
-                                className="object-cover transition-opacity duration-500"
-                                sizes="(max-width: 768px) 100vw, 100vw"
-                                priority
-                              />
-                              {/* FIXED: Changed hover:opacity-0 to group-hover:opacity-0 */}
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent transition-opacity duration-500 group-hover:opacity-0"></div>
-                            </>
-                          )}
-                        </div>
-                      <div className="space-y-3 px-4 transition-colors duration-300">
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs text-muted-foreground font-medium transition-colors duration-300 group-hover:text-foreground">
-                            {filteredPosts[0].category}
-                          </span>
-                          <time className="text-xs text-muted-foreground transition-colors duration-300 group-hover:text-foreground">
-                            {formatDate(filteredPosts[0].date)}
-                          </time>
+          <>
+            {/* All Posts View - Complex Layout with Lines */}
+            {isAllPostsView ? (
+              <div className="bg-card border border-[#E2E8F0] rounded-xl shadow-xl p-3 relative">
+                {/* Featured Post */}
+                {filteredPosts.length > 0 && (
+                  <>
+                    <div className="mb-4 pb-4">
+                      <Link href={`/blog/${filteredPosts[0].slug}`} className="block group">
+                        <article className="space-y-4">
+                          <div className="relative aspect-[16/9] md:aspect-[23/9] w-full rounded-lg overflow-hidden">
+                            {filteredPosts[0].image && (
+                              <>
+                                <Image
+                                  src={filteredPosts[0].image}
+                                  alt={filteredPosts[0].imageAlt || filteredPosts[0].title}
+                                  fill
+                                  className="object-cover transition-opacity duration-500"
+                                  sizes="(max-width: 768px) 100vw, 100vw"
+                                  priority
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent transition-opacity duration-500 group-hover:opacity-0"></div>
+                              </>
+                            )}
                           </div>
-                        <h2 className="blog-post-title text-xl font-semibold leading-tight text-foreground transition-colors duration-300 group-hover:text-primary">
-                          {filteredPosts[0].title}
-                        </h2>
-                        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2 transition-colors duration-300 group-hover:text-foreground">
-                          {filteredPosts[0].excerpt}
-                        </p>
-                      </div>
-                    </article>
-                  </Link>
-                </div>
-                <div className="border-b border-dashed border-border mb-4 -mx-3"></div>
-              </>
-            )}
+                          <div className="space-y-3 px-4 transition-colors duration-300">
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs text-muted-foreground font-medium transition-colors duration-300 group-hover:text-foreground">
+                                {filteredPosts[0].category}
+                              </span>
+                              <time className="text-xs text-muted-foreground transition-colors duration-300 group-hover:text-foreground">
+                                {formatDate(filteredPosts[0].date)}
+                              </time>
+                            </div>
+                            <h2 className="blog-post-title text-xl font-semibold leading-tight text-foreground transition-colors duration-300 group-hover:text-primary">
+                              {filteredPosts[0].title}
+                            </h2>
+                            <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2 transition-colors duration-300 group-hover:text-foreground">
+                              {filteredPosts[0].excerpt}
+                            </p>
+                          </div>
+                        </article>
+                      </Link>
+                    </div>
+                    <div className="border-b border-dashed border-border mb-4 -mx-3"></div>
+                  </>
+                )}
 
-            {/* Grid Posts */}
-            <div className="relative -mt-4">
-              {/* Vertical Lines positioned to start from horizontal line and extend to card bottom */}
-              <div className="absolute left-0 right-0 pointer-events-none" style={{ top: '-0.001rem', bottom: '-0.75rem' }}>
-                {/* Desktop Column separators */}
-                <div className="hidden lg:block h-full">
-                  <div className="grid grid-cols-3 h-full">
-                    <div className="border-r border-dashed border-border h-full" style={{ transform: 'translateX(-0.2rem)' }}></div>
-                    <div className="border-r border-dashed border-border h-full" style={{ transform: 'translateX(0.3rem)' }}></div>
-                    <div></div>
+                {/* Grid Posts with Complex Layout */}
+                <div className="relative -mt-4">
+                  {/* Vertical Lines positioned to start from horizontal line and extend to card bottom */}
+                  <div className="absolute left-0 right-0 pointer-events-none" style={{ top: '-0.001rem', bottom: '-0.75rem' }}>
+                    {/* Desktop Column separators */}
+                    <div className="hidden lg:block h-full">
+                      <div className="grid grid-cols-3 h-full">
+                        <div className="border-r border-dashed border-border h-full" style={{ transform: 'translateX(-0.2rem)' }}></div>
+                        <div className="border-r border-dashed border-border h-full" style={{ transform: 'translateX(0.3rem)' }}></div>
+                        <div></div>
+                      </div>
+                    </div>
+
+                    {/* Mobile center line */}
+                    {filteredPosts.length > 0 && (
+                      <div className="block md:hidden lg:hidden absolute left-1/2 transform -translate-x-1/2 top-0 h-full">
+                        <div className="border-r border-dashed border-border h-full"></div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 pt-4 pb-4 gap-y-10">
+                    {displayPosts.map((post) => (
+                      <div key={post.slug} className="relative z-10">
+                        <Link href={`/blog/${post.slug}`} className="block group">
+                          <article className="space-y-3">
+                            {post.image && (
+                              <div className="relative aspect-[16/9] w-full rounded-lg overflow-hidden">
+                                <Image
+                                  src={post.image}
+                                  alt={post.imageAlt || post.title}
+                                  fill
+                                  className="object-cover transition-opacity duration-500"
+                                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent transition-opacity duration-500 group-hover:opacity-0"></div>
+                              </div>
+                            )}
+                            <div className="space-y-3 px-4 transition-colors duration-300">
+                              <div className="flex items-center justify-between">
+                                <span className="text-xs text-muted-foreground font-medium transition-colors duration-300 group-hover:text-foreground">
+                                  {post.category}
+                                </span>
+                                <time className="text-xs text-muted-foreground transition-colors duration-300 group-hover:text-foreground">
+                                  {formatDate(post.date)}
+                                </time>
+                              </div>
+                              <h3 className="blog-post-title text-xl font-semibold leading-tight text-foreground transition-colors duration-300 group-hover:text-primary line-clamp-2">
+                                {post.title}
+                              </h3>
+                              <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3 transition-colors duration-300 group-hover:text-foreground">
+                                {post.excerpt}
+                              </p>
+                            </div>
+                          </article>
+                        </Link>
+                      </div>
+                    ))}
                   </div>
                 </div>
+              </div>
+            ) : (
+              /* Filtered View - Maintaining Original Design with Proper Containment */
+              <div className="bg-card border border-[#E2E8F0] rounded-xl shadow-xl relative overflow-hidden">
+                {/* Vertical Lines - Full Height */}
+                <div className="absolute inset-0 pointer-events-none">
+                  {/* Desktop Column separators */}
+                  <div className="hidden lg:block h-full">
+                    <div className="grid grid-cols-3 h-full px-3">
+                      <div className="border-r border-dashed border-border h-full" style={{ transform: 'translateX(-0.2rem)' }}></div>
+                      <div className="border-r border-dashed border-border h-full" style={{ transform: 'translateX(0.3rem)' }}></div>
+                      <div></div>
+                    </div>
+                  </div>
 
-                {/* Mobile center line */}
-                {activeCategory === 'All Posts' && filteredPosts.length > 0 && (
+                  {/* Mobile center line */}
                   <div className="block md:hidden lg:hidden absolute left-1/2 transform -translate-x-1/2 top-0 h-full">
                     <div className="border-r border-dashed border-border h-full"></div>
                   </div>
-                )}
-              </div>
+                </div>
 
-              <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 pt-4 pb-4 ${
-                activeCategory === 'All Posts' ? 'gap-y-10' : 'gap-y-8'
-              }`}>
-                {displayPosts.map((post) => (
-                  <div key={post.slug} className="relative z-10">
-                    <Link href={`/blog/${post.slug}`} className="block group">
-                      <article className="space-y-3">
-                        {post.image && (
-                          <div className="relative aspect-[16/9] w-full rounded-lg overflow-hidden">
-                            <Image
-                              src={post.image}
-                              alt={post.imageAlt || post.title}
-                              fill
-                              className="object-cover transition-opacity duration-500"
-                              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                            />
-                            {/* FIXED: Changed hover:opacity-0 to group-hover:opacity-0 */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent transition-opacity duration-500 group-hover:opacity-0"></div>
-                          </div>
-                        )}
-                        <div className="space-y-3 px-4 transition-colors duration-300">
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs text-muted-foreground font-medium transition-colors duration-300 group-hover:text-foreground">
-                              {post.category}
-                            </span>
-                            <time className="text-xs text-muted-foreground transition-colors duration-300 group-hover:text-foreground">
-                              {formatDate(post.date)}
-                            </time>
-                          </div>
-                          <h3 className="blog-post-title text-xl font-semibold leading-tight text-foreground transition-colors duration-300 group-hover:text-primary line-clamp-2">
-                            {post.title}
-                          </h3>
-                          <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3 transition-colors duration-300 group-hover:text-foreground">
-                            {post.excerpt}
-                          </p>
-                        </div>
-                      </article>
-                    </Link>
+                <div className="p-3 relative z-10">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">
+                    {displayPosts.map((post) => (
+                      <div key={post.slug}>
+                        <Link href={`/blog/${post.slug}`} className="block group">
+                          <article className="space-y-3">
+                            {post.image && (
+                              <div className="relative aspect-[16/9] w-full rounded-lg overflow-hidden">
+                                <Image
+                                  src={post.image}
+                                  alt={post.imageAlt || post.title}
+                                  fill
+                                  className="object-cover transition-opacity duration-500"
+                                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent transition-opacity duration-500 group-hover:opacity-0"></div>
+                              </div>
+                            )}
+                            <div className="space-y-3 px-4 transition-colors duration-300">
+                              <div className="flex items-center justify-between">
+                                <span className="text-xs text-muted-foreground font-medium transition-colors duration-300 group-hover:text-foreground">
+                                  {post.category}
+                                </span>
+                                <time className="text-xs text-muted-foreground transition-colors duration-300 group-hover:text-foreground">
+                                  {formatDate(post.date)}
+                                </time>
+                              </div>
+                              <h3 className="blog-post-title text-xl font-semibold leading-tight text-foreground transition-colors duration-300 group-hover:text-primary line-clamp-2">
+                                {post.title}
+                              </h3>
+                              <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3 transition-colors duration-300 group-hover:text-foreground">
+                                {post.excerpt}
+                              </p>
+                            </div>
+                          </article>
+                        </Link>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
               </div>
-            </div>
-
-          </div>
+            )}
+          </>
         ) : (
           <div className="bg-card border border-border rounded-lg p-12 text-center">
             <div className="max-w-md mx-auto space-y-4">

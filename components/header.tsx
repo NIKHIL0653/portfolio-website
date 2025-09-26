@@ -39,7 +39,7 @@ export function Header() {
               WebkitBackdropFilter: 'blur(20px)',
             }}
           ></span>
-          <span className="relative z-10">Nikhil Choudhary</span>
+          <span className="relative z-10">NIKHIL CHOUDHARY</span>
         </Link>
 
         {/* Center: Navigation pill, centered relative to content frame */}

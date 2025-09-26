@@ -10,12 +10,12 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    title: "Interface System Revamp",
-    description: "Component system rebuilt with accessibility-first patterns and strict performance budgets.",
-    tags: ["React", "TypeScript", "shadcn/ui"],
+    title: "Turbo-Cash",
+    description: "A sleek looking finance tracking and expense habit building application",
+    tags: ["React", "TypeScript", "Supabase", "Tailwind"],
     link: "#",
     repo: "#",
-    year: "2024",
+    year: "2025",
   },
   {
     title: "Marketing Site Engine",
@@ -77,22 +77,6 @@ export const projects: Project[] = [
     title: "Collaborative Whiteboard",
     description: "Real-time collaborative drawing and brainstorming tool with shape recognition.",
     tags: ["WebRTC", "Canvas API", "Socket.io"],
-    link: "#",
-    repo: "#",
-    year: "2024",
-  },
-  {
-    title: "API Gateway Service",
-    description: "Microservices API gateway with rate limiting, authentication, and monitoring.",
-    tags: ["Go", "Redis", "Docker"],
-    link: "#",
-    repo: "#",
-    year: "2023",
-  },
-  {
-    title: "Data Visualization Suite",
-    description: "Interactive dashboard library with customizable charts and real-time updates.",
-    tags: ["D3.js", "TypeScript", "Webpack"],
     link: "#",
     repo: "#",
     year: "2024",

@@ -9,40 +9,15 @@ export function ProjectsSection() {
   const cardRefs = useRef<(HTMLLIElement | null)[]>([])
   const [activeCardIndex, setActiveCardIndex] = useState<number | null>(null)
 
-  // Generate random grid patterns for more varied layout
-  const gridPatterns = useMemo(() => {
-    const patterns = [
-      '', // Regular 1x1
-      'md:col-span-2 lg:col-span-2', // Large 2x2
-      'md:col-span-2 lg:col-span-1', // Wide 2x1
-      'md:row-span-2 lg:row-span-1', // Tall 1x2 (medium screens)
-      'lg:col-span-2 lg:row-span-1', // Wide on large screens
-      'md:col-span-1 lg:col-span-2', // Wide only on large screens
-      '', // Regular 1x1
-      'md:col-span-2 lg:col-span-1', // Wide 2x1
-      '', // Regular 1x1
-      'lg:col-span-2', // Wide on large only
-      'md:row-span-2', // Tall on medium+
-      '', // Regular 1x1
-    ]
-    
-    // Create a more random distribution
-    return projects.map((_, index) => {
-      const seed = index * 7 + 13 // Simple pseudo-random seed
-      const patternIndex = seed % patterns.length
-      
-      // Add some additional randomness based on index position
-      if (index % 8 === 0) return patterns[1] // Every 8th is large
-      if (index % 6 === 2) return patterns[2] // Every 6th starting at 2 is wide
-      if (index % 9 === 4) return patterns[4] // Every 9th starting at 4 is lg wide
-      if (index % 11 === 1) return patterns[3] // Every 11th starting at 1 is tall
-      if (index % 7 === 3) return patterns[5] // Every 7th starting at 3 is lg-only wide
-      if (index % 13 === 6) return patterns[9] // Every 13th starting at 6 is lg wide
-      if (index % 10 === 7) return patterns[10] // Every 10th starting at 7 is tall
-      
-      return patterns[0] // Default regular
-    })
-  }, [])
+  // Define responsive bento grid patterns for 6 projects to fill without gaps
+  const gridPatterns = [
+    'md:col-span-2 lg:col-span-2', // Large card on medium+ screens
+    '', // Regular
+    '', // Regular
+    '', // Regular
+    '', // Regular
+    'md:col-span-2 lg:col-span-2', // Large card on medium+ screens
+  ]
 
   // Generate random heights for more visual variety
   const cardHeights = useMemo(() => {
@@ -112,7 +87,7 @@ export function ProjectsSection() {
 
   return (
     <section id="projects" onClick={handleSectionClick}>
-      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 auto-rows-min">
+      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-min grid-flow-dense">
         {projects.map((p, index) => {
           const gridClasses = gridPatterns[index]
           const heightClass = cardHeights[index]

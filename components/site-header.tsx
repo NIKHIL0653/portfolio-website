@@ -110,9 +110,9 @@ export function SiteHeader() {
             <div className="flex items-center">
               <Link
                 href="/"
-                className="font-light tracking-tight site-header-name"
+                className="font-light tracking-tight font-mono site-header-name"
               >
-                Nikhil Choudhary
+                NIKHIL CHOUDHARY
               </Link>
             </div>
 
@@ -171,7 +171,7 @@ export function SiteHeader() {
             {/* ✅ MODIFIED 1: Added ml-2 to move text to the right */}
             <Link
               href="/"
-              className={`font-light tracking-tight transition-opacity duration-300 ml-2 ${
+              className={`font-light tracking-tight font-mono transition-opacity duration-300 ml-2 ${
                 isMobileMenuOpen ? 'opacity-0' : 'opacity-100'
               }`}
             >

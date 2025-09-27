@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: "Nikhil Choudhary - Portfolio",
   description: "Full-stack developer portfolio showcasing skills in React, Next.js, and cutting-edge web technologies",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon.png",
   },
 }
 
@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}>
       <head>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
       </head>
       <body className="bg-background text-foreground font-sans">
         <ThemeProvider defaultTheme="dark" storageKey="portfolio-theme">

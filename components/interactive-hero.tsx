@@ -14,7 +14,7 @@ export function InteractiveHero() {
 
 const specialties = [
   "Software Engineer",
-  "AI / ML Engineer"
+  "AI Engineer"
 ]
 
 useEffect(() => {

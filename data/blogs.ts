@@ -87,7 +87,7 @@ export const posts: BlogPostMeta[] = [
   },
   {
     slug: "cart-pole-agent-blog",
-    title: "Training a Self-Learning CartPole AI with Python and Pygame",
+    title: "Training a Self-Learning CartPole AI with Python and OpenAI Gym",
     excerpt: "A step-by-step guide to building a Deep Q-Learning agent to master the classic CartPole game. Learn to implement a DQN in Python, integrate with OpenAI Gym, and create a modern, interactive visualization with Pygame.",
     date: "2025-09-17",
     author: "Nikhil Choudhary",

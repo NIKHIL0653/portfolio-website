@@ -70,12 +70,8 @@ export function ProjectsSection() {
   }
 
   const handleCardClick = (index: number) => {
-    // Toggle active state - clicking the same card deactivates it
-    if (activeCardIndex === index) {
-      setActiveCardIndex(null)
-    } else {
-      setActiveCardIndex(index)
-    }
+    // Set active state - clicking outside deactivates
+    setActiveCardIndex(index)
   }
 
   const handleSectionClick = (e: React.MouseEvent) => {
@@ -126,7 +122,7 @@ export function ProjectsSection() {
                     ))}
                   </ul>
                   <div className="flex items-center gap-3">
-                    {p.link && (
+                    {p.link && p.link !== "#" && (
                       <a
                         href={p.link}
                         target="_blank"
@@ -138,7 +134,7 @@ export function ProjectsSection() {
                         Visit →
                       </a>
                     )}
-                    {p.repo && (
+                    {p.repo && p.repo !== "#" && (
                       <a
                         href={p.repo}
                         target="_blank"

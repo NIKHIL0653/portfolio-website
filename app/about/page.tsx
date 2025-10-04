@@ -88,12 +88,12 @@ export default function AboutPage() {
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight mb-6 sm:mb-8 text-left">About Me</h1>
                 <div className="prose prose-neutral dark:prose-invert prose-base leading-relaxed">
                   <p className="text-base text-muted-foreground mb-6 text-left">
-                    I'm Nikhil Choudhary, a developer focused on performant, accessible, and design-forward web
-                    experiences—bridging interactive front-ends with robust backends.
+                    I'm Nikhil Choudhary, a Software Engineer and AI Engineer dedicated to crafting scalable systems
+                    and intelligent solutions that solve complex real-world problems.
                   </p>
                   <p className="text-base text-muted-foreground text-left">
-                    Areas of interest: AI-assisted tooling, developer experience, visualization, and building interfaces that feel
-                    "alive" without sacrificing clarity or speed.
+                    Areas of interest: Machine learning applications, AI-driven architectures, system optimization,
+                    and developing technologies that push the boundaries of what's possible.
                   </p>
                 </div>
 

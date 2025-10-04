@@ -13,9 +13,9 @@ const BlogIndexPageClient = dynamic(() => import("../../components/blog-index-pa
               <p className="text-muted-foreground mt-2 max-w-2xl text-sm sm:text-base">Writings on frontend, accessibility, and product craft.</p>
             </header>
             <div className="animate-pulse">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border border-gray-600 dark:border-gray-400 rounded-lg overflow-hidden">
                 {[...Array(6)].map((_, i) => (
-                  <div key={i} className="border border-gray-200 dark:border-gray-700 p-4">
+                  <div key={i} className="border border-gray-600 dark:border-gray-400 p-4">
                     <div className="h-48 bg-gray-200 dark:bg-gray-700 rounded-lg mb-4"></div>
                     <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
                     <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded mb-1"></div>

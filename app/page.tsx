@@ -6,7 +6,6 @@ import { TechStackMarquee } from "@/components/tech-stack-marquee"
 import { LetsConnect } from "@/components/lets-connect"
 import { MultilingualGreeting } from "@/components/multilingual-greeting"
 import { Github, Wrench, FolderOpen, FileText, User, Globe as GlobeIcon } from "lucide-react"
-import Prism from "@/components/Prism"
 import Link from "next/link"
 import { useRef, useEffect, useState } from 'react'
 import { useIsMobile } from "@/hooks/use-mobile"
@@ -259,7 +258,7 @@ function BlogCard() {
   const displayedPosts = isMobile ? blogPosts.slice(0, 2) : blogPosts;
 
   return (
-    <Link href="/blog" className="group relative bg-card rounded-lg border border-border overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 min-h-[380px] block">
+    <Link href="/blog" className="group relative bg-card rounded-lg border border-border overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 min-h-[380px] block">
       <div
         className="absolute inset-0 p-4 pt-12"
         style={{
@@ -341,7 +340,7 @@ function ProjectsCard() {
   return (
     <Link
       href="/projects"
-      className="group relative bg-card rounded-lg border border-border shadow-md hover:shadow-lg transition-all duration-300 min-h-[380px] block"
+      className="group relative bg-card rounded-lg border border-border shadow-sm hover:shadow-md transition-all duration-300 min-h-[380px] block"
     >
       <div
         className="absolute inset-0 p-4 pt-6 z-0"
@@ -397,37 +396,10 @@ function AboutCard() {
   return (
     <Link
       href="/about"
-      className="group relative bg-card rounded-lg border border-border overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 min-h-[380px] block"
+      className="group relative bg-card rounded-lg border border-border overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 min-h-[380px] block"
       style={{ WebkitTapHighlightColor: 'transparent' }}
     >
-      {/* Prism Background */}
-      <div className="absolute inset-0 z-0">
-        {mounted && (
-          <Prism
-            height={3.5}
-            baseWidth={4.5}
-            animationType="rotate"
-            glow={1}
-            noise={0.2}
-            scale={2.0}
-            hueShift={0.3}
-            colorFrequency={1}
-            timeScale={0.5}
-            theme={theme === 'dark' ? 'dark' : 'light'}
-          />
-        )}
-      </div>
 
-      {/* Background overlay - restored original complex masking for proper fade */}
-      <div className="absolute inset-0 pointer-events-none z-5">
-        <div
-          className="absolute bottom-0 left-0 right-0 h-[80%] bg-card"
-          style={{
-            maskImage: 'linear-gradient(to top, black 0%, black 20%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.4) 70%, transparent 100%)',
-            WebkitMaskImage: 'linear-gradient(to top, black 0%, black 20%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.4) 70%, transparent 100%)'
-          }}
-        />
-      </div>
 
       {/* Content - Exact same structure as original with proper animations */}
       <div className="absolute bottom-6 left-8 flex flex-col-reverse items-start z-10">
@@ -454,13 +426,13 @@ export default function HomePage() {
   return (
     <main className="min-h-dvh flex flex-col bg-[#fafafa] dark:bg-[#121212] pb-8 sm:pb-16 md:pb-20 lg:pb-6">
       <div className="flex-1 px-4 py-6 sm:p-8 md:p-12 lg:p-12">
-        <div className="w-full max-w-7xl mx-auto space-y-4">
+        <div className="w-full max-w-7xl lg:max-w-[1200px] mx-auto space-y-4">
 
-          <div className="bg-card rounded-lg border border-border overflow-hidden shadow-md">
+          <div className="bg-card rounded-lg border border-border overflow-hidden shadow-sm">
             <InteractiveHero />
           </div>
 
-          <div className="bg-card rounded-lg border border-border overflow-hidden shadow-md p-6 sm:p-8">
+          <div className="bg-card rounded-lg border border-border overflow-hidden shadow-sm p-6 sm:p-8">
             <div className="text-center mb-6">
               <div className="flex items-center justify-center gap-3">
                 <Github className="h-6 w-6 text-muted-foreground" />
@@ -485,7 +457,7 @@ export default function HomePage() {
             <AboutCard />
           </div>
 
-          <div className="bg-card rounded-lg border border-border overflow-hidden shadow-md p-4 sm:p-6 min-h-[280px] flex flex-col">
+          <div className="bg-card rounded-lg border border-border overflow-hidden shadow-sm p-4 sm:p-6 min-h-[280px] flex flex-col">
             <div className="text-center mb-6 pt-6 flex-1 flex flex-col justify-center">
               <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold">Let's connect</h2>
               <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">

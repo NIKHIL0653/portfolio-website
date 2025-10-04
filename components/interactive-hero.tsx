@@ -215,7 +215,7 @@ return (
 
           {/* Description */}
           <p className="text-sm sm:text-base leading-relaxed text-muted-foreground max-w-md mx-auto">
-            I build performant interfaces and systems with a product mindset.
+            I engineer scalable software and intelligent AI systems to solve real-world challenges.
           </p>
 
           {/* Scroll Down Indicator */}

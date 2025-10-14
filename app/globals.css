@@ -176,13 +176,13 @@
   background: rgba(75, 85, 99, 0.7);
 }
 
-/* Glowing border for cards and sections in dark mode */
+/* Glowing border for cards and sections in dark mode - subtle dark gray */
 .dark .bg-card:not(li) {
   box-shadow:
-    inset 0 -2px 4px -2px rgba(245, 245, 245, 0.015), /* bottom glow */
-    inset -2px 0 4px -2px rgba(245, 245, 245, 0.015), /* left glow */
-    inset 2px 0 4px -2px rgba(245, 245, 245, 0.015), /* right glow */
-    inset 0 1px 2px -1px rgba(245, 245, 245, 0.004); /* top glow (much weaker) */
+    inset 0 -6px 24px 2px rgba(80, 80, 80, 0.08), /* bottom glow - dark gray, uniform spread */
+    inset -6px 0 24px 2px rgba(80, 80, 80, 0.08), /* left glow - dark gray, uniform spread */
+    inset 6px 0 24px 2px rgba(80, 80, 80, 0.08), /* right glow - dark gray, uniform spread */
+    inset 0 6px 24px 2px rgba(80, 80, 80, 0.08); /* top glow - dark gray, uniform spread */
 }
 
 /* Cursor-following glow effect for project cards */
@@ -257,13 +257,13 @@
   border-color: #374151 !important;
 }
 
-/* Contact card glow effect */
+/* Contact card glow effect - subtle dark gray */
 .contact-card-glow {
   box-shadow:
-    inset 0 -2px 4px -2px rgba(245, 245, 245, 0.015), /* bottom glow */
-    inset -2px 0 4px -2px rgba(245, 245, 245, 0.015), /* left glow */
-    inset 2px 0 4px -2px rgba(245, 245, 245, 0.015), /* right glow */
-    inset 0 1px 2px -1px rgba(245, 245, 245, 0.004); /* top glow (much weaker) */
+    inset 0 -6px 24px 2px rgba(80, 80, 80, 0.08), /* bottom glow - dark gray, uniform spread */
+    inset -6px 0 24px 2px rgba(80, 80, 80, 0.08), /* left glow - dark gray, uniform spread */
+    inset 6px 0 24px 2px rgba(80, 80, 80, 0.08), /* right glow - dark gray, uniform spread */
+    inset 0 6px 24px 2px rgba(80, 80, 80, 0.08); /* top glow - dark gray, uniform spread */
 }
 
 .blog-filter-inactive {

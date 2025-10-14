@@ -258,7 +258,7 @@ function BlogCard() {
   const displayedPosts = isMobile ? blogPosts.slice(0, 2) : blogPosts;
 
   return (
-    <Link href="/blog" className="group relative bg-card rounded-lg border border-border overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 min-h-[380px] block">
+    <Link href="/blog" className="group relative bg-card rounded-lg border border-border overflow-hidden shadow-sm hover:shadow-md dark:shadow-xs dark:hover:shadow-sm transition-all duration-300 min-h-[380px] block">
       <div
         className="absolute inset-0 p-4 pt-12"
         style={{
@@ -290,8 +290,8 @@ function BlogCard() {
                 });
               }}
             >
-              <h4 className="font-semibold text-sm mb-2 text-muted-foreground/80 line-clamp-2">{post.title}</h4>
-              <p className="text-muted-foreground/50 text-xs line-clamp-3">{post.excerpt}</p>
+              <h4 className="font-semibold text-xs sm:text-sm mb-2 text-muted-foreground/80 line-clamp-2">{post.title}</h4>
+              <p className="text-muted-foreground/50 text-xs sm:text-xs line-clamp-3">{post.excerpt}</p>
             </div>
           ))}
         </div>
@@ -305,7 +305,7 @@ function BlogCard() {
         <div className="transition-all duration-300">
           <FileText className="h-12 w-12 text-foreground mb-3 group-hover:h-10 group-hover:w-10 transition-all duration-300" />
           <h3 className="text-2xl font-bold text-foreground group-hover:text-3xl transition-all duration-300">Read the Blog</h3>
-          <p className="text-muted-foreground text-base mt-1.5">Discover the most outstanding articles.</p>
+          <p className="text-muted-foreground text-sm sm:text-base mt-1.5">Discover the most outstanding articles.</p>
         </div>
       </div>
     </Link>
@@ -340,7 +340,7 @@ function ProjectsCard() {
   return (
     <Link
       href="/projects"
-      className="group relative bg-card rounded-lg border border-border shadow-sm hover:shadow-md transition-all duration-300 min-h-[380px] block"
+      className="group relative bg-card rounded-lg border border-border shadow-sm hover:shadow-md dark:shadow-xs dark:hover:shadow-sm transition-all duration-300 min-h-[380px] block"
     >
       <div
         className="absolute inset-0 p-4 pt-6 z-0"
@@ -374,7 +374,7 @@ function ProjectsCard() {
           <h3 className="text-2xl font-bold text-foreground group-hover:text-3xl transition-all duration-300">
             Featured Projects
           </h3>
-          <p className="text-muted-foreground text-base mt-1.5">
+          <p className="text-muted-foreground text-sm sm:text-base mt-1.5">
             My latest technical work.
           </p>
         </div>
@@ -396,7 +396,7 @@ function AboutCard() {
   return (
     <Link
       href="/about"
-      className="group relative bg-card rounded-lg border border-border overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 min-h-[380px] block"
+      className="group relative bg-card rounded-lg border border-border overflow-hidden shadow-sm hover:shadow-md dark:shadow-xs dark:hover:shadow-sm transition-all duration-300 min-h-[380px] block"
       style={{ WebkitTapHighlightColor: 'transparent' }}
     >
 
@@ -413,7 +413,7 @@ function AboutCard() {
           <h3 className="text-2xl font-bold text-foreground group-hover:text-3xl transition-all duration-300">
             About Me
           </h3>
-          <p className="text-muted-foreground text-base mt-1.5">
+          <p className="text-muted-foreground text-sm sm:text-base mt-1.5">
             My story & my skills.
           </p>
         </div>

@@ -246,10 +246,10 @@
   border: 1px solid #272727 !important; /* Dark mode compatible border */
   border-radius: 0.5rem !important; /* More rectangular corners for dark mode */
   box-shadow:
-    inset 0 -15px 45px rgba(255, 255, 255, 0.03), /* bottom glow - more intense */
-    inset -15px 0 45px rgba(255, 255, 255, 0.03), /* left glow - more intense */
-    inset 15px 0 45px rgba(255, 255, 255, 0.03), /* right glow - more intense */
-    inset 0 2px 8px rgba(255, 255, 255, 0.005) !important; /* top glow - minimal */
+    inset 0 -6px 24px 2px rgba(80, 80, 80, 0.08), /* bottom glow - dark gray, uniform spread */
+    inset -6px 0 24px 2px rgba(80, 80, 80, 0.08), /* left glow - dark gray, uniform spread */
+    inset 6px 0 24px 2px rgba(80, 80, 80, 0.08), /* right glow - dark gray, uniform spread */
+    inset 0 6px 24px 2px rgba(80, 80, 80, 0.08) !important; /* top glow - dark gray, uniform spread */
 }
 
 /* Prevent dotted background in footer - comprehensive fix */
@@ -783,11 +783,11 @@ footer * {
 .dark .blog-image-frame {
   background: #0F0F0F !important; /* Match blog card background */
   border-color: var(--border) !important;
-  box-shadow: var(--shadow-card) !important;
+  box-shadow: none !important; /* Remove glow effect from image frames */
 }
 
 .dark .blog-image-frame:hover {
-  box-shadow: var(--shadow-card-hover) !important;
+  box-shadow: none !important; /* Remove glow effect from image frames on hover */
   transform: translateY(-2px);
 }
 
@@ -1316,14 +1316,14 @@ footer * {
   font-family: "__fontHeading_9cf113", sans-serif !important;
 }
 
-/* Blog client page card dark mode border and glow */
+/* Blog client page card dark mode border and glow - subtle dark gray */
 .dark .bg-card.border {
   border-color: #272727 !important;
   box-shadow:
-    inset 0 -15px 45px rgba(255, 255, 255, 0.03), /* bottom glow - more intense */
-    inset -15px 0 45px rgba(255, 255, 255, 0.03), /* left glow - more intense */
-    inset 15px 0 45px rgba(255, 255, 255, 0.03), /* right glow - more intense */
-    inset 0 2px 8px rgba(255, 255, 255, 0.005) !important; /* top glow - minimal */
+    inset 0 -6px 24px 2px rgba(80, 80, 80, 0.08), /* bottom glow - dark gray, uniform spread */
+    inset -6px 0 24px 2px rgba(80, 80, 80, 0.08), /* left glow - dark gray, uniform spread */
+    inset 6px 0 24px 2px rgba(80, 80, 80, 0.08), /* right glow - dark gray, uniform spread */
+    inset 0 6px 24px 2px rgba(80, 80, 80, 0.08) !important; /* top glow - dark gray, uniform spread */
 }
 
 /* Blog post image borders on client page - dimming overlay removed */
